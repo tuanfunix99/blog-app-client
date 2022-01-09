@@ -10,18 +10,21 @@ import { useQuery } from "@apollo/client";
 import { GET_USER } from "./graphql/query/user";
 import { useSetRecoilState } from "recoil";
 import { useEffect } from "react";
-import { userState } from "./state/user";
+import { userState, completeLoadUserState } from "./state/user";
 import NotFound from "./pages/not-found/NotFound";
 
 function App() {
-  const { data } = useQuery(GET_USER);
   const setUser = useSetRecoilState(userState);
-
-  useEffect(() => {
-    if (data) {
+  const setCompleted = useSetRecoilState(completeLoadUserState);
+  useQuery(GET_USER, {
+    onCompleted(data) {
       setUser(data.user);
-    }
-  }, [data, setUser]);
+      setCompleted(true);
+    },
+    onError() {
+      setCompleted(true);
+    },
+  });
 
   return (
     <Routes>

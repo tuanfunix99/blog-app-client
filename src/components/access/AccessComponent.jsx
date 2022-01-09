@@ -1,13 +1,18 @@
 import React, { Fragment } from "react";
 import { useRecoilValue } from "recoil";
-import { userState } from "../../state/user";
+import { userState, completeLoadUserState } from "../../state/user";
 
 const AccessComponent = ({ children, isLogin }) => {
   const user = useRecoilValue(userState);
+  const completed = useRecoilValue(completeLoadUserState);
   return (
     <Fragment>
-      {user && isLogin && children} 
-      {!user && !isLogin && children}
+      {completed && (
+        <Fragment>
+          {user && isLogin && children}
+          {!user && !isLogin && children}
+        </Fragment>
+      )}
     </Fragment>
   );
 };
