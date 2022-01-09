@@ -11,6 +11,7 @@ import { GET_USER } from "./graphql/query/user";
 import { useSetRecoilState } from "recoil";
 import { useEffect } from "react";
 import { userState } from "./state/user";
+import NotFound from "./pages/not-found/NotFound";
 
 function App() {
   const { data } = useQuery(GET_USER);
@@ -30,6 +31,7 @@ function App() {
       <Route path="/settings" element={<Setting />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/not-found" element={<NotFound />} />
     </Routes>
   );
 }
