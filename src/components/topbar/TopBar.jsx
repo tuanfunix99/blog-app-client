@@ -5,19 +5,15 @@ import AccessComponent from "../access/AccessComponent";
 import { LOGOUT } from "../../graphql/mutation/user";
 import { useMutation } from "@apollo/client";
 import { ToastContainer, toast } from "react-toastify";
-import { useNavigate } from 'react-router-dom';
 
 
 const TopBar = () => {
   const [logout] = useMutation(LOGOUT);
-  const navigate = useNavigate();
-
   const onLogoutHanler = () => {
     logout({
       onCompleted(data) {
         if (data.logout) {
           localStorage.removeItem("access_token");
-          navigate("/login");
           window.location.reload();
         }
       },

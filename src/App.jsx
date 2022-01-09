@@ -31,7 +31,7 @@ function App() {
       <Route path="/settings" element={<Setting />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/not-found" element={<NotFound />} />
+      <Route path="/*" element={<NotFound />} />
     </Routes>
   );
 }
