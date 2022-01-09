@@ -1,0 +1,37 @@
+@import "~bootstrap/scss/bootstrap";
+
+
+
+.register {
+  height: calc(100vh);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.5)
+    ),
+    url("https://images.pexels.com/photos/317355/pexels-photo-317355.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+}
+
+.register-form {
+  background: #fafafa;
+  padding: 35px 40px;
+  border-radius: 5px;
+}
+
+.btn {
+  background: teal !important;
+  transition: 0.5s;
+}
+
+.btn:hover{
+  background: rgb(2, 112, 112) !important;
+}
+
+.btn:focus{
+  box-shadow: 0px !important;
+  outline: 0px !important;
+}
