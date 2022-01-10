@@ -13,13 +13,37 @@ export const LOGIN = gql`
 `;
 
 export const LOGOUT = gql`
-mutation{
-  logout
-}
+  mutation {
+    logout
+  }
 `;
 
 export const ACTIVE_ACCOUNT = gql`
   mutation ($input: String) {
     activeAccount(input: $input)
+  }
+`;
+
+export const UPLOAD_PROFILE_PIC = gql`
+  mutation ($input: uploadProfilePicInput) {
+    uploadProfilePic(input: $input) {
+      public_id
+      url
+    }
+  }
+`;
+
+export const UPDATE_INFO = gql`
+  mutation ($input: updateInfoInput) {
+    updateInfo(input: $input) {
+      email
+      username
+    }
+  }
+`;
+
+export const UPDATE_PASSWORD = gql`
+  mutation ($input: updatePasswordInput) {
+    updatePassword(input: $input)
   }
 `;

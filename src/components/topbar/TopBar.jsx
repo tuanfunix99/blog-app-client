@@ -1,14 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./TopBar.scss";
 import { Link } from "react-router-dom";
 import AccessComponent from "../access/AccessComponent";
 import { LOGOUT } from "../../graphql/mutation/user";
-import { useMutation } from "@apollo/client";
+import { useMutation, useSubscription } from "@apollo/client";
 import { ToastContainer, toast } from "react-toastify";
-
+import { useRecoilValue } from "recoil";
+import { userState } from "../../state/user";
+import { UPLOADED_PROFILEPIC } from "../../graphql/subscription/user";
 
 const TopBar = () => {
   const [logout] = useMutation(LOGOUT);
+
+  const user = useRecoilValue(userState);
+  const [profilePic, setProfilePic] = useState("");
+
+  useSubscription(UPLOADED_PROFILEPIC, {
+    onSubscriptionData({
+      subscriptionData: {
+        data: {
+          uplodedProfilePic: { user_id, image },
+        },
+      },
+    }) {
+      if (user._id === user_id){
+        setProfilePic(image);
+      }
+    },
+  });
+
+  useEffect(() => {
+    if(user){
+      setProfilePic(user.profilePic);
+    }
+  }, [user])
+
   const onLogoutHanler = () => {
     logout({
       onCompleted(data) {
@@ -56,11 +82,7 @@ const TopBar = () => {
       <div className="topRight">
         <AccessComponent isLogin={true}>
           <Link className="link" to="/settings">
-            <img
-              className="topImg"
-              src="https://images.pexels.com/photos/1858175/pexels-photo-1858175.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-              alt=""
-            />
+            <img className="topImg" src={profilePic} alt="profile" />
           </Link>
         </AccessComponent>
         <AccessComponent isLogin={true}>

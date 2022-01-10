@@ -6,16 +6,17 @@ import Register from "./pages/register/Register";
 import Setting from "./pages/setting/Setting";
 import Single from "./pages/single/Single";
 import Write from "./pages/write/Write";
-import { useQuery } from "@apollo/client";
+import { useQuery, useSubscription } from "@apollo/client";
 import { GET_USER } from "./graphql/query/user";
-import { useSetRecoilState } from "recoil";
-import { useEffect } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { userState, completeLoadUserState } from "./state/user";
 import NotFound from "./pages/not-found/NotFound";
+import { UPLOADED_PROFILEPIC } from "./graphql/subscription/user";
 
 function App() {
-  const setUser = useSetRecoilState(userState);
+  const [user, setUser] = useRecoilState(userState);
   const setCompleted = useSetRecoilState(completeLoadUserState);
+
   useQuery(GET_USER, {
     onCompleted(data) {
       setUser(data.user);
@@ -25,6 +26,23 @@ function App() {
       setCompleted(true);
     },
   });
+
+  // useSubscription(UPLOADED_PROFILEPIC, {
+  //   onSubscriptionData({
+  //     subscriptionData: {
+  //       data: {
+  //         uplodedProfilePic: { user_id, image },
+  //       },
+  //     },
+  //   }) {
+  //     if (user._id === user_id){
+  //       setUser((...pre) => {
+  //         return {...pre, profilePic: image };
+  //       });
+  //       console.log(user);
+  //     }
+  //   },
+  // });
 
   return (
     <Routes>
