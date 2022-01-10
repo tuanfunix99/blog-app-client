@@ -222,7 +222,7 @@ const Setting = () => {
                     <span className="settingsTitleUpdate">
                       Update Your Info
                     </span>
-                    {/* <span className="settingsTitleDelete">Delete Account</span> */}
+                    <span className="settingsTitleDelete">Delete Account</span>
                   </div>
                   <Form>
                     <label>Profile Picture</label>
