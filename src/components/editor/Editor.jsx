@@ -1,11 +1,14 @@
 import React, { Fragment, useRef, useEffect } from "react";
 import EditorJS from "@editorjs/editorjs";
-import { EDITOR_JS_TOOLS } from "./constants";
+import { EDITOR_JS_TOOLS } from "../../pages/write/constants";
 import { useState } from "react";
+import { useSetRecoilState } from "recoil";
+import { editorState } from "../../state/user";
 
-const Editor = () => {
+const Editor = ({ onPublishPost }) => {
   const instanceRef = useRef(null);
   const [editor, setEditor] = useState(null);
+  const setEditorState = useSetRecoilState(editorState);
 
   useEffect(() => {
     if (!editor) {

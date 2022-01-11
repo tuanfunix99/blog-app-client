@@ -9,4 +9,9 @@ export const userState = new atom({
 export const completeLoadUserState = new atom({
   key: 'LoadUser',
   default: false,
+});
+
+export const editorState = new atom({
+  key: 'EditorUser',
+  default: null,
 })

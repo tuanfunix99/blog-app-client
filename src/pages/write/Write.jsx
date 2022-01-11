@@ -1,51 +1,275 @@
-import React, { Fragment } from "react";
-import Editor from "../../components/editor/Editor";
+import React, { Fragment, useState } from "react";
+import Resizer from "react-image-file-resizer";
 import TopBar from "../../components/topbar/TopBar";
-import { Container, Row, Col, Alert } from "react-bootstrap";
-
-import "./Write.scss";
+import { Container, Row, Col, Alert, Form, Modal } from "react-bootstrap";
 import AccessComponent from "../../components/access/AccessComponent";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import { createReactEditorJS } from "react-editor-js";
+import { EDITOR_JS_TOOLS } from "./constants";
+import EdjsParser from "../../utils/parse/parse-editor-to-html";
+import parse from "html-react-parser";
+import Undo from 'editorjs-undo';
+import DragDrop from 'editorjs-drag-drop';
+
+import "./Write.scss";
 
 const Write = () => {
+  const categories = ["Life", "Music", "Sport", "Style", "Tech", "Cinema"];
+  const [backgroundPic, setBackgroundPic] = useState("./background.jpg");
+  const [checkCategory, setCheckCategory] = useState([]);
+  const [show, setShow] = useState(false);
+  const [title, setTitle] = useState("Your title...");
+  const [content, setContent] = useState({});
+  const [html, setHtml] = useState("");
+  const ReactEditorJS = createReactEditorJS();
+
+  const editorCore = React.useRef(null);
+  const handleReady = (editor) => {
+    new Undo({ editor });
+    new DragDrop({editor});
+  };
+
+  const blocks = [
+    {
+      type: "header",
+      data: {
+        text: "What is Lorem Ipsum?",
+        level: 4,
+      },
+    },
+    {
+      type: "paragraph",
+      data: {
+        text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      },
+    },
+  ];
+
+  const handleInitialize = React.useCallback((instance) => {
+    editorCore.current = instance;
+  }, []);
+
+  const toastError = (message) => {
+    toast.error(message, {
+      position: "top-center",
+      autoClose: 3000,
+      theme: "colored",
+    });
+  };
+
+  const toastWarning = (message) => {
+    toast.warning(message, {
+      position: "top-center",
+      autoClose: 3000,
+      theme: "colored",
+    });
+  };
+
+  const toastSuccess = (message) => {
+    toast.success(message, {
+      position: "top-center",
+      autoClose: 3000,
+      theme: "colored",
+    });
+  };
+
+  const resizeFile = (file) =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        855,
+        400,
+        "PNG",
+        100,
+        0,
+        (uri) => {
+          resolve(uri);
+        },
+        "base64"
+      );
+    });
+
+  const displayCategories = (category) => {
+    return categories.map((category, key) => {
+      return (
+        <Form.Check
+          key={key}
+          inline
+          label={category}
+          value={category}
+          name="group1"
+          type="checkbox"
+          id={key}
+          onClick={onCheckHandler}
+        />
+      );
+    });
+  };
+
+  const onChangeBackgroundHandler = async (e) => {
+    const file = e.target.files[0];
+    const types = ["image/jpeg", "image/jpg", "image/png"];
+    if (file) {
+      if (file.size > 3000000) {
+        toastError("File size is bigger than 3MB");
+        return;
+      } else if (!types.includes(file.type)) {
+        toastError("File not image");
+        return;
+      }
+      try {
+        const image = await resizeFile(file);
+        setBackgroundPic(image);
+      } catch (error) {
+        toastError("Can't upload image");
+      }
+    }
+  };
+
+  const onCheckHandler = (e) => {
+    let checkCategoryClone = [...checkCategory];
+    if (checkCategoryClone.includes(e.target.value)) {
+      const index = checkCategoryClone.indexOf(e.target.value);
+      checkCategoryClone.splice(index, 1);
+      setCheckCategory(checkCategoryClone);
+    } else {
+      checkCategoryClone.push(e.target.value);
+      setCheckCategory(checkCategoryClone);
+    }
+  };
+
+  const onPublisPostHandler = async (e) => {
+    e.preventDefault();
+    if (checkCategory.length === 0) {
+      toastWarning("Please choose at leat 1 category");
+      return;
+    }
+    const savedData = await editorCore.current.save();
+    const parseHtml = new EdjsParser();
+    const htmlParser = parseHtml.parse(savedData);
+    setContent(savedData);
+    setHtml(htmlParser);
+    toastSuccess("Publish post successful");
+  };
+
+  const onShowHandler = async () => {
+    setShow(true);
+    const savedData = await editorCore.current.save();
+    const parseHtml = new EdjsParser();
+    const htmlParser = parseHtml.parse(savedData);
+    setContent(savedData);
+    setHtml(htmlParser);
+  };
+
+  const displayViewDemo = () => {
+    return (
+      <Modal show={show} fullscreen={true} onHide={() => setShow(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>View Demo</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Container>
+          <Row>
+            <Col lg={9} className="mx-auto text-center">
+              <img
+                className="writeImg"
+                src={backgroundPic}
+                alt="background post"
+              />
+              <h2 className="writeInput">{title}</h2>
+            </Col>
+          </Row>
+            <Row>
+              <Col lg={8} className="mx-auto">
+                {parse(html)}
+              </Col>
+            </Row>
+          </Container>
+        </Modal.Body>
+      </Modal>
+    );
+  };
+
   return (
     <Fragment>
+      <ToastContainer />
       <TopBar />
+      { displayViewDemo() }
       <AccessComponent isLogin={true}>
-        <Container>
+        <Container className="px-4">
           <Row>
-            <Col lg={9} className="mx-auto">
-              <div className="write">
-                <img
-                  className="writeImg"
-                  src="./background.jpg"
-                  alt="background post"
+            <Col lg={9} className="mx-auto px-0 mt-5 position-relative">
+              <img
+                className="writeImg"
+                src={backgroundPic}
+                alt="background post"
+              />
+              <form className="form-upload-background">
+                <label htmlFor="fileInput">
+                  <i className="writeIcon fas fa-plus"></i>
+                </label>
+                <input
+                  id="fileInput"
+                  type="file"
+                  style={{ display: "none" }}
+                  onChange={onChangeBackgroundHandler}
                 />
+              </form>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={9} className="mx-auto px-0">
+              <div className="write">
                 <form className="writeForm">
                   <div className="writeFormGroup">
-                    <label htmlFor="fileInput">
-                      <i className="writeIcon fas fa-plus"></i>
-                    </label>
                     <input
-                      id="fileInput"
-                      type="file"
-                      style={{ display: "none" }}
-                    />
-                    <input
-                      className="writeInput"
+                      className="writeInput text-center"
                       placeholder="Title"
+                      value={title}
                       type="text"
                       autoFocus={true}
+                      onChange={(e) => setTitle(e.target.value)}
                     />
-                    <button className="writeSubmit" type="submit">
-                      Publish
-                    </button>
-                  </div>
-                  <div className="writeFormGroup">
-                    <Editor />
                   </div>
                 </form>
               </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={8} className="mx-auto px-0">
+              <ReactEditorJS
+                holder="editorjs"
+                onReady = { handleReady }
+                onInitialize={handleInitialize}
+                tools={EDITOR_JS_TOOLS}
+                defaultValue={{
+                  blocks: blocks,
+                }}
+              >
+                <div id="editorjs"></div>
+              </ReactEditorJS>
+              <Form className="py-5 form-publish">
+                <Form.Group className="form-publish-checkbox">
+                  {displayCategories()}
+                </Form.Group>
+                <Form.Group className="form-publish-button mt-3">
+                  <button
+                    type="button"
+                    className="btn btn-primary mx-3"
+                    onClick={onShowHandler}
+                  >
+                    View Demo
+                  </button>
+                  <button
+                   className="btn btn-primary"
+                    type="submit"
+                    onClick={onPublisPostHandler}
+                  >
+                    Publish
+                  </button>
+                </Form.Group>
+              </Form>
             </Col>
           </Row>
         </Container>
@@ -53,7 +277,7 @@ const Write = () => {
       <AccessComponent isLogin={false}>
         <Container>
           <Row>
-            <Col lg={9} className="mx-auto">
+            <Col lg={8} className="mx-auto px-2">
               <Alert variant={"danger"}>
                 Access denied.Please <Link to="/login">Login</Link> to access
                 page.

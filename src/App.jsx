@@ -11,7 +11,8 @@ import { GET_USER } from "./graphql/query/user";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { userState, completeLoadUserState } from "./state/user";
 import NotFound from "./pages/not-found/NotFound";
-import { UPLOADED_PROFILEPIC } from "./graphql/subscription/user";
+
+import './App.scss';
 
 function App() {
   const [user, setUser] = useRecoilState(userState);
