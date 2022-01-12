@@ -18,7 +18,6 @@ import { userState } from "../../state/user";
 import { useMutation } from "@apollo/client";
 import { UPDATE_INFO, UPDATE_PASSWORD, UPLOAD_PROFILE_PIC } from "../../graphql/mutation/user";
 import Resizer from "react-image-file-resizer";
-import { BallTriangle } from "react-loader-spinner";
 import FadeLoader from 'react-spinners/FadeLoader';
 
 import "./Setting.scss";
@@ -49,6 +48,22 @@ const Setting = () => {
     }
   }, [user]);
 
+  const toastError = (message) => {
+    toast.error(message, {
+      position: "top-center",
+      autoClose: 3000,
+      theme: "colored",
+    });
+  };
+
+  const toastSuccess = (message) => {
+    toast.success(message, {
+      position: "top-center",
+      autoClose: 3000,
+      theme: "colored",
+    });
+  };
+
   const resizeFile = (file) =>
     new Promise((resolve) => {
       Resizer.imageFileResizer(
@@ -65,21 +80,7 @@ const Setting = () => {
       );
     });
 
-  const toastError = (message) => {
-    toast.error(message, {
-      position: "top-center",
-      autoClose: 3000,
-      theme: "colored",
-    });
-  };
-
-  const toastSuccess = (message) => {
-    toast.success(message, {
-      position: "top-center",
-      autoClose: 3000,
-      theme: "colored",
-    });
-  };
+  
 
   const onChangePasswordHandler = (e) => {
     setPasswdInput((pre) => {

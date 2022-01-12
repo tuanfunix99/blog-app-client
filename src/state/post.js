@@ -1,7 +1,11 @@
-
-import { atom } from 'recoil';
+import { atom } from "recoil";
 
 export const postsState = new atom({
-  key: 'Posts',
-  default: [],  
+  key: "Posts",
+  default: [],
+});
+
+export const myPostState = new atom({
+  key: "My Post",
+  default: [],
 });

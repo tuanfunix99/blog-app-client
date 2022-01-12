@@ -19,7 +19,7 @@ import EdjsParser from "../../utils/parse/parse-editor-to-html";
 import parse from "html-react-parser";
 import Undo from "editorjs-undo";
 import DragDrop from "editorjs-drag-drop";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { categoriesState } from "../../state/category";
 import { useMutation } from "@apollo/client";
 import { CREATE_POST } from "../../graphql/mutation/post";
@@ -166,6 +166,11 @@ const Write = () => {
       setPublishing(false);
       return;
     }
+    else if (checkCategory.length > 5) {
+      toastWarning("Each post max 5 categories");
+      setPublishing(false);
+      return;
+    }
     const savedData = await editorCore.current.save();
     createPost({
       variables: {
@@ -191,7 +196,6 @@ const Write = () => {
   const onShowHandler = async () => {
     setShow(true);
     const savedData = await editorCore.current.save();
-    console.log(savedData);
     const parseHtml = new EdjsParser();
     const htmlParser = parseHtml.parse(savedData);
     setContent(savedData);
@@ -294,6 +298,7 @@ const Write = () => {
                     type="button"
                     className="btn btn-primary mx-3"
                     onClick={onShowHandler}
+                    disabled={publishing}
                   >
                     View Demo
                   </button>
@@ -301,6 +306,7 @@ const Write = () => {
                     className="btn btn-primary"
                     type="submit"
                     onClick={onPublisPostHandler}
+                    disabled={publishing}
                   >
                     {!publishing && "Publish"}
                     {publishing && (

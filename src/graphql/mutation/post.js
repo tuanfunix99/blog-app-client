@@ -5,3 +5,9 @@ export const CREATE_POST = gql`
     createPost(input: $input)
   }
 `;
+
+export const DELETE_POST = gql`
+  mutation ($input: ID!) {
+    deletePost(input: $input)
+  }
+`;

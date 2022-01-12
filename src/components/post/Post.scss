@@ -34,6 +34,7 @@ img {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  height: 120px;
 }
 
 .card__image {
@@ -67,15 +68,17 @@ img {
   margin-left: 0.5em;
 }
 
+
+
 .tag-blue {
   background: #56ccf2;
   background: linear-gradient(to bottom, #2f80ed, #56ccf2);
   color: #fafafa;
 }
 
-.tag-brown {
-  background: #d1913c;
-  background: linear-gradient(to bottom, #ffd194, #d1913c);
+.tag-yellow {
+  background: #bac32b;
+  background: linear-gradient(to bottom, #ffd194, #e8d33dfa);
   color: #fafafa;
 }
 
@@ -88,6 +91,12 @@ img {
 .tag-green {
   background: #45f78c;
   background: linear-gradient(to bottom, #3aef82, #2dcb89);
+  color: #fafafa;
+}
+
+.tag-teal {
+  background: #45cef7;
+  background: linear-gradient(to bottom, #38b9e0, #40afd1);
   color: #fafafa;
 }
 
@@ -104,10 +113,53 @@ img {
 .user {
   display: flex;
   gap: 0.5rem;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.user__detail{
+  display: flex;
+  gap: 0.5rem;
 }
 
 .user__image {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+}
+
+@mixin reset-focus {
+  box-shadow: 0px !important;
+  outline: 0px !important;
+}
+
+@mixin btn-css($background-color, ) {
+  background: $background-color !important;
+  border: 0px;
+  transition: 0.5s;
+}
+
+.btn-delete-post.btn.btn-primary{
+  @include btn-css(#f03a3a);
+}
+
+.btn-delete-post.btn.btn-primary:hover{
+  background: #e92a2a !important;
+}
+
+.btn-delete-post.btn.btn-primary:focus{
+  @include reset-focus;
+}
+
+.btn-update-post.btn.btn-primary {
+  @include btn-css(#39b9cd);
+  margin-right: 5px;
+}
+
+.btn-update-post.btn.btn-primary:hover{
+  background: #26a6b9 !important;
+}
+
+.btn-update-post.btn.btn-primary:focus{
+  @include reset-focus;
 }

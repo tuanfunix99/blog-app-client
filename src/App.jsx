@@ -6,6 +6,7 @@ import Register from "./pages/register/Register";
 import Setting from "./pages/setting/Setting";
 import Single from "./pages/single/Single";
 import Write from "./pages/write/Write";
+import MyPost from "./pages/my-post/MyPost";
 import { useQuery, useSubscription } from "@apollo/client";
 import { GET_USER } from "./graphql/query/user";
 import { useRecoilState, useSetRecoilState } from "recoil";
@@ -37,28 +38,12 @@ function App() {
     }
   })
 
-  // useSubscription(UPLOADED_PROFILEPIC, {
-  //   onSubscriptionData({
-  //     subscriptionData: {
-  //       data: {
-  //         uplodedProfilePic: { user_id, image },
-  //       },
-  //     },
-  //   }) {
-  //     if (user._id === user_id){
-  //       setUser((...pre) => {
-  //         return {...pre, profilePic: image };
-  //       });
-  //       console.log(user);
-  //     }
-  //   },
-  // });
-
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/post/:id" element={<Single />} />
       <Route path="/write" element={<Write />} />
+      <Route path="/my-post/:id" element={<MyPost />} />
       <Route path="/settings" element={<Setting />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />

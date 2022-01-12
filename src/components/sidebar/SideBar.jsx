@@ -1,20 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import './SideBar.scss';
+import "./SideBar.scss";
 
 const SideBar = () => {
   return (
     <div className="sidebar">
       <div className="sidebarItem">
         <span className="sidebarTitle">ABOUT US</span>
-        <img
-          src="./about_us1.jpg"
-          alt="about_us"
-        />
+        <img src="/designer-coffee-break.gif" alt="about_us" />
         <p>
-          Laboris sunt aute cupidatat velit magna velit ullamco dolore mollit
-          amet ex esse.Sunt eu ut nostrud id quis proident.
+          A programming language is for thinking about programs, not for
+          expressing programs you've already thought of. It should be a pencil,
+          not a pen.
         </p>
       </div>
       <div className="sidebarItem">

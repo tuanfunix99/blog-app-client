@@ -30,3 +30,24 @@ export const GET_POSTS = gql`
     }
   }
 `;
+
+export const GET_MY_POST = gql`
+query($input: ID!){
+  myPost(input: $input) {
+    _id
+    title
+    backgroundPic
+    content
+    createdAt
+    categories {
+      _id
+      name
+    }
+    createdBy {
+      _id
+      username
+      profilePic
+    }
+  }
+}
+`

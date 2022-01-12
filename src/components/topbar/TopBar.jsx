@@ -76,6 +76,11 @@ const TopBar = () => {
                 WRITE
               </Link>
             </li>
+            <li className="topListItem">
+              <Link className="link" to={"/my-post/" + (user ? user._id : "")}>
+                MY POST
+              </Link>
+            </li>
           </AccessComponent>
         </ul>
       </div>
