@@ -53,6 +53,7 @@ const Register = () => {
             {
               position: "top-center",
               autoClose: 6000,
+              theme:"colored"
             }
           );
         }
@@ -76,13 +77,7 @@ const Register = () => {
       },
       onCompleted(data) {
         if (data.activeAccount) {
-          toast.success("Your account has been active", {
-            position: "top-center",
-            autoClose: 3000,
-          });
-          setTimeout(() => {
-            navigate("/login");
-          }, 3000);
+          navigate("/login");
         }
         setLoading(false);
         setIsValid(false);

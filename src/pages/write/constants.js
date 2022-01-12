@@ -12,7 +12,7 @@ import Marker from "@editorjs/marker";
 import CheckList from "@editorjs/checklist";
 import Delimiter from "@editorjs/delimiter";
 import InlineCode from "@editorjs/inline-code";
-import SimpleImage from "simple-image-editorjs";
+import SimpleImage from "@editorjs/simple-image";
 import ImageGallery from "@rodrigoodhin/editorjs-image-gallery";
 import Hyperlink from "editorjs-hyperlink";
 import Paragraph from "@editorjs/paragraph";

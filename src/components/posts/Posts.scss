@@ -1,8 +1,10 @@
 
 @import "~bootstrap/scss/bootstrap";
+
 .posts {
-  flex: 9;
-  display: flex;
-  flex-wrap: wrap;
-  margin: 20px;
+    flex: 9 1;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px;
+    justify-content: space-around;
 }

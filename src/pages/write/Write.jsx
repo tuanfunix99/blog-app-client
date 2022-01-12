@@ -1,33 +1,50 @@
 import React, { Fragment, useState } from "react";
 import Resizer from "react-image-file-resizer";
 import TopBar from "../../components/topbar/TopBar";
-import { Container, Row, Col, Alert, Form, Modal } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Alert,
+  Form,
+  Modal,
+  Spinner,
+} from "react-bootstrap";
 import AccessComponent from "../../components/access/AccessComponent";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { createReactEditorJS } from "react-editor-js";
 import { EDITOR_JS_TOOLS } from "./constants";
 import EdjsParser from "../../utils/parse/parse-editor-to-html";
 import parse from "html-react-parser";
-import Undo from 'editorjs-undo';
-import DragDrop from 'editorjs-drag-drop';
+import Undo from "editorjs-undo";
+import DragDrop from "editorjs-drag-drop";
+import { useRecoilValue } from "recoil";
+import { categoriesState } from "../../state/category";
+import { useMutation } from "@apollo/client";
+import { CREATE_POST } from "../../graphql/mutation/post";
+import { userState } from "../../state/user";
 
 import "./Write.scss";
 
 const Write = () => {
-  const categories = ["Life", "Music", "Sport", "Style", "Tech", "Cinema"];
+  const categories = useRecoilValue(categoriesState);
   const [backgroundPic, setBackgroundPic] = useState("./background.jpg");
   const [checkCategory, setCheckCategory] = useState([]);
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState("Your title...");
+  const [publishing, setPublishing] = useState(false);
   const [content, setContent] = useState({});
   const [html, setHtml] = useState("");
   const ReactEditorJS = createReactEditorJS();
+  const [createPost] = useMutation(CREATE_POST);
+  const user = useRecoilValue(userState);
+  const navigate = useNavigate();
 
   const editorCore = React.useRef(null);
   const handleReady = (editor) => {
     new Undo({ editor });
-    new DragDrop({editor});
+    new DragDrop({ editor });
   };
 
   const blocks = [
@@ -90,21 +107,23 @@ const Write = () => {
       );
     });
 
-  const displayCategories = (category) => {
-    return categories.map((category, key) => {
-      return (
-        <Form.Check
-          key={key}
-          inline
-          label={category}
-          value={category}
-          name="group1"
-          type="checkbox"
-          id={key}
-          onClick={onCheckHandler}
-        />
-      );
-    });
+  const displayCategories = () => {
+    if (categories.length > 0) {
+      return categories.map((category, key) => {
+        return (
+          <Form.Check
+            key={key}
+            inline
+            label={category.name}
+            value={category._id}
+            name="group1"
+            type="checkbox"
+            id={key}
+            onClick={onCheckHandler}
+          />
+        );
+      });
+    }
   };
 
   const onChangeBackgroundHandler = async (e) => {
@@ -141,21 +160,38 @@ const Write = () => {
 
   const onPublisPostHandler = async (e) => {
     e.preventDefault();
+    setPublishing(true);
     if (checkCategory.length === 0) {
       toastWarning("Please choose at leat 1 category");
+      setPublishing(false);
       return;
     }
     const savedData = await editorCore.current.save();
-    const parseHtml = new EdjsParser();
-    const htmlParser = parseHtml.parse(savedData);
-    setContent(savedData);
-    setHtml(htmlParser);
-    toastSuccess("Publish post successful");
+    createPost({
+      variables: {
+        input: {
+          title: title,
+          content: savedData,
+          categories: checkCategory,
+          backgroundPic: backgroundPic,
+          userId: user._id,
+        },
+      },
+      onCompleted(data) {
+        navigate(`/post/${data.createPost}`);
+        setPublishing(false);
+      },
+      onError(err) {
+        toastError("Error System. Can't publish post");
+        setPublishing(false);
+      },
+    });
   };
 
   const onShowHandler = async () => {
     setShow(true);
     const savedData = await editorCore.current.save();
+    console.log(savedData);
     const parseHtml = new EdjsParser();
     const htmlParser = parseHtml.parse(savedData);
     setContent(savedData);
@@ -170,16 +206,16 @@ const Write = () => {
         </Modal.Header>
         <Modal.Body>
           <Container>
-          <Row>
-            <Col lg={9} className="mx-auto text-center">
-              <img
-                className="writeImg"
-                src={backgroundPic}
-                alt="background post"
-              />
-              <h2 className="writeInput">{title}</h2>
-            </Col>
-          </Row>
+            <Row>
+              <Col lg={9} className="mx-auto text-center">
+                <img
+                  className="writeImg"
+                  src={backgroundPic}
+                  alt="background post"
+                />
+                <h2 className="writeInput">{title}</h2>
+              </Col>
+            </Row>
             <Row>
               <Col lg={8} className="mx-auto">
                 {parse(html)}
@@ -195,7 +231,7 @@ const Write = () => {
     <Fragment>
       <ToastContainer />
       <TopBar />
-      { displayViewDemo() }
+      {displayViewDemo()}
       <AccessComponent isLogin={true}>
         <Container className="px-4">
           <Row>
@@ -240,7 +276,7 @@ const Write = () => {
             <Col lg={8} className="mx-auto px-0">
               <ReactEditorJS
                 holder="editorjs"
-                onReady = { handleReady }
+                onReady={handleReady}
                 onInitialize={handleInitialize}
                 tools={EDITOR_JS_TOOLS}
                 defaultValue={{
@@ -262,11 +298,23 @@ const Write = () => {
                     View Demo
                   </button>
                   <button
-                   className="btn btn-primary"
+                    className="btn btn-primary"
                     type="submit"
                     onClick={onPublisPostHandler}
                   >
-                    Publish
+                    {!publishing && "Publish"}
+                    {publishing && (
+                      <div>
+                        <Spinner
+                          as="span"
+                          animation="border"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                        />
+                        Publishing...
+                      </div>
+                    )}
                   </button>
                 </Form.Group>
               </Form>

@@ -13,9 +13,12 @@ import { userState, completeLoadUserState } from "./state/user";
 import NotFound from "./pages/not-found/NotFound";
 
 import './App.scss';
+import { categoriesState } from "./state/category";
+import { GET_CATEGORIES } from "./graphql/query/category";
 
 function App() {
   const [user, setUser] = useRecoilState(userState);
+  const setCategories = useSetRecoilState(categoriesState);
   const setCompleted = useSetRecoilState(completeLoadUserState);
 
   useQuery(GET_USER, {
@@ -27,6 +30,12 @@ function App() {
       setCompleted(true);
     },
   });
+
+  useQuery(GET_CATEGORIES, {
+    onCompleted(data){
+      setCategories(data.categories);
+    }
+  })
 
   // useSubscription(UPLOADED_PROFILEPIC, {
   //   onSubscriptionData({

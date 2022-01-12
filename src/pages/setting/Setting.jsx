@@ -19,6 +19,7 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_INFO, UPDATE_PASSWORD, UPLOAD_PROFILE_PIC } from "../../graphql/mutation/user";
 import Resizer from "react-image-file-resizer";
 import { BallTriangle } from "react-loader-spinner";
+import FadeLoader from 'react-spinners/FadeLoader';
 
 import "./Setting.scss";
 
@@ -229,12 +230,7 @@ const Setting = () => {
                     <div className="settingsPP">
                       {uploading && (
                         <div className="profile-loading">
-                          <BallTriangle
-                            heigth="35"
-                            width="35"
-                            color="grey"
-                            arialLabel="loading-indicator"
-                          />
+                          <FadeLoader color={"#000000"} loading={uploading} size={10} />
                         </div>
                       )}
                       {!uploading && <img src={profilePic} alt="profile" />}

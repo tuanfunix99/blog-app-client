@@ -1,39 +1,56 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import moment from "moment";
 
-import './Post.scss';
+import "./Post.scss";
 
-const Post = ({ img }) => {
-  return (
-    <div className="post">
-      <img className="postImg" src={img} alt="" />
-      <div className="postInfo">
-        <div className="postCats">
-          <span className="postCat">
-            <Link className="link" to="/posts?cat=Music">
-              Music
-            </Link>
-          </span>
-          <span className="postCat">
-            <Link className="link" to="/posts?cat=Music">
-              Life
-            </Link>
-          </span>
-        </div>
-        <span className="postTitle">
-          <Link to="/post/abc" className="link">
-            Lorem ipsum dolor sit amet
+const Post = ({ post }) => {
+  let { _id, title, backgroundPic, createdAt, categories, createdBy } = post;
+  const tags = ["tag-blue", "tag-brown", "tag-red", "tag-green"];
+
+  console.log();
+  createdAt = moment(new Date(createdAt)).fromNow();
+
+  const displayCat = () => {
+    if (categories.length > 0) {
+      return categories.map((cat, key) => {
+        return (
+          <Link to={"/posts/?cat=" + cat.name}>
+            <span class={"tag " + tags[key]}>{cat.name}</span>
           </Link>
-        </span>
-        <hr />
-        <span className="postDate">1 hour ago</span>
+        );
+      });
+    }
+  };
+
+  if(title.length > 100){
+    title = title.slice(0, 100) + "...";
+  }
+
+  return (
+    <div class="card">
+      <div class="card__header">
+        <Link to={"/post/" + _id}>
+          <img src={backgroundPic} alt="card__image" class="card__image" />
+        </Link>
       </div>
-      <p className="postDesc">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda
-        officia architecto deserunt deleniti? Labore ipsum aspernatur magnam
-        fugiat, reprehenderit praesentium blanditiis quos cupiditate ratione
-        atque, exercitationem quibusdam, reiciendis odio laboriosam?
-      </p>
+      <div class="card__body">
+        <div className="tag__container">{displayCat()}</div>
+        <h5>{title}</h5>
+      </div>
+      <div class="card__footer">
+        <div class="user">
+          <img
+            src={createdBy.profilePic}
+            alt="user__image"
+            class="user__image"
+          />
+          <div class="user__info">
+            <h6 className="my-0">{createdBy.username}</h6>
+            <small>{createdAt} ago</small>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
