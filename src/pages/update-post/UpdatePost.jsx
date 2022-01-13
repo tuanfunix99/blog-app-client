@@ -26,9 +26,10 @@ import { CREATE_POST } from "../../graphql/mutation/post";
 import { userState } from "../../state/user";
 import EditorJS from "@editorjs/editorjs";
 import { GET_POST } from "../../graphql/query/post";
+import Loading from "../../components/loading/Loading";
+import Footer from "../../components/footer/Footer";
 
 import "./UpdatePost.scss";
-import Footer from "../../components/footer/Footer";
 
 const UpdatePost = () => {
   const categories = useRecoilValue(categoriesState);
@@ -51,7 +52,9 @@ const UpdatePost = () => {
   useQuery(GET_POST, {
     variables: { input: id },
     onCompleted(data) {
-      setPost(data.post);
+      if(data.post && data.post.content){
+        setPost(data.post);
+      }
     },
     onError() {
       navigate("/not-found");
@@ -252,7 +255,7 @@ const UpdatePost = () => {
       <TopBar />
       {displayViewDemo()}
       <AccessComponent isLogin={true}>
-        <Container className="px-4">
+        {post && <Container className="px-4">
           <Row>
             <Col lg={9} className="mx-auto px-0 mt-5 position-relative">
               <img
@@ -331,7 +334,8 @@ const UpdatePost = () => {
               </Form>
             </Col>
           </Row>
-        </Container>
+        </Container>}
+        {!post && <Loading/> }
       </AccessComponent>
       <AccessComponent isLogin={false}>
         <Container>
