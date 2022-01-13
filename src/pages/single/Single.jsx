@@ -19,7 +19,9 @@ const Single = () => {
   useQuery(GET_POST, {
     variables: { input: id },
     onCompleted(data) {
-      setPost(data.post);
+      if(data.post && data.post.content){
+        setPost(data.post);
+      }
     },
     onError() {
       navigate("/not-found");
