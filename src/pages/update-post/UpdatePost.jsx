@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Resizer from "react-image-file-resizer";
 import TopBar from "../../components/topbar/TopBar";
 import {
@@ -11,7 +11,7 @@ import {
   Spinner,
 } from "react-bootstrap";
 import AccessComponent from "../../components/access/AccessComponent";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { createReactEditorJS } from "react-editor-js";
 import { EDITOR_JS_TOOLS } from "../../utils/parse/constants";
@@ -21,14 +21,16 @@ import Undo from "editorjs-undo";
 import DragDrop from "editorjs-drag-drop";
 import { useRecoilValue } from "recoil";
 import { categoriesState } from "../../state/category";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_POST } from "../../graphql/mutation/post";
 import { userState } from "../../state/user";
+import EditorJS from "@editorjs/editorjs";
+import { GET_POST } from "../../graphql/query/post";
 
-import "./Write.scss";
+import "./UpdatePost.scss";
 import Footer from "../../components/footer/Footer";
 
-const Write = () => {
+const UpdatePost = () => {
   const categories = useRecoilValue(categoriesState);
   const [backgroundPic, setBackgroundPic] = useState("./background.jpg");
   const [checkCategory, setCheckCategory] = useState([]);
@@ -41,32 +43,52 @@ const Write = () => {
   const [createPost] = useMutation(CREATE_POST);
   const user = useRecoilValue(userState);
   const navigate = useNavigate();
+  const [post, setPost] = useState(null);
+  const [blocks, setBlocks] = useState([]);
+  const { id } = useParams();
+  const [editor, setEditor] = useState(null);
+
+  useQuery(GET_POST, {
+    variables: { input: id },
+    onCompleted(data) {
+      setPost(data.post);
+    },
+    onError() {
+      navigate("/not-found");
+    },
+  });
+
+  useEffect(() => {
+    if (post) {
+      setBackgroundPic(post.backgroundPic);
+      setTitle(post.title);
+      setCheckCategory(post.categories);
+    }
+  }, [post]);
+
+  if (post) {
+    if (!editor) {
+      const content = JSON.parse(post.content);
+      setEditor(
+        new EditorJS({
+          holder: "editorjs",
+          readOnly: false,
+          tools: EDITOR_JS_TOOLS,
+          data: {
+            blocks: content.blocks,
+          },
+          version: "2.22.2",
+        })
+      );
+    }
+  }
 
   const editorCore = React.useRef(null);
+
   const handleReady = (editor) => {
     new Undo({ editor });
     new DragDrop({ editor });
   };
-
-  const blocks = [
-    {
-      type: "header",
-      data: {
-        text: "What is Lorem Ipsum?",
-        level: 4,
-      },
-    },
-    {
-      type: "paragraph",
-      data: {
-        text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      },
-    },
-  ];
-
-  const handleInitialize = React.useCallback((instance) => {
-    editorCore.current = instance;
-  }, []);
 
   const toastError = (message) => {
     toast.error(message, {
@@ -113,6 +135,7 @@ const Write = () => {
             type="checkbox"
             id={key}
             onClick={onCheckHandler}
+            defaultChecked={checkCategory.includes(category._id) ? true : false}
           />
         );
       });
@@ -158,8 +181,7 @@ const Write = () => {
       toastWarning("Please choose at leat 1 category");
       setPublishing(false);
       return;
-    }
-    else if (checkCategory.length > 5) {
+    } else if (checkCategory.length > 5) {
       toastWarning("Each post max 5 categories");
       setPublishing(false);
       return;
@@ -188,7 +210,7 @@ const Write = () => {
 
   const onShowHandler = async () => {
     setShow(true);
-    const savedData = await editorCore.current.save();
+    const savedData = await editor.save();
     const parseHtml = new EdjsParser();
     const htmlParser = parseHtml.parse(savedData);
     setContent(savedData);
@@ -271,17 +293,7 @@ const Write = () => {
           </Row>
           <Row>
             <Col lg={8} className="mx-auto px-0">
-              <ReactEditorJS
-                holder="editorjs"
-                onReady={handleReady}
-                onInitialize={handleInitialize}
-                tools={EDITOR_JS_TOOLS}
-                defaultValue={{
-                  blocks: blocks,
-                }}
-              >
-                <div id="editorjs"></div>
-              </ReactEditorJS>
+              <div id="editorjs"></div>
               <Form className="py-5 form-publish">
                 <Form.Group className="form-publish-checkbox">
                   {displayCategories()}
@@ -299,9 +311,9 @@ const Write = () => {
                     className="btn btn-primary"
                     type="submit"
                     onClick={onPublisPostHandler}
-                    disabled={publishing}
+                    disabled={!publishing}
                   >
-                    {!publishing && "Publish"}
+                    {!publishing && "Update"}
                     {publishing && (
                       <div>
                         <Spinner
@@ -311,7 +323,7 @@ const Write = () => {
                           role="status"
                           aria-hidden="true"
                         />
-                        Publishing...
+                        Updating...
                       </div>
                     )}
                   </button>
@@ -338,4 +350,4 @@ const Write = () => {
   );
 };
 
-export default Write;
+export default UpdatePost;

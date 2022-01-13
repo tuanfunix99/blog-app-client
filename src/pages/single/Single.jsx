@@ -8,6 +8,8 @@ import { GET_POST } from "../../graphql/query/post";
 import parse from "html-react-parser";
 import { Col, Container, Row } from "react-bootstrap";
 import EdjsParser from "../../utils/parse/parse-editor-to-html";
+import Loading from "../../components/loading/Loading";
+import Footer from "../../components/footer/Footer";
 
 const Single = () => {
   const navigate = useNavigate();
@@ -17,6 +19,7 @@ const Single = () => {
   useQuery(GET_POST, {
     variables: { input: id },
     onCompleted(data) {
+      console.log(data);
       setPost(data.post);
     },
     onError() {
@@ -54,8 +57,10 @@ const Single = () => {
     <Fragment>
       <TopBar />
       <div className="single">
+        {!post && <Loading /> }
         <Container>{displayPost()}</Container>
       </div>
+      <Footer />
     </Fragment>
   );
 };

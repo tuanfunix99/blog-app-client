@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
 import { Button, Modal, Spinner } from "react-bootstrap";
@@ -10,13 +10,14 @@ import { useRecoilState } from "recoil";
 
 import "./Post.scss";
 
-const Post = ({ post, isUser }) => {
+const Post = ({ index, post, isUser }) => {
   let { _id, title, backgroundPic, createdAt, categories, createdBy } = post;
   const tags = ["tag-blue", "tag-yellow", "tag-red", "tag-green", "tag-teal"];
   const [show, setShow] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [deletePost] = useMutation(DELETE_POST);
   const [myPost, setMyPost] = useRecoilState(myPostState);
+  const navigate = useNavigate();
 
   createdAt = moment(new Date(createdAt)).fromNow();
 
@@ -41,7 +42,7 @@ const Post = ({ post, isUser }) => {
       return categories.map((cat, key) => {
         return (
           <Link to={"/posts/?cat=" + cat.name}>
-            <span class={"tag " + tags[key]}>{cat.name}</span>
+            <span className={"tag " + tags[key]}>{cat.name}</span>
           </Link>
         );
       });
@@ -108,39 +109,43 @@ const Post = ({ post, isUser }) => {
     });
   };
 
+  const onNavigateUpdatePage = () => {
+    navigate(`/update-my-post/${_id}`);
+  }
+
   return (
-    <div class="card">
+    <div className="card">
       <ToastContainer />
       {displayDeleteModal()}
-      <div class="card__header">
+      <div className="card__header">
         <Link to={"/post/" + _id}>
-          <img src={backgroundPic} alt="card__image" class="card__image" />
+          <img src={backgroundPic} alt="card__image" className="card__image" />
         </Link>
       </div>
-      <div class="card__body">
+      <div className="card__body">
         <div className="tag__container">{displayCat()}</div>
         <h5>{title}</h5>
       </div>
-      <div class="card__footer">
-        <div class="user">
+      <div className="card__footer">
+        <div className="user">
           <div className="user__detail">
             <img
               src={createdBy.profilePic}
               alt="user__image"
-              class="user__image"
+              className="user__image"
             />
-            <div class="user__info">
+            <div className="user__info">
               <h6 className="my-0">{createdBy.username}</h6>
               <small>{createdAt} ago</small>
             </div>
           </div>
           {isUser && (
             <div className="user__controller">
-              <Button className="btn-update-post">
-                <i class="fas fa-pen-square"></i>
+              <Button className="btn-update-post" onClick={onNavigateUpdatePage}>
+                <i className="fas fa-pen-square"></i>
               </Button>
               <Button className="btn-delete-post" onClick={() => setShow(true)}>
-                <i class="fas fa-trash"></i>
+                <i className="fas fa-trash"></i>
               </Button>
             </div>
           )}

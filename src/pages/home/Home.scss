@@ -3,3 +3,23 @@
   display: flex;
   flex-wrap: wrap;
 }
+
+.navigate-page {
+  display: flex;
+  position: absolute;
+  top: 415px;
+  left: 95%;
+}
+
+.navigate-page .btn {
+  border-radius: 0% !important;
+  background: white !important;
+  color: black;
+  border: 0px !important;
+  font-size: 35px;
+}
+
+.navigate-page .btn:hover{
+  background: #66cae2 !important;
+  transition: 0.5s;
+}

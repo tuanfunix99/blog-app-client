@@ -1,6 +1,11 @@
+.ce-block {
+  margin-top: 5px !important;
+  margin-bottom: 10px !important;
+}
+
 .ce-block__content {
   max-width: 100% !important;
-  margin: 0px !important;
+  margin: 0px 0px !important;
 }
 
 .caption {
@@ -109,4 +114,23 @@
 .tc-table__area {
   padding: 10px;
   height: 100%;
+}
+
+.ce-delimiter {
+  line-height: 1.6em;
+  width: 100%;
+  text-align: center;
+}
+
+.cdx-block {
+  padding: 0.4em 0;
+}
+
+.ce-delimiter:before {
+  display: inline-block;
+  content: "***";
+  font-size: 30px;
+  line-height: 65px;
+  height: 30px;
+  letter-spacing: 0.2em;
 }

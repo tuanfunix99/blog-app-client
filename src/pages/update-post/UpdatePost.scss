@@ -1,6 +1,6 @@
 @import "~bootstrap/scss/bootstrap";
 
-#editorjs{
+#editorjs {
   width: 100%;
 }
 
@@ -77,16 +77,16 @@
   padding-bottom: 0px !important;
 }
 
-.ce-toolbar__content{
+.ce-toolbar__content {
   max-width: 100% !important;
 }
 
-.ce-block__content{
+.ce-block__content {
   max-width: 100% !important;
   margin: 0px !important;
 }
 
-.embed-tool__content{
+.embed-tool__content {
   height: 500px;
   overflow-y: scroll;
 }
@@ -107,12 +107,12 @@
   transition: 0.5s;
 }
 
-.form-upload-background:hover{
+.form-upload-background:hover {
   opacity: 1;
   transition: 0.5s;
 }
 
-.form-publish{
+.form-publish {
   background: white;
   width: 100%;
 }
@@ -127,7 +127,7 @@
   justify-content: center;
 }
 
-.cdx-simple-image__picture img{ 
+.cdx-simple-image__picture img {
   width: 100% !important;
 }
 

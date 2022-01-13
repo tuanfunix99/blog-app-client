@@ -7,6 +7,9 @@ export const GET_POST = gql`
       title
       content
       backgroundPic
+      categories{
+        _id
+      }
     }
   }
 `;
@@ -29,6 +32,27 @@ export const GET_POSTS = gql`
       }
     }
   }
+`;
+
+export const GET_POSTS_PAGE = gql`
+  query($input: Int!){
+  postsPage(input: $input) {
+   _id
+    title
+    backgroundPic
+    content
+    createdAt
+    categories {
+      _id
+      name
+    }
+    createdBy {
+      _id
+      username
+      profilePic
+    }
+  }
+}
 `;
 
 export const GET_MY_POST = gql`

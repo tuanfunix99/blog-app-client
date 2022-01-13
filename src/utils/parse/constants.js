@@ -1,5 +1,5 @@
 import Embed from "@editorjs/embed";
-import Table from "editorjs-table";
+import Table from "@editorjs/table";
 import ParagraphAlignment from "editorjs-paragraph-with-alignment";
 import List from "@editorjs/list";
 import Warning from "@editorjs/warning";
@@ -23,7 +23,9 @@ import LinkAutocomplete from "@editorjs/link-autocomplete";
 import ChangeCase from "editorjs-change-case";
 import Tooltip from "editorjs-tooltip";
 import AlignmentTuneTool from "editorjs-text-alignment-blocktune";
-import CodeBox from '@bomdi/codebox';
+import CodeBox from "@bomdi/codebox";
+import ImageTool from "@editorjs/image";
+import axios from "axios";
 
 export const EDITOR_JS_TOOLS = {
   embed: Embed,
@@ -32,7 +34,41 @@ export const EDITOR_JS_TOOLS = {
   warning: Warning,
   code: Code,
   link: LinkTool,
-  image: SimpleImage,
+  image: {
+    class: ImageTool,
+    config: {
+      uploader:{
+        async uploadByFile(file) {
+          const dataForm = new FormData();
+          dataForm.append("upload", file);
+          const { data } = await axios.post(
+            `${process.env.REACT_APP_HTTP_API_LINK_URL}/api/upload-file`,
+            dataForm
+          );
+          return {
+            success: 1,
+            file: {
+              url: data,
+            },
+          };
+        },
+        async uploadByUrl(url) {
+          const { data } = await axios.post(
+            `${process.env.REACT_APP_HTTP_API_LINK_URL}/api/fetch-url`,
+            {
+              url,
+            }
+          );
+          return {
+            success: 1,
+            file: {
+              url: data,
+            },
+          };
+        },
+      },
+    },
+  },
   raw: Raw,
   header: Header,
   quote: Quote,
@@ -43,5 +79,6 @@ export const EDITOR_JS_TOOLS = {
   imageGallery: ImageGallery,
   hyperlink: Hyperlink,
   changeCase: ChangeCase,
+  simpleImage: SimpleImage,
   codeBox: CodeBox,
 };

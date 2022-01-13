@@ -79,7 +79,7 @@ let defaultParsers = {
     }
     elements.push(`
     <div className="cdx-simple-image__picture">
-    <img src=${data.url} alt="image">
+    <img src=${data.file.url} alt="image">
     </div>
     `);
     return templateBlock(elements);
@@ -181,18 +181,28 @@ ${ggBox}
     return templateBlock(elements);
   },
   raw: function (data) {
-    return data.html;
+    let elements = [];
+    elements.push(data.htm);
+    return templateBlock(elements);
   },
   delimiter: function (data) {
-    return "<br />";
+    let elements = [];
+    elements.push(`
+        <div class="ce-delimiter cdx-block"></div>
+    `);
+    return templateBlock(elements);
   },
-  quote: function (data, config) {
+  quote: function (data) {  
+    let elements = [];
     let alignment = `style="text-align: ${data.alignment};"`;
-    return `<blockquote ${alignment}><p>${data.text}</p><cite>${data.caption}</cite></blockquote>`;
+    elements.push(`<blockquote ${alignment}><p>${data.text}</p><cite>${data.caption}</cite></blockquote>`);
+    return templateBlock(elements);
   },
-  code: function (data, config) {
+  code: function (data) {
+    let elements = [];
     const markup = sanitizeHtml(data.code);
-    return `<pre><code class="code-block">${markup}</code></pre>`;
+    elements.push(`<pre><code class="code-block">${markup}</code></pre>`);
+    return templateBlock(elements);
   },
 };
 

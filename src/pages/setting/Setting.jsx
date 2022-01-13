@@ -21,6 +21,7 @@ import Resizer from "react-image-file-resizer";
 import FadeLoader from 'react-spinners/FadeLoader';
 
 import "./Setting.scss";
+import Footer from "../../components/footer/Footer";
 
 const Setting = () => {
   const [uploading, setUploading] = useState(false);
@@ -102,7 +103,7 @@ const Setting = () => {
       try {
         const image = await resizeFile(file);
         const arr = profilePic.split("/");
-        const public_id = arr[arr.length - 1].replace(".jpg", "");
+        const public_id = arr[arr.length - 1].split(".")[0];
         setUploading(true);
         uploadProfilePic({
           variables: {
@@ -384,6 +385,7 @@ const Setting = () => {
           </Row>
         </Container>
       </AccessComponent>
+      <Footer />
     </Fragment>
   );
 };

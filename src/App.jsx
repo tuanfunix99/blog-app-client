@@ -16,6 +16,7 @@ import NotFound from "./pages/not-found/NotFound";
 import './App.scss';
 import { categoriesState } from "./state/category";
 import { GET_CATEGORIES } from "./graphql/query/category";
+import UpdatePost from "./pages/update-post/UpdatePost";
 
 function App() {
   const [user, setUser] = useRecoilState(userState);
@@ -44,6 +45,7 @@ function App() {
       <Route path="/post/:id" element={<Single />} />
       <Route path="/write" element={<Write />} />
       <Route path="/my-post/:id" element={<MyPost />} />
+      <Route path="/update-my-post/:id" element={<UpdatePost />} />
       <Route path="/settings" element={<Setting />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />

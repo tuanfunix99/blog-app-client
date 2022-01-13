@@ -4,6 +4,7 @@ import { Alert, Col, Container, Row } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import AccessComponent from "../../components/access/AccessComponent";
+import Footer from "../../components/footer/Footer";
 import Loading from "../../components/loading/Loading";
 import Posts from "../../components/posts/Posts";
 import TopBar from "../../components/topbar/TopBar";
@@ -33,8 +34,6 @@ const MyPost = () => {
     },
   });
 
-  console.log(myPost);
-
   return (
     <Fragment>
       <TopBar />
@@ -58,6 +57,7 @@ const MyPost = () => {
           </Row>
         </Container>
       </AccessComponent>
+      <Footer />
     </Fragment>
   );
 };

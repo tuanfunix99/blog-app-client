@@ -1,22 +1,21 @@
 import React from "react";
 import Post from "../post/Post";
 
-import './Posts.scss';
+import "./Posts.scss";
 
 const Posts = ({ posts, isUser }) => {
-
   const displayPost = () => {
-    if(posts && posts.length > 0){
+    if (posts && posts.length > 0) {
       return posts.map((post, key) => {
-        return <Post key={key} post={post} isUser={isUser} />
-      })
+        return (
+            <li key={key}>
+              <Post index={key} post={post} isUser={isUser} />
+            </li>
+        );
+      });
     }
-  }
-  return (
-    <div className="posts">
-      { displayPost() }
-    </div>
-  );
+  };
+  return <div className="posts">{displayPost()}</div>;
 };
 
 export default Posts;
