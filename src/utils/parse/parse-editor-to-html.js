@@ -84,6 +84,18 @@ let defaultParsers = {
     `);
     return templateBlock(elements);
   },
+  simpleImage: function (data) {
+    let elements = [];
+    if (data.caption.trim().length > 0) {
+      elements.push(`<div className='caption'>${data.caption.trim()}</div>`);
+    }
+    elements.push(`
+    <div className="cdx-simple-image__picture">
+    <img src=${data.url} alt="image">
+    </div>
+    `);
+    return templateBlock(elements);
+  },
   imageGallery: function (data) {
     let elements = [];
     let images = data.urls
