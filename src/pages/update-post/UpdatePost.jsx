@@ -49,11 +49,30 @@ const UpdatePost = () => {
   const { id } = useParams();
   const [editor, setEditor] = useState(null);
 
+  const toastError = (message) => {
+    toast.error(message, {
+      position: "top-center",
+      autoClose: 3000,
+      theme: "colored",
+    });
+  };
+
+  const toastWarning = (message) => {
+    toast.warning(message, {
+      position: "top-center",
+      autoClose: 3000,
+      theme: "colored",
+    });
+  };
+
   useQuery(GET_POST, {
     variables: { input: id },
     onCompleted(data) {
       if(data.post && data.post.content){
         setPost(data.post);
+      }
+      else{
+        toastError("Error System.Can't load post");
       }
     },
     onError() {
@@ -91,22 +110,6 @@ const UpdatePost = () => {
   const handleReady = (editor) => {
     new Undo({ editor });
     new DragDrop({ editor });
-  };
-
-  const toastError = (message) => {
-    toast.error(message, {
-      position: "top-center",
-      autoClose: 3000,
-      theme: "colored",
-    });
-  };
-
-  const toastWarning = (message) => {
-    toast.warning(message, {
-      position: "top-center",
-      autoClose: 3000,
-      theme: "colored",
-    });
   };
 
   const resizeFile = (file) =>

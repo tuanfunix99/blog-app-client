@@ -10,17 +10,29 @@ import { Col, Container, Row } from "react-bootstrap";
 import EdjsParser from "../../utils/parse/parse-editor-to-html";
 import Loading from "../../components/loading/Loading";
 import Footer from "../../components/footer/Footer";
+import { ToastContainer, toast } from "react-toastify";
 
 const Single = () => {
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
   const { id } = useParams();
 
+  const toastError = (message) => {
+    toast.error(message, {
+      position: "top-center",
+      autoClose: 5000,
+      theme: "colored",
+    });
+  };
+
   useQuery(GET_POST, {
     variables: { input: id },
     onCompleted(data) {
       if(data.post && data.post.content){
         setPost(data.post);
+      }
+      else{
+        toastError("Error System.Can't load post");
       }
     },
     onError() {
@@ -56,6 +68,7 @@ const Single = () => {
 
   return (
     <Fragment>
+      <ToastContainer />
       <TopBar />
       <div className="single">
         {!post && <Loading /> }
