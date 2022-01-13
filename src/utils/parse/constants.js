@@ -34,10 +34,22 @@ export const EDITOR_JS_TOOLS = {
   warning: Warning,
   code: Code,
   link: LinkTool,
+  raw: Raw,
+  header: Header,
+  quote: Quote,
+  marker: Marker,
+  checklist: CheckList,
+  delimiter: Delimiter,
+  inlineCode: InlineCode,
+  imageGallery: ImageGallery,
+  hyperlink: Hyperlink,
+  changeCase: ChangeCase,
+  simpleImage: SimpleImage,
+  codeBox: CodeBox,
   image: {
     class: ImageTool,
     config: {
-      uploader:{
+      uploader: {
         async uploadByFile(file) {
           const dataForm = new FormData();
           dataForm.append("upload", file);
@@ -68,17 +80,5 @@ export const EDITOR_JS_TOOLS = {
         },
       },
     },
-  },
-  raw: Raw,
-  header: Header,
-  quote: Quote,
-  marker: Marker,
-  checklist: CheckList,
-  delimiter: Delimiter,
-  inlineCode: InlineCode,
-  imageGallery: ImageGallery,
-  hyperlink: Hyperlink,
-  changeCase: ChangeCase,
-  simpleImage: SimpleImage,
-  codeBox: CodeBox,
+  }
 };

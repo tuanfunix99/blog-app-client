@@ -19,7 +19,6 @@ const Single = () => {
   useQuery(GET_POST, {
     variables: { input: id },
     onCompleted(data) {
-      console.log(data);
       setPost(data.post);
     },
     onError() {
