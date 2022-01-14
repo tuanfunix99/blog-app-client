@@ -40,7 +40,6 @@ export const GET_POSTS_PAGE = gql`
    _id
     title
     backgroundPic
-    content
     createdAt
     categories {
       _id
@@ -61,7 +60,6 @@ query($input: ID!){
     _id
     title
     backgroundPic
-    content
     createdAt
     categories {
       _id

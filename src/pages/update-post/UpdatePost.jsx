@@ -69,8 +69,10 @@ const UpdatePost = () => {
     variables: { input: id },
     onCompleted(data) {
       if(data.post && data.post.content){
-        setPost(data.post);
-      }
+        const clone = {...data.post};
+        clone.content = JSON.parse(clone.content);
+        setPost(clone);
+      } 
       else{
         toastError("Error System.Can't load post");
       }
@@ -90,7 +92,7 @@ const UpdatePost = () => {
 
   if (post) {
     if (!editor) {
-      const content = JSON.parse(post.content);
+      const content = post.content;
       setEditor(
         new EditorJS({
           holder: "editorjs",

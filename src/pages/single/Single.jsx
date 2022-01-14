@@ -29,7 +29,9 @@ const Single = () => {
     variables: { input: id },
     onCompleted(data) {
       if(data.post && data.post.content){
-        setPost(data.post);
+        const clone = {...data.post};
+        clone.content = JSON.parse(clone.content);
+        setPost(clone);
       }
       else{
         toastError("Error System.Can't load post");
@@ -43,7 +45,7 @@ const Single = () => {
   const displayPost = () => {
     if (post) {
       const parseHtml = new EdjsParser();
-      const htmlParser = parseHtml.parse(JSON.parse(post.content));
+      const htmlParser = parseHtml.parse(post.content);
       return (
         <Fragment>
           <Row className="mt-5">
