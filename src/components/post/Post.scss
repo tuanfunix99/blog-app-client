@@ -24,8 +24,7 @@ img {
   overflow: hidden;
   box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.1);
   border-radius: 1em;
-  background: #ece9e6;
-  background: linear-gradient(to right, #ffffff, #ece9e6);
+  background: white;
   height: 400px;
 }
 
@@ -35,6 +34,10 @@ img {
   flex-direction: column;
   gap: 0.5rem;
   height: 120px;
+}
+
+.card__body h5 {
+  text-transform: capitalize;
 }
 
 .card__image {
@@ -61,14 +64,12 @@ img {
 }
 
 // .tag:hover{
-//   background: linear-gradient(to bottom, #a0b6cf2d, #c5d3d823); 
+//   background: linear-gradient(to bottom, #a0b6cf2d, #c5d3d823);
 // }
 
 .tag + .tag {
   margin-left: 0.5em;
 }
-
-
 
 .tag-blue {
   background: #56ccf2;
@@ -117,7 +118,7 @@ img {
   justify-content: space-between;
 }
 
-.user__detail{
+.user__detail {
   display: flex;
   gap: 0.5rem;
 }
@@ -133,21 +134,21 @@ img {
   outline: 0px !important;
 }
 
-@mixin btn-css($background-color, ) {
+@mixin btn-css($background-color) {
   background: $background-color !important;
   border: 0px;
   transition: 0.5s;
 }
 
-.btn-delete-post.btn.btn-primary{
+.btn-delete-post.btn.btn-primary {
   @include btn-css(#f03a3a);
 }
 
-.btn-delete-post.btn.btn-primary:hover{
+.btn-delete-post.btn.btn-primary:hover {
   background: #e92a2a !important;
 }
 
-.btn-delete-post.btn.btn-primary:focus{
+.btn-delete-post.btn.btn-primary:focus {
   @include reset-focus;
 }
 
@@ -156,10 +157,14 @@ img {
   margin-right: 5px;
 }
 
-.btn-update-post.btn.btn-primary:hover{
+.btn-update-post.btn.btn-primary:hover {
   background: #26a6b9 !important;
 }
 
-.btn-update-post.btn.btn-primary:focus{
+.btn-update-post.btn.btn-primary:focus {
   @include reset-focus;
+}
+
+.my-0 {
+  text-transform: capitalize;
 }

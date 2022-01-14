@@ -1,5 +1,22 @@
 @import "~bootstrap/scss/bootstrap";
 
-body{
-    overflow-x: hidden;
+body {
+  overflow-x: hidden;
+}
+
+.writeInput{
+  text-transform: capitalize;
+  
+  font-size: 45px;
+  font-weight: 700;
+}
+
+.view-demo{
+  p {
+    font-size: 20px !important;
+  }
+
+  li {
+    font-size: 18px !important;
+  }
 }

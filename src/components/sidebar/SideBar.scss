@@ -1,5 +1,14 @@
 
 @import "~bootstrap/scss/bootstrap";
+
+li{
+  font-size: 17px !important;
+}
+
+p{
+  font-size: 17px !important;
+}
+
 .sidebar {
   flex: 3;
   height: fit-content;
@@ -40,6 +49,7 @@
 
 .sidebarItem > p {
   padding: 30px;
+  text-align: center;
 }
 
 .sidebarList {

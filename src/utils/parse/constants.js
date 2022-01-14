@@ -1,7 +1,7 @@
 import Embed from "@editorjs/embed";
-import Table from "@editorjs/table";
+import Table from "editorjs-table";
 import ParagraphAlignment from "editorjs-paragraph-with-alignment";
-import List from "@editorjs/list";
+import List from '@editorjs/list';
 import Warning from "@editorjs/warning";
 import Code from "@editorjs/code";
 import LinkTool from "@editorjs/link";
@@ -29,23 +29,19 @@ import axios from "axios";
 
 export const EDITOR_JS_TOOLS = {
   embed: Embed,
+  header: Header,
   table: Table,
   list: List,
   warning: Warning,
-  code: Code,
   link: LinkTool,
-  raw: Raw,
-  header: Header,
   quote: Quote,
   marker: Marker,
   checklist: CheckList,
   delimiter: Delimiter,
   inlineCode: InlineCode,
-  imageGallery: ImageGallery,
   hyperlink: Hyperlink,
   changeCase: ChangeCase,
   simpleImage: SimpleImage,
-  codeBox: CodeBox,
   image: {
     class: ImageTool,
     config: {
@@ -80,5 +76,9 @@ export const EDITOR_JS_TOOLS = {
         },
       },
     },
-  }
+  },
+  imageGallery: ImageGallery,
+  codeBox: CodeBox,
+  raw: Raw,
+  code: Code,
 };

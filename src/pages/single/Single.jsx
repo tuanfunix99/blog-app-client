@@ -1,8 +1,6 @@
 import { useQuery } from "@apollo/client";
 import React, { Fragment, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import SideBar from "../../components/sidebar/SideBar";
-import SinglePost from "../../components/singlePost/SinglePost";
 import TopBar from "../../components/topbar/TopBar";
 import { GET_POST } from "../../graphql/query/post";
 import parse from "html-react-parser";
@@ -11,6 +9,9 @@ import EdjsParser from "../../utils/parse/parse-editor-to-html";
 import Loading from "../../components/loading/Loading";
 import Footer from "../../components/footer/Footer";
 import { ToastContainer, toast } from "react-toastify";
+import CardUser from "../../components/card-user/CardUser";
+
+import './Single.scss';
 
 const Single = () => {
   const navigate = useNavigate();
@@ -28,12 +29,11 @@ const Single = () => {
   useQuery(GET_POST, {
     variables: { input: id },
     onCompleted(data) {
-      if(data.post && data.post.content){
-        const clone = {...data.post};
+      if (data.post && data.post.content) {
+        const clone = { ...data.post };
         clone.content = JSON.parse(clone.content);
         setPost(clone);
-      }
-      else{
+      } else {
         toastError("Error System.Can't load post");
       }
     },
@@ -55,7 +55,8 @@ const Single = () => {
                 src={post.backgroundPic}
                 alt="background post"
               />
-              <h2 className="writeInput">{post.title}</h2>
+              <CardUser user={post.createdBy} createdAt={post.createdAt} />
+              <h1 className="writeInput">{post.title}</h1>
             </Col>
           </Row>
           <Row>
@@ -73,7 +74,8 @@ const Single = () => {
       <ToastContainer />
       <TopBar />
       <div className="single">
-        {!post && <Loading /> }
+
+        {!post && <Loading />}
         <Container>{displayPost()}</Container>
       </div>
       <Footer />

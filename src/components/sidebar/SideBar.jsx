@@ -10,9 +10,7 @@ const SideBar = () => {
         <span className="sidebarTitle">ABOUT US</span>
         <img src="/designer-coffee-break.gif" alt="about_us" />
         <p>
-          A programming language is for thinking about programs, not for
-          expressing programs you've already thought of. It should be a pencil,
-          not a pen.
+          Sometimes it pays to stay in bed on Monday, rather than spending the rest of the week debugging Monday's code. - Dan Salomon
         </p>
       </div>
       <div className="sidebarItem">

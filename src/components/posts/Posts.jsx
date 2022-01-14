@@ -8,14 +8,18 @@ const Posts = ({ posts, isUser }) => {
     if (posts && posts.length > 0) {
       return posts.map((post, key) => {
         return (
-            <li key={key}>
-              <Post index={key} post={post} isUser={isUser} />
-            </li>
+          <li key={key}>
+            <Post index={key} post={post} isUser={isUser} />
+          </li>
         );
       });
     }
   };
-  return <div className="posts">{displayPost()}</div>;
+  return (
+    <div className="posts">
+      {displayPost()}
+    </div>
+  );
 };
 
 export default Posts;

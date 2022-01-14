@@ -36,7 +36,7 @@ let defaultParsers = {
     let alignment = data.alignment;
     let elements = [];
     elements.push(
-      `<p style="text-align:${alignment}" class="">${data.text}</p>`
+      `<p style="text-align:${alignment}">${data.text}</p>`
     );
     return templateBlock(elements);
   },

@@ -19,7 +19,7 @@ const Post = ({ index, post, isUser }) => {
   const [myPost, setMyPost] = useRecoilState(myPostState);
   const navigate = useNavigate();
 
-  createdAt = moment(new Date(createdAt)).fromNow();
+  createdAt = moment(new Date(parseInt(createdAt.toString()))).fromNow();
 
   const toastError = (message) => {
     toast.error(message, {
@@ -41,7 +41,7 @@ const Post = ({ index, post, isUser }) => {
     if (categories.length > 0) {
       return categories.map((cat, key) => {
         return (
-          <Link to={"/posts/?cat=" + cat.name}>
+          <Link to={"/posts/?cat=" + cat.name} key={key}>
             <span className={"tag " + tags[key]}>{cat.name}</span>
           </Link>
         );
@@ -136,7 +136,7 @@ const Post = ({ index, post, isUser }) => {
             />
             <div className="user__info">
               <h6 className="my-0">{createdBy.username}</h6>
-              <small>{createdAt} ago</small>
+              <small>{createdAt}</small>
             </div>
           </div>
           {isUser && (
