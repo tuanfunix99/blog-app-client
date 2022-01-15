@@ -4,18 +4,46 @@ body {
   overflow-x: hidden;
 }
 
-.writeInput{
+.writeInput {
   text-transform: capitalize;
   font-size: 45px;
   font-weight: 700;
 }
 
-.view-demo{
+.view-demo {
   p {
     font-size: 20px !important;
   }
 
   li {
     font-size: 18px !important;
+  }
+}
+
+@media only screen and (max-width: 860px) {
+  .topBar {
+    flex: 3;
+    display: block;
+    text-align: end;
+    padding: 0px 20px;
+    font-size: 25px;
+  }
+
+  .topTitle {
+    display: flex;
+    flex: 3;
+    align-items: center;
+    font-family: "Lora", serif;
+    color: #444;
+    padding: 0px 20px;
+  }
+
+  .topLeft,
+  .topRight {
+    display: none;
+  }
+
+  .topCenter {
+    display: none;
   }
 }

@@ -21,6 +21,24 @@
   color: gray;
 }
 
+.topBar{
+  flex: 3;
+  display: none;
+}
+
+.topBar button{
+  border: 0px;
+  background: transparent;
+}
+
+.topTitle{
+  flex: 3;
+  align-items: center;
+  font-family: "Lora", serif;
+  color: #444;
+  display: none;
+}
+
 .topLeft,
 .topRight {
   flex: 3;
@@ -29,7 +47,7 @@
   justify-content: center;
 }
 
-.topIcon {
+.topIcon{
   font-size: 20px;
   margin-right: 10px;
   color: #444;
@@ -72,4 +90,11 @@
   font-size: 18px;
   color: #666;
   cursor: pointer;
+}
+
+.link{
+  display: flex;
+  text-decoration: none;
+  align-items: center;
+  text-transform: capitalize;
 }
