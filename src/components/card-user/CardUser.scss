@@ -18,8 +18,11 @@ img {
   margin: 4px 12px;
 }
 
-.carduser__info h6{
+.carduser__info h6 {
   font-size: 16px;
+  text-align: initial;
+  text-transform: capitalize;
+  margin: 0px;
 }
 
 .carduser__info small{

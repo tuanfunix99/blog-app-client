@@ -29,9 +29,9 @@ const Single = () => {
   useQuery(GET_POST, {
     variables: { input: id },
     onCompleted(data) {
-      if (data.post && data.post.content) {
-        const clone = { ...data.post };
-        clone.content = JSON.parse(clone.content);
+      console.log(data.post);
+      if (data.post && data.post.content){
+        const clone = {...data.post};
         setPost(clone);
       } else {
         toastError("Error System.Can't load post");

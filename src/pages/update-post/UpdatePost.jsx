@@ -22,7 +22,7 @@ import DragDrop from "editorjs-drag-drop";
 import { useRecoilValue } from "recoil";
 import { categoriesState } from "../../state/category";
 import { useMutation, useQuery } from "@apollo/client";
-import { CREATE_POST } from "../../graphql/mutation/post";
+import { UPDATE_POST } from "../../graphql/mutation/post";
 import { userState } from "../../state/user";
 import EditorJS from "@editorjs/editorjs";
 import { GET_POST } from "../../graphql/query/post";
@@ -36,13 +36,14 @@ const UpdatePost = () => {
   const categories = useRecoilValue(categoriesState);
   const [backgroundPic, setBackgroundPic] = useState("./background.jpg");
   const [checkCategory, setCheckCategory] = useState([]);
+  const [checkedCategory, setCheckedCategory] = useState([]);
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState("Your title...");
   const [publishing, setPublishing] = useState(false);
   const [content, setContent] = useState({});
   const [html, setHtml] = useState("");
   const ReactEditorJS = createReactEditorJS();
-  const [createPost] = useMutation(CREATE_POST);
+  const [updatePost] = useMutation(UPDATE_POST);
   const user = useRecoilValue(userState);
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
@@ -71,7 +72,6 @@ const UpdatePost = () => {
     onCompleted(data) {
       if (data.post && data.post.content) {
         const clone = { ...data.post };
-        clone.content = JSON.parse(clone.content);
         setPost(clone);
       } else {
         toastError("Error System.Can't load post");
@@ -86,7 +86,10 @@ const UpdatePost = () => {
     if (post) {
       setBackgroundPic(post.backgroundPic);
       setTitle(post.title);
-      setCheckCategory(post.categories);
+      let clone = [...post.categories];
+      clone = clone.map((c) => c._id);
+      setCheckedCategory(clone);
+      setCheckCategory(clone);
     }
   }, [post]);
 
@@ -131,8 +134,9 @@ const UpdatePost = () => {
     });
 
   const displayCategories = () => {
-    if (categories.length > 0) {
+    if (categories.length > 0 && checkedCategory.length > 0) {
       return categories.map((category, key) => {
+        const checked = checkedCategory.includes(category._id);
         return (
           <Form.Check
             key={key}
@@ -143,7 +147,7 @@ const UpdatePost = () => {
             type="checkbox"
             id={key}
             onClick={onCheckHandler}
-            defaultChecked={checkCategory.includes(category._id) ? true : false}
+            defaultChecked={checked}
           />
         );
       });
@@ -194,8 +198,8 @@ const UpdatePost = () => {
       setPublishing(false);
       return;
     }
-    const savedData = await editorCore.current.save();
-    createPost({
+    const savedData = await editor.save();
+    updatePost({
       variables: {
         input: {
           title: title,
@@ -203,11 +207,13 @@ const UpdatePost = () => {
           categories: checkCategory,
           backgroundPic: backgroundPic,
           userId: user._id,
+          postId: post._id,
         },
       },
       onCompleted(data) {
-        navigate(`/post/${data.createPost}`);
         setPublishing(false);
+        navigate(`/post/${data.updatePost}`);
+        window.location.reload();
       },
       onError(err) {
         toastError("Error System. Can't publish post");
@@ -227,7 +233,12 @@ const UpdatePost = () => {
 
   const displayViewDemo = () => {
     return (
-      <Modal className="view-demo" show={show} fullscreen={true} onHide={() => setShow(false)}>
+      <Modal
+        className="view-demo"
+        show={show}
+        fullscreen={true}
+        onHide={() => setShow(false)}
+      >
         <Modal.Header closeButton>
           <Modal.Title>View Demo</Modal.Title>
         </Modal.Header>
@@ -240,7 +251,9 @@ const UpdatePost = () => {
                   src={backgroundPic}
                   alt="background post"
                 />
-                {post && <CardUser user={post.createdBy} createdAt={post.createdAt} />}
+                {post && (
+                  <CardUser user={post.createdBy} createdAt={post.createdAt} />
+                )}
                 <h2 className="writeInput">{title}</h2>
               </Col>
             </Row>
@@ -323,7 +336,7 @@ const UpdatePost = () => {
                         className="btn btn-primary"
                         type="submit"
                         onClick={onPublisPostHandler}
-                        disabled={!publishing}
+                        disabled={publishing}
                       >
                         {!publishing && "Update"}
                         {publishing && (

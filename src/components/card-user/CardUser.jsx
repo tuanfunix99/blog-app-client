@@ -18,7 +18,7 @@ const CardUser = ({ user, createdAt }) => {
                 className="carduser__image"
               />
               <div className="carduser__info">
-                <h6 className="my-0">{user.username}</h6>
+                <h6>{user.username}</h6>
                 <small>{createdAt}</small>
               </div>
             </div>
