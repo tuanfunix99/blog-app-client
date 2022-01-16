@@ -2,6 +2,11 @@
 
 body {
   overflow-x: hidden;
+  overflow-y: scroll !important;
+}
+
+body.modal-open{
+  overflow-y: hidden !important;
 }
 
 .writeInput {

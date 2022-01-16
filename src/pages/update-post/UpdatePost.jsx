@@ -28,9 +28,9 @@ import EditorJS from "@editorjs/editorjs";
 import { GET_POST } from "../../graphql/query/post";
 import Loading from "../../components/loading/Loading";
 import Footer from "../../components/footer/Footer";
+import CardUser from "../../components/card-user/CardUser";
 
 import "./UpdatePost.scss";
-import CardUser from "../../components/card-user/CardUser";
 
 const UpdatePost = () => {
   const categories = useRecoilValue(categoriesState);

@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
-import { Button, Modal, Spinner } from "react-bootstrap";
+import { Button, Form, Modal, Spinner } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
 import { DELETE_POST } from "../../graphql/mutation/post";
 import { myPostState } from "../../state/post";
 import { useRecoilState } from "recoil";
+
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import "./Post.scss";
 
@@ -20,6 +25,31 @@ const Post = ({ index, post, isUser }) => {
   const navigate = useNavigate();
 
   createdAt = moment(new Date(parseInt(createdAt.toString()))).fromNow();
+
+  const options = ["Update", "Delete"];
+
+  const ITEM_HEIGHT = 48;
+
+  //material icon
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = (e) => {
+    const { option } = e.currentTarget.dataset;
+    switch(option) {
+      case "Delete":
+        onOpenHandler();
+        setAnchorEl(null);
+        break;
+      case "Update":
+        onNavigateUpdatePage();
+        setAnchorEl(null);
+        break;  
+      default: setAnchorEl(null);   
+    }
+  };
 
   const toastError = (message) => {
     toast.error(message, {
@@ -53,9 +83,19 @@ const Post = ({ index, post, isUser }) => {
     title = title.slice(0, 80) + "...";
   }
 
+  const onOpenHandler = () => {
+    document.body.classList.add('modal-open');
+    setShow(true);
+  }
+
+  const onCloseHandler = () => {
+    document.body.classList.remove('modal-open');
+    setShow(false);
+  }
+
   const displayDeleteModal = () => {
     return (
-      <Modal show={show} onHide={() => setShow(false)}>
+      <Modal show={show} onHide={onCloseHandler}>
         <Modal.Header closeButton>
           <Modal.Title>Delete Post</Modal.Title>
         </Modal.Header>
@@ -63,12 +103,16 @@ const Post = ({ index, post, isUser }) => {
         <Modal.Footer>
           <Button
             variant="secondary"
-            onClick={() => setShow(false)}
+            onClick={onCloseHandler}
             disabled={deleting}
           >
             Close
           </Button>
-          <Button variant="danger" onClick={ondeleteHandler} disabled={deleting}>
+          <Button
+            variant="danger"
+            onClick={onOpenHandler}
+            disabled={deleting}
+          >
             {!deleting && "Delete"}
             {deleting && (
               <div>
@@ -111,7 +155,8 @@ const Post = ({ index, post, isUser }) => {
 
   const onNavigateUpdatePage = () => {
     navigate(`/update-my-post/${_id}`);
-  }
+  };
+
 
   return (
     <div className="card">
@@ -141,12 +186,50 @@ const Post = ({ index, post, isUser }) => {
           </div>
           {isUser && (
             <div className="user__controller">
-              <Button className="btn-update-post" onClick={onNavigateUpdatePage}>
+              {/* <Button className="btn-update-post" onClick={onNavigateUpdatePage}>
                 <i className="fas fa-pen-square"></i>
               </Button>
               <Button className="btn-delete-post" onClick={() => setShow(true)}>
                 <i className="fas fa-trash"></i>
-              </Button>
+              </Button> */}
+              {/* <Form.Group className="mt-2">
+                <Form.Check type="checkbox" />
+              </Form.Group> */}
+              <IconButton
+                aria-label="more"
+                id="long-button"
+                aria-controls={open ? "long-menu" : undefined}
+                aria-expanded={open ? "true" : undefined}
+                aria-haspopup="true"
+                onClick={handleClick}
+              >
+                <MoreVertIcon />
+              </IconButton>
+              <Menu
+                id="long-menu"
+                MenuListProps={{
+                  "aria-labelledby": "long-button",
+                }}
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                PaperProps={{
+                  style: {
+                    maxHeight: ITEM_HEIGHT * 4.5,
+                    width: "20ch",
+                  },
+                }}
+              >
+                {options.map((option) => (
+                  <MenuItem
+                    key={option}
+                    data-option={option}
+                    onClick={handleClose}
+                  >
+                    {option}
+                  </MenuItem>
+                ))}
+              </Menu>
             </div>
           )}
         </div>
