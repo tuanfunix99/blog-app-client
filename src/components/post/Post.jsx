@@ -71,9 +71,9 @@ const Post = ({ index, post, isUser }) => {
     if (categories.length > 0) {
       return categories.map((cat, key) => {
         return (
-          <Link to={"/posts/?cat=" + cat.name} key={key}>
+          <a href={"/posts/?cat=" + cat.name} key={key}>
             <span className={"tag " + tags[key]}>{cat.name}</span>
-          </Link>
+          </a>
         );
       });
     }

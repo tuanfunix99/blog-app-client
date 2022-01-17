@@ -9,3 +9,8 @@ export const myPostState = new atom({
   key: "My Post",
   default: [],
 });
+
+export const searchState = new atom({
+  key: "Search",
+  default: [],
+});

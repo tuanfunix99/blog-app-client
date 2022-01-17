@@ -24,7 +24,10 @@ const Home = () => {
 
   const { data } = useQuery(GET_POSTS_PAGE, {
     variables: {
-      input: page,
+      input: {
+        page: page,
+        perPage: 4
+      },
     },
   });
 

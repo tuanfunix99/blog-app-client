@@ -42,7 +42,7 @@ export const GET_POSTS = gql`
 `;
 
 export const GET_POSTS_PAGE = gql`
-  query ($input: Int!) {
+  query ($input: postPageInput) {
     postsPage(input: $input) {
       count
       posts {
@@ -79,6 +79,29 @@ export const GET_MY_POST = gql`
         _id
         username
         profilePic
+      }
+    }
+  }
+`;
+
+export const GET_POST_CATEGORY = gql`
+  query ($input: postCategoryInput) {
+    postCategory(input: $input) {
+      count
+      posts {
+        _id
+        title
+        backgroundPic
+        createdAt
+        categories {
+          _id
+          name
+        }
+        createdBy {
+          _id
+          username
+          profilePic
+        }
       }
     }
   }

@@ -3,6 +3,7 @@
 body {
   overflow-x: hidden;
   overflow-y: scroll !important;
+  min-height: 500px;
 }
 
 body.modal-open{

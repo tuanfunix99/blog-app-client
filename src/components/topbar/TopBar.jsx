@@ -67,14 +67,14 @@ const TopBar = () => {
   const onSelectHandler = (e) => {
     const link = e.target.innerHTML.toString();
     if(link === "MY POST"){
-      navigator("/my-post/" + (user ? user._id : ""));
+      navigator("/my-post/" + (user ? user._id : ""), { replace: true });
       return;
     }
     if(link === "HOME"){
-      navigator("/");
+      navigator("/", { replace: true });
       return;
     }
-    navigator(link.toLowerCase());
+    navigator(link.toLowerCase(), { replace: true });
   };
 
   const displayMenuPopup = () => {
@@ -85,7 +85,7 @@ const TopBar = () => {
             <AccessComponent isLogin={true}>
               <Link className="link" to="/settings">
                 <img className="topImg" src={profilePic} alt="profile" />
-                <h6>{user? user.username : ""}</h6>
+                <h6>{user ? user.username : ""}</h6>
               </Link>
             </AccessComponent>
           </Modal.Title>
@@ -94,19 +94,33 @@ const TopBar = () => {
           <Dropdown.Item eventKey="1" onClick={onSelectHandler}>
             HOME
           </Dropdown.Item>
-          <Dropdown.Item eventKey="2" onClick={onSelectHandler}>ABOUT</Dropdown.Item>
-          <Dropdown.Item eventKey="3" onClick={onSelectHandler}>CONTACT</Dropdown.Item>
+          <Dropdown.Item eventKey="2" onClick={onSelectHandler}>
+            ABOUT
+          </Dropdown.Item>
+          <Dropdown.Item eventKey="3" onClick={onSelectHandler}>
+            CONTACT
+          </Dropdown.Item>
           <AccessComponent isLogin={true}>
-            <Dropdown.Item eventKey="4" onClick={onSelectHandler}>WRITE</Dropdown.Item>
-            <Dropdown.Item eventKey="5" onClick={onSelectHandler}>MY POST</Dropdown.Item>
-            <Dropdown.Item eventKey="5" onClick={onSelectHandler}>SETTINGS</Dropdown.Item>
+            <Dropdown.Item eventKey="4" onClick={onSelectHandler}>
+              WRITE
+            </Dropdown.Item>
+            <Dropdown.Item eventKey="5" onClick={onSelectHandler}>
+              MY POST
+            </Dropdown.Item>
+            <Dropdown.Item eventKey="5" onClick={onSelectHandler}>
+              SETTINGS
+            </Dropdown.Item>
             <Dropdown.Item eventKey="6" onClick={onLogoutHanler}>
               LOGOUT
             </Dropdown.Item>
           </AccessComponent>
           <AccessComponent isLogin={false}>
-            <Dropdown.Item eventKey="7" onClick={onSelectHandler}>LOGIN</Dropdown.Item>
-            <Dropdown.Item eventKey="8" onClick={onSelectHandler}>REGISTER</Dropdown.Item>
+            <Dropdown.Item eventKey="7" onClick={onSelectHandler}>
+              LOGIN
+            </Dropdown.Item>
+            <Dropdown.Item eventKey="8" onClick={onSelectHandler}>
+              REGISTER
+            </Dropdown.Item>
           </AccessComponent>
         </Modal.Body>
       </Modal>
