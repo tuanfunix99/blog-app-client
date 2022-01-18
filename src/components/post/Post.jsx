@@ -7,7 +7,6 @@ import { useMutation } from "@apollo/client";
 import { DELETE_POST } from "../../graphql/mutation/post";
 import { myPostState } from "../../state/post";
 import { useRecoilState } from "recoil";
-
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -15,7 +14,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import "./Post.scss";
 
-const Post = ({ index, post, isUser }) => {
+const Post = ({ index, post, isUser, onChooseCard }) => {
   let { _id, title, backgroundPic, createdAt, categories, createdBy } = post;
   const tags = ["tag-blue", "tag-yellow", "tag-red", "tag-green", "tag-teal"];
   const [show, setShow] = useState(false);
@@ -38,7 +37,7 @@ const Post = ({ index, post, isUser }) => {
   };
   const handleClose = (e) => {
     const { option } = e.currentTarget.dataset;
-    switch(option) {
+    switch (option) {
       case "Delete":
         onOpenHandler();
         setAnchorEl(null);
@@ -46,8 +45,9 @@ const Post = ({ index, post, isUser }) => {
       case "Update":
         onNavigateUpdatePage();
         setAnchorEl(null);
-        break;  
-      default: setAnchorEl(null);   
+        break;
+      default:
+        setAnchorEl(null);
     }
   };
 
@@ -71,9 +71,9 @@ const Post = ({ index, post, isUser }) => {
     if (categories.length > 0) {
       return categories.map((cat, key) => {
         return (
-          <Link to={"/posts-category/?cat=" + cat.name} key={key}>
+          <a href={"/posts-category/?cat=" + cat.name} key={key}>
             <span className={"tag " + tags[key]}>{cat.name}</span>
-          </Link>
+          </a>
         );
       });
     }
@@ -84,14 +84,14 @@ const Post = ({ index, post, isUser }) => {
   }
 
   const onOpenHandler = () => {
-    document.body.classList.add('modal-open');
+    document.body.classList.add("modal-open");
     setShow(true);
-  }
+  };
 
   const onCloseHandler = () => {
-    document.body.classList.remove('modal-open');
+    document.body.classList.remove("modal-open");
     setShow(false);
-  }
+  };
 
   const displayDeleteModal = () => {
     return (
@@ -157,7 +157,6 @@ const Post = ({ index, post, isUser }) => {
     navigate(`/update-my-post/${_id}`);
   };
 
-
   return (
     <div className="card">
       <ToastContainer />
@@ -186,15 +185,9 @@ const Post = ({ index, post, isUser }) => {
           </div>
           {isUser && (
             <div className="user__controller">
-              {/* <Button className="btn-update-post" onClick={onNavigateUpdatePage}>
-                <i className="fas fa-pen-square"></i>
-              </Button>
-              <Button className="btn-delete-post" onClick={() => setShow(true)}>
-                <i className="fas fa-trash"></i>
-              </Button> */}
-              {/* <Form.Group className="mt-2">
-                <Form.Check type="checkbox" />
-              </Form.Group> */}
+              <Form.Group className="mt-2">
+                <Form.Check type="checkbox" onClick={() => onChooseCard(_id)} />
+              </Form.Group>
               <IconButton
                 aria-label="more"
                 id="long-button"

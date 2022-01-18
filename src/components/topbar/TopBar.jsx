@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./TopBar.scss";
 import { Link, useNavigate } from "react-router-dom";
 import AccessComponent from "../access/AccessComponent";
 import { LOGOUT } from "../../graphql/mutation/user";
@@ -9,6 +8,8 @@ import { useRecoilValue } from "recoil";
 import { userState } from "../../state/user";
 import { UPLOADED_PROFILEPIC } from "../../graphql/subscription/user";
 import { Button, Dropdown, Form, Modal } from "react-bootstrap";
+
+import "./TopBar.scss";
 
 const TopBar = () => {
   const [logout] = useMutation(LOGOUT);
@@ -75,7 +76,7 @@ const TopBar = () => {
       navigator("/", { replace: true });
       return;
     }
-    navigator(link.toLowerCase(), { replace: true });
+    navigator("/" + link.toLowerCase(), { replace: true });
   };
 
   const displayMenuPopup = () => {

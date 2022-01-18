@@ -176,8 +176,9 @@ const Write = () => {
         },
       },
       onCompleted(data) {
-        navigate(`/post/${data.createPost}`);
         setPublishing(false);
+        navigate(`/post/${data.createPost}`);
+        window.location.reload();
       },
       onError(err) {
         toastError("Error System. Can't publish post");

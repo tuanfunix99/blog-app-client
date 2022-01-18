@@ -16,9 +16,13 @@ import { ToastContainer, toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { userState } from "../../state/user";
 import { useMutation } from "@apollo/client";
-import { UPDATE_INFO, UPDATE_PASSWORD, UPLOAD_PROFILE_PIC } from "../../graphql/mutation/user";
+import {
+  UPDATE_INFO,
+  UPDATE_PASSWORD,
+  UPLOAD_PROFILE_PIC,
+} from "../../graphql/mutation/user";
 import Resizer from "react-image-file-resizer";
-import FadeLoader from 'react-spinners/FadeLoader';
+import FadeLoader from "react-spinners/FadeLoader";
 
 import "./Setting.scss";
 import Footer from "../../components/footer/Footer";
@@ -37,7 +41,6 @@ const Setting = () => {
   const [uploadProfilePic] = useMutation(UPLOAD_PROFILE_PIC);
   const [updateInfo] = useMutation(UPDATE_INFO);
   const [updatePassword] = useMutation(UPDATE_PASSWORD);
-
 
   useEffect(() => {
     if (user) {
@@ -80,8 +83,6 @@ const Setting = () => {
         "base64"
       );
     });
-
-  
 
   const onChangePasswordHandler = (e) => {
     setPasswdInput((pre) => {
@@ -164,9 +165,9 @@ const Setting = () => {
     setIsUpdatePassword(false);
     updatePassword({
       variables: {
-        input: passwdInput
+        input: passwdInput,
       },
-      onCompleted(data){
+      onCompleted(data) {
         toastSuccess("Successfully updated");
         setPasswdInput({
           password: "",
@@ -180,7 +181,7 @@ const Setting = () => {
         setUpdatingPsw(false);
         setIsUpdatePassword(true);
       },
-    })
+    });
   };
 
   const onIsUpdateInfo = () => {
@@ -232,7 +233,11 @@ const Setting = () => {
                     <div className="settingsPP">
                       {uploading && (
                         <div className="profile-loading">
-                          <FadeLoader color={"#000000"} loading={uploading} size={10} />
+                          <FadeLoader
+                            color={"#000000"}
+                            loading={uploading}
+                            size={10}
+                          />
                         </div>
                       )}
                       {!uploading && <img src={profilePic} alt="profile" />}
@@ -378,8 +383,8 @@ const Setting = () => {
           <Row>
             <Col lg={9} className="mx-auto">
               <Alert variant={"danger"}>
-                Access denied.Please <Link to="/login">Login</Link> to access
-                page.
+                <Alert.Heading>Access denied</Alert.Heading>
+                Please <Link to="/login">Login</Link> to access page.
               </Alert>
             </Col>
           </Row>

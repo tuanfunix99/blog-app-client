@@ -53,3 +53,10 @@ body.modal-open{
     display: none;
   }
 }
+
+@media only screen and (max-width: 780px){
+  .card{
+    width: 400px;
+    height: 450px;
+  }
+}

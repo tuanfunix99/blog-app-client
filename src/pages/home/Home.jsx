@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client";
+import { useQuery, useSubscription } from "@apollo/client";
 import React, { Fragment } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -15,6 +15,7 @@ import { GET_POSTS_PAGE } from "../../graphql/query/post";
 import { postsState } from "../../state/post";
 
 import "./Home.scss";
+import { CREATED_POST } from "../../graphql/subscription/post";
 
 const Home = () => {
   const [posts, setPosts] = useRecoilState(postsState);
@@ -26,8 +27,24 @@ const Home = () => {
     variables: {
       input: {
         page: page,
-        perPage: 4
+        perPage: 4,
       },
+    },
+  });
+
+  useSubscription(CREATED_POST, {
+    onSubscriptionData({
+      subscriptionData: {
+        data: { createdPost },
+      },
+    }) {
+      if (page === 1) {
+        setPosts((pre) => {
+          const clone = [...pre];
+          clone.unshift(createdPost);
+          return [...clone.slice(0, 4)];
+        });
+      }
     },
   });
 
@@ -42,8 +59,8 @@ const Home = () => {
   const onChangePagination = (e, value) => {
     setPage(value);
     setLoadPage(true);
-    window.scrollTo(500, 500)
-  }
+    window.scrollTo(500, 500);
+  };
 
   return (
     <Fragment>
@@ -57,15 +74,17 @@ const Home = () => {
               {loadPage && (
                 <Loading color={"#36D7B7"} loading={true} size={40} />
               )}
-              {posts.length > 0 && !loadPage && <div className="pagination-bar">
-                <Pagination
-                  count={count}
-                  page={page}
-                  onChange={onChangePagination}
-                  variant="outlined"
-                  shape="rounded"
-                />
-              </div>}
+              {posts.length > 0 && !loadPage && (
+                <div className="pagination-bar">
+                  <Pagination
+                    count={count}
+                    page={page}
+                    onChange={onChangePagination}
+                    variant="outlined"
+                    shape="rounded"
+                  />
+                </div>
+              )}
               <Stack spacing={2}></Stack>
             </Col>
             <Col lg={4} md={0}>

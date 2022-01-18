@@ -17,3 +17,9 @@ export const DELETE_POST = gql`
     deletePost(input: $input)
   }
 `;
+
+export const DELETE_POSTS = gql`
+  mutation ($input: [ID]!) {
+    deletePosts(input: $input)
+  }
+`;
