@@ -124,8 +124,8 @@ const Write = () => {
     const file = e.target.files[0];
     const types = ["image/jpeg", "image/jpg", "image/png"];
     if (file) {
-      if (file.size > 3000000) {
-        toastError("File size is bigger than 3MB");
+      if (file.size > 2000000) {
+        toastError("File size is bigger than 2MB");
         return;
       } else if (!types.includes(file.type)) {
         toastError("File not image");
@@ -178,7 +178,6 @@ const Write = () => {
       onCompleted(data) {
         setPublishing(false);
         navigate(`/post/${data.createPost}`);
-        window.location.reload();
       },
       onError(err) {
         toastError("Error System. Can't publish post");

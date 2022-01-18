@@ -1,7 +1,7 @@
 import Embed from "@editorjs/embed";
 import Table from "editorjs-table";
 import ParagraphAlignment from "editorjs-paragraph-with-alignment";
-import List from '@editorjs/list';
+import List from "@editorjs/list";
 import Warning from "@editorjs/warning";
 import Code from "@editorjs/code";
 import LinkTool from "@editorjs/link";
@@ -26,6 +26,7 @@ import AlignmentTuneTool from "editorjs-text-alignment-blocktune";
 import CodeBox from "@bomdi/codebox";
 import ImageTool from "@editorjs/image";
 import axios from "axios";
+import { Alert } from "react-bootstrap";
 
 const access_token = localStorage.getItem("access_token");
 
@@ -49,6 +50,10 @@ export const EDITOR_JS_TOOLS = {
     config: {
       uploader: {
         async uploadByFile(file) {
+          if (file.size > 2000000) {
+            Alert("File size is bigger than 2MB");
+            return;
+          }
           const dataForm = new FormData();
           dataForm.append("upload", file);
           const { data } = await axios.post(
@@ -56,8 +61,8 @@ export const EDITOR_JS_TOOLS = {
             dataForm,
             {
               headers: {
-                authorization: access_token
-              }
+                authorization: access_token,
+              },
             }
           );
           return {
