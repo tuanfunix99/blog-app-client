@@ -197,7 +197,12 @@ const Write = () => {
 
   const displayViewDemo = () => {
     return (
-      <Modal className="view-demo" show={show} fullscreen={true} onHide={() => setShow(false)}>
+      <Modal
+        className="view-demo"
+        show={show}
+        fullscreen={true}
+        onHide={() => setShow(false)}
+      >
         <Modal.Header closeButton>
           <Modal.Title>View Demo</Modal.Title>
         </Modal.Header>
@@ -210,7 +215,7 @@ const Write = () => {
                   src={backgroundPic}
                   alt="background post"
                 />
-                 <CardUser user={user} createdAt={new Date().getTime()} />
+                <CardUser user={user} createdAt={new Date().getTime()} />
                 <h2 className="writeInput">{title}</h2>
               </Col>
             </Row>
@@ -329,8 +334,8 @@ const Write = () => {
             <Row>
               <Col lg={8} className="mx-auto px-2">
                 <Alert variant={"danger"}>
-                  Access denied.Please <Link to="/login">Login</Link> to access
-                  page.
+                  <Alert.Heading>Access denied</Alert.Heading>
+                  Please <Link to="/login">Login</Link> to access page.
                 </Alert>
               </Col>
             </Row>

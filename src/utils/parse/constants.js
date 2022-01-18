@@ -27,6 +27,8 @@ import CodeBox from "@bomdi/codebox";
 import ImageTool from "@editorjs/image";
 import axios from "axios";
 
+const access_token = localStorage.getItem("access_token");
+
 export const EDITOR_JS_TOOLS = {
   embed: Embed,
   header: Header,
@@ -51,7 +53,12 @@ export const EDITOR_JS_TOOLS = {
           dataForm.append("upload", file);
           const { data } = await axios.post(
             `${process.env.REACT_APP_HTTP_API_LINK_URL}/api/upload-file`,
-            dataForm
+            dataForm,
+            {
+              headers: {
+                authorization: access_token
+              }
+            }
           );
           return {
             success: 1,

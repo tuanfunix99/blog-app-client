@@ -8,7 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../state/user";
 import { UPLOADED_PROFILEPIC } from "../../graphql/subscription/user";
-import { Button, Dropdown, Modal } from "react-bootstrap";
+import { Button, Dropdown, Form, Modal } from "react-bootstrap";
 
 const TopBar = () => {
   const [logout] = useMutation(LOGOUT);
@@ -16,6 +16,7 @@ const TopBar = () => {
   const user = useRecoilValue(userState);
   const [profilePic, setProfilePic] = useState("");
   const [show, setShow] = useState(false);
+  const [searchTitle, setSearchTitle] = useState("");
 
   const navigator = useNavigate();
 
@@ -66,11 +67,11 @@ const TopBar = () => {
 
   const onSelectHandler = (e) => {
     const link = e.target.innerHTML.toString();
-    if(link === "MY POST"){
+    if (link === "MY POST") {
       navigator("/my-post/" + (user ? user._id : ""), { replace: true });
       return;
     }
-    if(link === "HOME"){
+    if (link === "HOME") {
       navigator("/", { replace: true });
       return;
     }
@@ -91,6 +92,15 @@ const TopBar = () => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <Dropdown.Item eventKey="0">
+            <Form className="form-search" onSubmit={onSubmitSearchHandler}>
+              <Form.Control
+                type="text"
+                placeholder="Title..."
+                onChange={(e) => setSearchTitle(e.target.value)}
+              />
+            </Form>
+          </Dropdown.Item>
           <Dropdown.Item eventKey="1" onClick={onSelectHandler}>
             HOME
           </Dropdown.Item>
@@ -125,6 +135,14 @@ const TopBar = () => {
         </Modal.Body>
       </Modal>
     );
+  };
+
+  const onSubmitSearchHandler = (e) => {
+    e.preventDefault();
+    const link = "/posts?title=" + searchTitle;
+    navigator(link);
+    setSearchTitle("");
+    setShow(false);
   };
 
   return (
@@ -169,20 +187,22 @@ const TopBar = () => {
         </ul>
       </div>
       <div className="topRight">
-        <AccessComponent isLogin={true}>
-          <Link className="link" to="/settings">
-            <img className="topImg" src={profilePic} alt="profile" />
-          </Link>
-        </AccessComponent>
-        <AccessComponent isLogin={true}>
-          <ul className="topList">
+        <ul className="topList">
+          <li className="topListItem">
+            <Form className="form-search" onSubmit={onSubmitSearchHandler}>
+              <Form.Control
+                type="text"
+                placeholder="Title..."
+                onChange={(e) => setSearchTitle(e.target.value)}
+              />
+            </Form>
+          </li>
+          <AccessComponent isLogin={true}>
             <li className="topListItem" onClick={onLogoutHanler}>
               LOGOUT
             </li>
-          </ul>
-        </AccessComponent>
-        <AccessComponent isLogin={false}>
-          <ul className="topList">
+          </AccessComponent>
+          <AccessComponent isLogin={false}>
             <li className="topListItem">
               <Link className="link" to="/login">
                 LOGIN
@@ -193,9 +213,13 @@ const TopBar = () => {
                 REGISTER
               </Link>
             </li>
-          </ul>
-        </AccessComponent>
-        <i className="topSearchIcon fas fa-search"></i>
+          </AccessComponent>
+          <AccessComponent isLogin={true}>
+            <Link className="link" to="/settings">
+              <img className="topImg" src={profilePic} alt="profile" />
+            </Link>
+          </AccessComponent>
+        </ul>
       </div>
     </div>
   );

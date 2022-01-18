@@ -71,9 +71,9 @@ const Post = ({ index, post, isUser }) => {
     if (categories.length > 0) {
       return categories.map((cat, key) => {
         return (
-          <a href={"/posts/?cat=" + cat.name} key={key}>
+          <Link to={"/posts-category/?cat=" + cat.name} key={key}>
             <span className={"tag " + tags[key]}>{cat.name}</span>
-          </a>
+          </Link>
         );
       });
     }
@@ -110,7 +110,7 @@ const Post = ({ index, post, isUser }) => {
           </Button>
           <Button
             variant="danger"
-            onClick={onOpenHandler}
+            onClick={ondeleteHandler}
             disabled={deleting}
           >
             {!deleting && "Delete"}

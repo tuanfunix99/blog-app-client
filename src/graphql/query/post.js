@@ -106,3 +106,26 @@ export const GET_POST_CATEGORY = gql`
     }
   }
 `;
+
+export const GET_SEARCH = gql`
+  query ($input: searchInput) {
+    search(input: $input) {
+      count
+      posts {
+        _id
+        title
+        backgroundPic
+        createdAt
+        categories {
+          _id
+          name  
+        }
+        createdBy {
+          _id
+          username
+          profilePic
+        }
+      }
+    }
+  }
+`;

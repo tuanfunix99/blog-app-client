@@ -16,6 +16,7 @@ import "./MyPost.scss";
 const MyPost = () => {
   const [myPost, setMyPost] = useRecoilState(myPostState);
   const [isUser, setIsUser] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -24,7 +25,9 @@ const MyPost = () => {
       input: id,
     },
     onCompleted(data) {
-      if(myPost.length === 0) {
+      if (data.myPost.length === 0) {
+        setIsSuccess(true);
+      } else if (myPost.length === 0) {
         setMyPost(data.myPost);
       }
       setIsUser(true);
@@ -43,15 +46,29 @@ const MyPost = () => {
             <Posts posts={myPost} isUser={isUser} />
           </div>
         )}
-        { myPost.length === 0 && <Loading /> }
+        {myPost.length === 0 && !isSuccess && <Loading />}
+        {isSuccess && (
+          <Container>
+            <Row>
+              <Col lg={12}>
+                <Alert variant="info">
+                  <Alert.Heading>My Post Empty</Alert.Heading>
+                  <p>
+                    Create a new post <Link to="/write">here</Link>
+                  </p>
+                </Alert>
+              </Col>
+            </Row>
+          </Container>
+        )}
       </AccessComponent>
       <AccessComponent isLogin={false}>
         <Container>
           <Row>
             <Col lg={8} className="mx-auto px-2">
+              <Alert.Heading>Access denied</Alert.Heading>
               <Alert variant={"danger"}>
-                Access denied.Please <Link to="/login">Login</Link> to access
-                page.
+                Please <Link to="/login">Login</Link> to access page.
               </Alert>
             </Col>
           </Row>
