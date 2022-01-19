@@ -42,15 +42,11 @@ const TopBar = () => {
   }, [user]);
 
   const onLogoutHanler = () => {
+    localStorage.removeItem("access_token");
+    window.location.reload();
     logout({
-      onCompleted(data) {
-        if (data.logout) {
-          localStorage.removeItem("access_token");
-          window.location.reload();
-        }
-      },
       onError(errors) {
-        toast.error(errors.message, {
+        toast.error("Error System", {
           position: "top-center",
           autoClose: 8000,
         });
