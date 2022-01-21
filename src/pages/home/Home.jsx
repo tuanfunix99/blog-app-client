@@ -65,33 +65,35 @@ const Home = () => {
   return (
     <Fragment>
       <Header />
-      <div className="home">
-        <Container fluid>
-          <Row>
-            <Col lg={8} md={12} className="position-relative">
-              {posts.length > 0 && !loadPage && <Posts posts={posts} />}
-              {posts.length === 0 && <Loading />}
-              {loadPage && (
-                <Loading color={"#36D7B7"} loading={true} size={40} />
-              )}
-              {posts.length > 0 && !loadPage && (
-                <div className="pagination-bar">
-                  <Pagination
-                    count={count}
-                    page={page}
-                    onChange={onChangePagination}
-                    variant="outlined"
-                    shape="rounded"
-                  />
-                </div>
-              )}
-              <Stack spacing={2}></Stack>
-            </Col>
-            <Col lg={4} md={0}>
-              <SideBar />
-            </Col>
-          </Row>
-        </Container>
+      <div className="main">
+        <div className="home">
+          <Container fluid>
+            <Row>
+              <Col lg={8} md={12} className="position-relative">
+                {posts.length > 0 && !loadPage && <Posts posts={posts} />}
+                {posts.length === 0 && <Loading />}
+                {loadPage && (
+                  <Loading color={"#36D7B7"} loading={true} size={40} />
+                )}
+                {posts.length > 0 && !loadPage && (
+                  <div className="pagination-bar">
+                    <Pagination
+                      count={count}
+                      page={page}
+                      onChange={onChangePagination}
+                      variant="outlined"
+                      shape="rounded"
+                    />
+                  </div>
+                )}
+                <Stack spacing={2}></Stack>
+              </Col>
+              <Col lg={4} md={0}>
+                <SideBar />
+              </Col>
+            </Row>
+          </Container>
+        </div>
       </div>
       <Footer />
     </Fragment>

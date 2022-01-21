@@ -52,25 +52,27 @@ const SearchCategory = () => {
   return (
     <Fragment>
       <TopBar />
-      {search.length > 0 && !loadPage && (
-        <div>
-          <Posts posts={search} />
-        </div>
-      )}
-      {search.length === 0 && <Loading />}
-      {loadPage && <Loading color={"#36D7B7"} loading={true} size={40} />}
-      {search.length > 0 && !loadPage && (
-        <div className="pagination-bar">
-          <Pagination
-            count={count}
-            page={page}
-            onChange={onChangePagination}
-            variant="outlined"
-            shape="rounded"
-          />
-        </div>
-      )}
-      <Stack spacing={2}></Stack>
+      <div className="main">
+        {search.length > 0 && !loadPage && (
+          <div>
+            <Posts posts={search} />
+          </div>
+        )}
+        {search.length === 0 && <Loading />}
+        {loadPage && <Loading color={"#36D7B7"} loading={true} size={40} />}
+        {search.length > 0 && !loadPage && (
+          <div className="pagination-bar">
+            <Pagination
+              count={count}
+              page={page}
+              onChange={onChangePagination}
+              variant="outlined"
+              shape="rounded"
+            />
+          </div>
+        )}
+        <Stack spacing={2}></Stack>
+      </div>
       <Footer />
     </Fragment>
   );

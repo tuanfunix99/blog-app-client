@@ -74,7 +74,6 @@ const Single = () => {
       <ToastContainer />
       <TopBar />
       <div className="single">
-
         {!post && <Loading />}
         <Container>{displayPost()}</Container>
       </div>

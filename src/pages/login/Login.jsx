@@ -60,75 +60,75 @@ const Login = () => {
   };
 
   return (
-    <div className="login">
-      <Container>
-        <Row>
-          <Col lg={5} className="mx-auto">
-            <Form className="login-form" onSubmit={onSubmitHandler}>
-              <h1>Login</h1>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  onChange={onChangeHandler}
-                  type="email"
-                  placeholder="Enter email"
-                  name="email"
-                  disabled={loading}
-                  isInvalid={errors.email}
-                />
-                {errors.email && (
-                  <Form.Control.Feedback type="invalid">
-                    {errors.email}
-                  </Form.Control.Feedback>
-                )}
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  onChange={onChangeHandler}
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  disabled={loading}
-                  isInvalid={errors.password}
-                />
-                {errors.password && (
-                  <Form.Control.Feedback type="invalid">
-                    {errors.password}
-                  </Form.Control.Feedback>
-                )}
-              </Form.Group>
-              <div className="d-grid gap-2">
-                <Button
-                  variant="primary"
-                  type="submit"
-                  disabled={!isValid || loading}
-                >
-                  {!loading && "Login"}
-                  {loading && (
-                    <div>
-                      <Spinner
-                        as="span"
-                        animation="border"
-                        size="sm"
-                        role="status"
-                        aria-hidden="true"
-                      />
-                      Checking...
-                    </div>
+      <div className="login">
+        <Container>
+          <Row>
+            <Col lg={5} className="mx-auto">
+              <Form className="login-form" onSubmit={onSubmitHandler}>
+                <h1>Login</h1>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Email address</Form.Label>
+                  <Form.Control
+                    onChange={onChangeHandler}
+                    type="email"
+                    placeholder="Enter email"
+                    name="email"
+                    disabled={loading}
+                    isInvalid={errors.email}
+                  />
+                  {errors.email && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.email}
+                    </Form.Control.Feedback>
                   )}
-                </Button>
-                <div className="text-center">
-                  <Link to="/register">
-                    Don't have an account? Register here.
-                  </Link>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    onChange={onChangeHandler}
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                    disabled={loading}
+                    isInvalid={errors.password}
+                  />
+                  {errors.password && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.password}
+                    </Form.Control.Feedback>
+                  )}
+                </Form.Group>
+                <div className="d-grid gap-2">
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    disabled={!isValid || loading}
+                  >
+                    {!loading && "Login"}
+                    {loading && (
+                      <div>
+                        <Spinner
+                          as="span"
+                          animation="border"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                        />
+                        Checking...
+                      </div>
+                    )}
+                  </Button>
+                  <div className="text-center">
+                    <Link to="/register">
+                      Don't have an account? Register here.
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            </Form>
-          </Col>
-        </Row>
-      </Container>
-    </div>
+              </Form>
+            </Col>
+          </Row>
+        </Container>
+      </div>
   );
 };
 

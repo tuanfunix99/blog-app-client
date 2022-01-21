@@ -40,40 +40,42 @@ const MyPost = () => {
   return (
     <Fragment>
       <TopBar />
-      <AccessComponent isLogin={true}>
-        {myPost.length > 0 && (
-          <div>
-            <Posts posts={myPost} isUser={isUser} />
-          </div>
-        )}
-        {myPost.length === 0 && !isSuccess && <Loading />}
-        {isSuccess && (
+      <div className="main">
+        <AccessComponent isLogin={true}>
+          {myPost.length > 0 && (
+            <div>
+              <Posts posts={myPost} isUser={isUser} />
+            </div>
+          )}
+          {myPost.length === 0 && !isSuccess && <Loading />}
+          {isSuccess && (
+            <Container>
+              <Row>
+                <Col lg={12}>
+                  <Alert variant="info">
+                    <Alert.Heading>My Post Empty</Alert.Heading>
+                    <p>
+                      Create a new post <Link to="/write">here</Link>
+                    </p>
+                  </Alert>
+                </Col>
+              </Row>
+            </Container>
+          )}
+        </AccessComponent>
+        <AccessComponent isLogin={false}>
           <Container>
             <Row>
-              <Col lg={12}>
-                <Alert variant="info">
-                  <Alert.Heading>My Post Empty</Alert.Heading>
-                  <p>
-                    Create a new post <Link to="/write">here</Link>
-                  </p>
+              <Col lg={8} className="mx-auto px-2">
+                <Alert.Heading>Access denied</Alert.Heading>
+                <Alert variant={"danger"}>
+                  Please <Link to="/login">Login</Link> to access page.
                 </Alert>
               </Col>
             </Row>
           </Container>
-        )}
-      </AccessComponent>
-      <AccessComponent isLogin={false}>
-        <Container>
-          <Row>
-            <Col lg={8} className="mx-auto px-2">
-              <Alert.Heading>Access denied</Alert.Heading>
-              <Alert variant={"danger"}>
-                Please <Link to="/login">Login</Link> to access page.
-              </Alert>
-            </Col>
-          </Row>
-        </Container>
-      </AccessComponent>
+        </AccessComponent>
+      </div>
       <Footer />
     </Fragment>
   );

@@ -60,39 +60,41 @@ const Search = () => {
   return (
     <Fragment>
       <TopBar />
-      {search.length > 0 && !loadPage && (
-        <div>
-          <Posts posts={search} />
-        </div>
-      )}
-      {search.length === 0 && !isEmpty  && <Loading />}
-      {loadPage && !isEmpty && <Loading color={"#36D7B7"} loading={true} size={40} />}
-      {search.length > 0 && !loadPage && (
-        <div className="pagination-bar">
-          <Pagination
-            count={count}
-            page={page}
-            onChange={onChangePagination}
-            variant="outlined"
-            shape="rounded"
-          />
-        </div>
-      )}
-      {isEmpty && (
-        <Container>
-          <Row>
-            <Col lg={12}>
-              <Alert variant="info">
-                <Alert.Heading>No Resuls</Alert.Heading>
-                <p>
-                  0 results with title={searchParams.get("title").trim()}
-                </p>
-              </Alert>
-            </Col>
-          </Row>
-        </Container>
-      )}
-      <Stack spacing={2}></Stack>
+      <div className="main">
+        {search.length > 0 && !loadPage && (
+          <div>
+            <Posts posts={search} />
+          </div>
+        )}
+        {search.length === 0 && !isEmpty && <Loading />}
+        {loadPage && !isEmpty && (
+          <Loading color={"#36D7B7"} loading={true} size={40} />
+        )}
+        {search.length > 0 && !loadPage && (
+          <div className="pagination-bar">
+            <Pagination
+              count={count}
+              page={page}
+              onChange={onChangePagination}
+              variant="outlined"
+              shape="rounded"
+            />
+          </div>
+        )}
+        {isEmpty && (
+          <Container>
+            <Row>
+              <Col lg={12}>
+                <Alert variant="info">
+                  <Alert.Heading>No Resuls</Alert.Heading>
+                  <p>0 results with title={searchParams.get("title").trim()}</p>
+                </Alert>
+              </Col>
+            </Row>
+          </Container>
+        )}
+        <Stack spacing={2}></Stack>
+      </div>
       <Footer />
     </Fragment>
   );
