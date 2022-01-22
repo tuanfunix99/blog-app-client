@@ -103,14 +103,12 @@ const Setting = () => {
       }
       try {
         const image = await resizeFile(file);
-        const arr = profilePic.split("/");
-        const public_id = arr[arr.length - 1].split(".")[0];
         setUploading(true);
         uploadProfilePic({
           variables: {
             input: {
               image,
-              public_id,
+              profilePic,
             },
           },
           onCompleted(data) {
@@ -216,180 +214,188 @@ const Setting = () => {
     <Fragment>
       <ToastContainer />
       <TopBar />
-      <AccessComponent isLogin={true}>
-        <Container>
-          <Row>
-            <Col lg={9} className="mx-auto">
-              <div className="settings">
-                <div className="settingsWrapper">
-                  <div className="settingsTitle">
-                    <span className="settingsTitleUpdate">
-                      Update Your Info
-                    </span>
-                    {/* <span className="settingsTitleDelete">Delete Account</span> */}
-                  </div>
-                  <Form>
-                    <label>Profile Picture</label>
-                    <div className="settingsPP">
-                      {uploading && (
-                        <div className="profile-loading">
-                          <FadeLoader
-                            color={"#000000"}
-                            loading={uploading}
-                            size={10}
-                          />
-                        </div>
-                      )}
-                      {!uploading && <img src={profilePic} alt="profile" />}
-                      <label htmlFor="fileInput">
-                        <i className="settingsPPIcon far fa-user-circle"></i>{" "}
-                      </label>
-                      <input
-                        id="fileInput"
-                        type="file"
-                        style={{ display: "none" }}
-                        className="settingsPPInput"
-                        onChange={onChangeFileHandler}
-                      />
+      <div className="main">
+        <AccessComponent isLogin={true}>
+          <Container>
+            <Row>
+              <Col lg={9} className="mx-auto">
+                <div className="settings">
+                  <div className="settingsWrapper">
+                    <div className="settingsTitle">
+                      <span className="settingsTitleUpdate">
+                        Update Your Info
+                      </span>
+                      {/* <span className="settingsTitleDelete">Delete Account</span> */}
                     </div>
-                  </Form>
-                  <Form
-                    onSubmit={onUpdateInfoHandler}
-                    onMouseEnter={onIsUpdateInfo}
-                    onMouseLeave={onIsNotUpdateInfo}
-                  >
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Label>Username</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter username"
-                        name="username"
-                        required
-                        value={info.username}
-                        onChange={(e) =>
-                          setInfo({ ...info, username: e.target.value })
-                        }
-                        disabled={!isUpdateInfo}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Label>Email address</Form.Label>
-                      <Form.Control
-                        type="email"
-                        placeholder="Enter email"
-                        name="email"
-                        required
-                        value={info.email}
-                        onChange={(e) =>
-                          setInfo({ ...info, email: e.target.value })
-                        }
-                        disabled={!isUpdateInfo}
-                      />
-                    </Form.Group>
-                    <Button
-                      className="mx-auto"
-                      variant="primary"
-                      type="submit"
-                      disabled={!isUpdateInfo}
+                    <Form>
+                      <label>Profile Picture</label>
+                      <div className="settingsPP">
+                        {uploading && (
+                          <div className="profile-loading">
+                            <FadeLoader
+                              color={"#000000"}
+                              loading={uploading}
+                              size={10}
+                            />
+                          </div>
+                        )}
+                        {!uploading && <img src={profilePic} alt="profile" />}
+                        <label htmlFor="fileInput">
+                          <i className="settingsPPIcon far fa-user-circle"></i>{" "}
+                        </label>
+                        <input
+                          id="fileInput"
+                          type="file"
+                          style={{ display: "none" }}
+                          className="settingsPPInput"
+                          onChange={onChangeFileHandler}
+                        />
+                      </div>
+                    </Form>
+                    <Form
+                      onSubmit={onUpdateInfoHandler}
+                      onMouseEnter={onIsUpdateInfo}
+                      onMouseLeave={onIsNotUpdateInfo}
                     >
-                      {!updating && "Save"}
-                      {updating && (
-                        <div>
-                          <Spinner
-                            as="span"
-                            animation="border"
-                            size="sm"
-                            role="status"
-                            aria-hidden="true"
-                          />
-                          Saving...
-                        </div>
-                      )}
-                    </Button>
-                  </Form>
-                  <Form
-                    className="my-4"
-                    onSubmit={onUpdatePasswordHandler}
-                    onMouseEnter={onIsUpdatePassword}
-                    onMouseLeave={onIsNotUpdatePassword}
-                  >
-                    <span className="settingsTitleUpdate">
-                      Update Your Pasword
-                    </span>
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
-                      <Form.Label>Your Password</Form.Label>
-                      <Form.Control
-                        type="password"
-                        placeholder="Your Password"
-                        name="password"
-                        value={passwdInput.password}
-                        required
-                        onChange={onChangePasswordHandler}
-                        disabled={!isUpdatePassword}
-                        isInvalid={errors.password}
-                      />
-                      {errors.password && (
-                        <Form.Control.Feedback type="invalid">
-                          {errors.password}
-                        </Form.Control.Feedback>
-                      )}
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
-                      <Form.Label>New Password</Form.Label>
-                      <Form.Control
-                        type="password"
-                        placeholder="New Password"
-                        name="newPassword"
-                        value={passwdInput.newPassword}
-                        required
-                        onChange={onChangePasswordHandler}
-                        disabled={!isUpdatePassword}
-                        isInvalid={errors.newPassword}
-                      />
-                      {errors.newPassword && (
-                        <Form.Control.Feedback type="invalid">
-                          {errors.newPassword}
-                        </Form.Control.Feedback>
-                      )}
-                    </Form.Group>
-                    <Button
-                      variant="primary"
-                      type="submit"
-                      disabled={!isUpdatePassword}
+                      <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Username</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter username"
+                          name="username"
+                          required
+                          value={info.username}
+                          onChange={(e) =>
+                            setInfo({ ...info, username: e.target.value })
+                          }
+                          disabled={!isUpdateInfo}
+                        />
+                      </Form.Group>
+                      <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Email address</Form.Label>
+                        <Form.Control
+                          type="email"
+                          placeholder="Enter email"
+                          name="email"
+                          required
+                          value={info.email}
+                          onChange={(e) =>
+                            setInfo({ ...info, email: e.target.value })
+                          }
+                          disabled={!isUpdateInfo}
+                        />
+                      </Form.Group>
+                      <Button
+                        className="mx-auto"
+                        variant="primary"
+                        type="submit"
+                        disabled={!isUpdateInfo}
+                      >
+                        {!updating && "Save"}
+                        {updating && (
+                          <div>
+                            <Spinner
+                              as="span"
+                              animation="border"
+                              size="sm"
+                              role="status"
+                              aria-hidden="true"
+                            />
+                            Saving...
+                          </div>
+                        )}
+                      </Button>
+                    </Form>
+                    <Form
+                      className="my-4"
+                      onSubmit={onUpdatePasswordHandler}
+                      onMouseEnter={onIsUpdatePassword}
+                      onMouseLeave={onIsNotUpdatePassword}
                     >
-                      {!updatingPsw && "Save"}
-                      {updatingPsw && (
-                        <div>
-                          <Spinner
-                            as="span"
-                            animation="border"
-                            size="sm"
-                            role="status"
-                            aria-hidden="true"
-                          />
-                          Saving...
-                        </div>
-                      )}
-                    </Button>
-                  </Form>
+                      <span className="settingsTitleUpdate">
+                        Update Your Pasword
+                      </span>
+                      <Form.Group
+                        className="mb-3"
+                        controlId="formBasicPassword"
+                      >
+                        <Form.Label>Your Password</Form.Label>
+                        <Form.Control
+                          type="password"
+                          placeholder="Your Password"
+                          name="password"
+                          value={passwdInput.password}
+                          required
+                          onChange={onChangePasswordHandler}
+                          disabled={!isUpdatePassword}
+                          isInvalid={errors.password}
+                        />
+                        {errors.password && (
+                          <Form.Control.Feedback type="invalid">
+                            {errors.password}
+                          </Form.Control.Feedback>
+                        )}
+                      </Form.Group>
+                      <Form.Group
+                        className="mb-3"
+                        controlId="formBasicPassword"
+                      >
+                        <Form.Label>New Password</Form.Label>
+                        <Form.Control
+                          type="password"
+                          placeholder="New Password"
+                          name="newPassword"
+                          value={passwdInput.newPassword}
+                          required
+                          onChange={onChangePasswordHandler}
+                          disabled={!isUpdatePassword}
+                          isInvalid={errors.newPassword}
+                        />
+                        {errors.newPassword && (
+                          <Form.Control.Feedback type="invalid">
+                            {errors.newPassword}
+                          </Form.Control.Feedback>
+                        )}
+                      </Form.Group>
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        disabled={!isUpdatePassword}
+                      >
+                        {!updatingPsw && "Save"}
+                        {updatingPsw && (
+                          <div>
+                            <Spinner
+                              as="span"
+                              animation="border"
+                              size="sm"
+                              role="status"
+                              aria-hidden="true"
+                            />
+                            Saving...
+                          </div>
+                        )}
+                      </Button>
+                    </Form>
+                  </div>
                 </div>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </AccessComponent>
-      <AccessComponent isLogin={false}>
-        <Container>
-          <Row>
-            <Col lg={9} className="mx-auto">
-              <Alert variant={"danger"}>
-                <Alert.Heading>Access denied</Alert.Heading>
-                Please <Link to="/login">Login</Link> to access page.
-              </Alert>
-            </Col>
-          </Row>
-        </Container>
-      </AccessComponent>
+              </Col>
+            </Row>
+          </Container>
+        </AccessComponent>
+        <AccessComponent isLogin={false}>
+          <Container>
+            <Row>
+              <Col lg={9} className="mx-auto">
+                <Alert variant={"danger"}>
+                  <Alert.Heading>Access denied</Alert.Heading>
+                  Please <Link to="/login">Login</Link> to access page.
+                </Alert>
+              </Col>
+            </Row>
+          </Container>
+        </AccessComponent>
+      </div>
       <Footer />
     </Fragment>
   );

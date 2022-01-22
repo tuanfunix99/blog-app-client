@@ -344,7 +344,7 @@ const Write = () => {
           </AccessComponent>
         </div>
       </div>
-      <Footer />
+        <Footer />
     </Fragment>
   );
 };

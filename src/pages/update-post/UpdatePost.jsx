@@ -273,105 +273,110 @@ const UpdatePost = () => {
       <ToastContainer />
       <TopBar />
       {displayViewDemo()}
-      <div className="update-post">
-        <AccessComponent isLogin={true}>
-          {post && (
-            <Container className="px-4">
-              <Row>
-                <Col lg={9} className="mx-auto px-0 mt-5 position-relative">
-                  <img
-                    className="writeImg"
-                    src={backgroundPic}
-                    alt="background post"
-                  />
-                  <CardUser user={post.createdBy} createdAt={post.createdAt} />
-                  <form className="form-upload-background">
-                    <label htmlFor="fileInput">
-                      <i className="writeIcon fas fa-plus"></i>
-                    </label>
-                    <input
-                      id="fileInput"
-                      type="file"
-                      style={{ display: "none" }}
-                      onChange={onChangeBackgroundHandler}
+      <div className="main">
+        <div className="update-post">
+          <AccessComponent isLogin={true}>
+            {post && (
+              <Container className="px-4">
+                <Row>
+                  <Col lg={9} className="mx-auto px-0 mt-5 position-relative">
+                    <img
+                      className="writeImg"
+                      src={backgroundPic}
+                      alt="background post"
                     />
-                  </form>
-                </Col>
-              </Row>
-              <Row>
-                <Col lg={9} className="mx-auto px-0">
-                  <div className="write">
-                    <form className="writeForm">
-                      <div className="writeFormGroup">
-                        <input
-                          className="writeInput text-center"
-                          placeholder="Title"
-                          value={title}
-                          type="text"
-                          autoFocus={true}
-                          onChange={(e) => setTitle(e.target.value)}
-                        />
-                      </div>
+                    <CardUser
+                      user={post.createdBy}
+                      createdAt={post.createdAt}
+                    />
+                    <form className="form-upload-background">
+                      <label htmlFor="fileInput">
+                        <i className="writeIcon fas fa-plus"></i>
+                      </label>
+                      <input
+                        id="fileInput"
+                        type="file"
+                        style={{ display: "none" }}
+                        onChange={onChangeBackgroundHandler}
+                      />
                     </form>
-                  </div>
-                </Col>
-              </Row>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={9} className="mx-auto px-0">
+                    <div className="write">
+                      <form className="writeForm">
+                        <div className="writeFormGroup">
+                          <input
+                            className="writeInput text-center"
+                            placeholder="Title"
+                            value={title}
+                            type="text"
+                            autoFocus={true}
+                            onChange={(e) => setTitle(e.target.value)}
+                          />
+                        </div>
+                      </form>
+                    </div>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={8} className="mx-auto px-0">
+                    <div id="editorjs"></div>
+                    <Form className="py-5 form-publish">
+                      <Form.Group className="form-publish-checkbox">
+                        {displayCategories()}
+                      </Form.Group>
+                      <Form.Group className="form-publish-button mt-3">
+                        <button
+                          type="button"
+                          className="btn btn-primary mx-3"
+                          onClick={onShowHandler}
+                          disabled={publishing}
+                        >
+                          View Demo
+                        </button>
+                        <button
+                          className="btn btn-primary"
+                          type="submit"
+                          onClick={onPublisPostHandler}
+                          disabled={publishing}
+                        >
+                          {!publishing && "Update"}
+                          {publishing && (
+                            <div>
+                              <Spinner
+                                as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                              />
+                              Updating...
+                            </div>
+                          )}
+                        </button>
+                      </Form.Group>
+                    </Form>
+                  </Col>
+                </Row>
+              </Container>
+            )}
+            {!post && <Loading />}
+          </AccessComponent>
+          <AccessComponent isLogin={false}>
+            <Container>
               <Row>
-                <Col lg={8} className="mx-auto px-0">
-                  <div id="editorjs"></div>
-                  <Form className="py-5 form-publish">
-                    <Form.Group className="form-publish-checkbox">
-                      {displayCategories()}
-                    </Form.Group>
-                    <Form.Group className="form-publish-button mt-3">
-                      <button
-                        type="button"
-                        className="btn btn-primary mx-3"
-                        onClick={onShowHandler}
-                        disabled={publishing}
-                      >
-                        View Demo
-                      </button>
-                      <button
-                        className="btn btn-primary"
-                        type="submit"
-                        onClick={onPublisPostHandler}
-                        disabled={publishing}
-                      >
-                        {!publishing && "Update"}
-                        {publishing && (
-                          <div>
-                            <Spinner
-                              as="span"
-                              animation="border"
-                              size="sm"
-                              role="status"
-                              aria-hidden="true"
-                            />
-                            Updating...
-                          </div>
-                        )}
-                      </button>
-                    </Form.Group>
-                  </Form>
+                <Col lg={8} className="mx-auto px-2">
+                  <Alert variant={"danger"}>
+                    Access denied.Please <Link to="/login">Login</Link> to
+                    access page.
+                  </Alert>
                 </Col>
               </Row>
             </Container>
-          )}
-          {!post && <Loading />}
-        </AccessComponent>
-        <AccessComponent isLogin={false}>
-          <Container>
-            <Row>
-              <Col lg={8} className="mx-auto px-2">
-                <Alert variant={"danger"}>
-                  Access denied.Please <Link to="/login">Login</Link> to access
-                  page.
-                </Alert>
-              </Col>
-            </Row>
-          </Container>
-        </AccessComponent>
+          </AccessComponent>
+        </div>
       </div>
       <Footer />
     </Fragment>
