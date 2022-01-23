@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
@@ -7,39 +7,57 @@ import Setting from "./pages/setting/Setting";
 import Single from "./pages/single/Single";
 import Write from "./pages/write/Write";
 import MyPost from "./pages/my-post/MyPost";
-import { useQuery, useSubscription } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { GET_USER } from "./graphql/query/user";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { userState, completeLoadUserState } from "./state/user";
 import NotFound from "./pages/not-found/NotFound";
-
-import './App.scss';
 import { categoriesState } from "./state/category";
 import { GET_CATEGORIES } from "./graphql/query/category";
 import UpdatePost from "./pages/update-post/UpdatePost";
 import Search from "./pages/search/Search";
 import SearchCategory from "./pages/search/SearchCategory";
+import axios from "axios";
+
+import "./App.scss";
 
 function App() {
   const [user, setUser] = useRecoilState(userState);
   const setCategories = useSetRecoilState(categoriesState);
   const setCompleted = useSetRecoilState(completeLoadUserState);
+  const login_passport = localStorage.getItem("login_passport");
 
   useQuery(GET_USER, {
     onCompleted(data) {
       setUser(data.user);
       setCompleted(true);
     },
-    onError() {
+    onError(err) {
       setCompleted(true);
     },
   });
 
   useQuery(GET_CATEGORIES, {
-    onCompleted(data){
+    onCompleted(data) {
       setCategories(data.categories);
+    },
+  });
+
+  useEffect(() => {
+    if (!user && login_passport) {
+      axios
+        .get("/api/passport/success")
+        .then((res) => {
+          localStorage.removeItem("access_token");
+          localStorage.setItem("access_token", res.data);
+          localStorage.removeItem("login_passport");
+          window.location.reload();
+        })
+        .catch((err) => {
+          localStorage.removeItem("login_passport");
+        });
     }
-  })
+  });
 
   return (
     <Routes>

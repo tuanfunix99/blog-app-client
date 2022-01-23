@@ -7,6 +7,7 @@ export const GET_USER = gql`
       email
       username
       profilePic
+      passportId
     }
   }
 `;

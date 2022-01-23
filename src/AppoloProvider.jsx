@@ -14,12 +14,14 @@ const access_token = localStorage.getItem("access_token");
 
 const httpLink = ApolloLink.from([
   new ApolloLink((operation, forward) => {
-    operation.setContext(({ headers }) => ({
+    operation.setContext(
+      ({ headers }) => ({
       headers: {
         authorization: access_token,
         ...headers,
       },
-    }));
+    })
+    );
     return forward(operation);
   }),
   new HttpLink({ uri: process.env.REACT_APP_HTTP_LINK_URL }),

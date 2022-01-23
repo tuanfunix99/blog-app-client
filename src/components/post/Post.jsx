@@ -174,12 +174,12 @@ const Post = ({ index, post, isUser, onChooseCard }) => {
         <div className="user">
           <div className="user__detail">
             <img
-              src={createdBy.profilePic}
+              src={createdBy && createdBy.profilePic}
               alt="user__image"
               className="user__image"
             />
             <div className="user__info">
-              <h6 className="my-0">{createdBy.username}</h6>
+              <h6 className="my-0">{createdBy && createdBy.username}</h6>
               <small>{createdAt}</small>
             </div>
           </div>

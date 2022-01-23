@@ -23,9 +23,9 @@ import {
 } from "../../graphql/mutation/user";
 import Resizer from "react-image-file-resizer";
 import FadeLoader from "react-spinners/FadeLoader";
+import Footer from "../../components/footer/Footer";
 
 import "./Setting.scss";
-import Footer from "../../components/footer/Footer";
 
 const Setting = () => {
   const [uploading, setUploading] = useState(false);
@@ -114,7 +114,7 @@ const Setting = () => {
           onCompleted(data) {
             setProfilePic(data.uploadProfilePic.url);
             setUser((...pre) => {
-              return { ...pre, profilePic: image };
+              return { ...pre, profilePic: image, passportId: user.passportId };
             });
             setUploading(false);
             toastSuccess("Upload profile picture successful");
@@ -146,6 +146,7 @@ const Setting = () => {
             ...pre,
             username: data.updateInfo.username,
             email: data.updateInfo.email,
+            passportId: data.passportId,
           };
         });
         setUpdating(false);
@@ -271,20 +272,22 @@ const Setting = () => {
                           disabled={!isUpdateInfo}
                         />
                       </Form.Group>
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Email address</Form.Label>
-                        <Form.Control
-                          type="email"
-                          placeholder="Enter email"
-                          name="email"
-                          required
-                          value={info.email}
-                          onChange={(e) =>
-                            setInfo({ ...info, email: e.target.value })
-                          }
-                          disabled={!isUpdateInfo}
-                        />
-                      </Form.Group>
+                      {user && !user.passportId && (
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                          <Form.Label>Email address</Form.Label>
+                          <Form.Control
+                            type="email"
+                            placeholder="Enter email"
+                            name="email"
+                            required
+                            value={info.email}
+                            onChange={(e) =>
+                              setInfo({ ...info, email: e.target.value })
+                            }
+                            disabled={!isUpdateInfo}
+                          />
+                        </Form.Group>
+                      )}
                       <Button
                         className="mx-auto"
                         variant="primary"
@@ -306,77 +309,79 @@ const Setting = () => {
                         )}
                       </Button>
                     </Form>
-                    <Form
-                      className="my-4"
-                      onSubmit={onUpdatePasswordHandler}
-                      onMouseEnter={onIsUpdatePassword}
-                      onMouseLeave={onIsNotUpdatePassword}
-                    >
-                      <span className="settingsTitleUpdate">
-                        Update Your Pasword
-                      </span>
-                      <Form.Group
-                        className="mb-3"
-                        controlId="formBasicPassword"
+                    {user && !user.passportId && (
+                      <Form
+                        className="my-4"
+                        onSubmit={onUpdatePasswordHandler}
+                        onMouseEnter={onIsUpdatePassword}
+                        onMouseLeave={onIsNotUpdatePassword}
                       >
-                        <Form.Label>Your Password</Form.Label>
-                        <Form.Control
-                          type="password"
-                          placeholder="Your Password"
-                          name="password"
-                          value={passwdInput.password}
-                          required
-                          onChange={onChangePasswordHandler}
+                        <span className="settingsTitleUpdate">
+                          Update Your Pasword
+                        </span>
+                        <Form.Group
+                          className="mb-3"
+                          controlId="formBasicPassword"
+                        >
+                          <Form.Label>Your Password</Form.Label>
+                          <Form.Control
+                            type="password"
+                            placeholder="Your Password"
+                            name="password"
+                            value={passwdInput.password}
+                            required
+                            onChange={onChangePasswordHandler}
+                            disabled={!isUpdatePassword}
+                            isInvalid={errors.password}
+                          />
+                          {errors.password && (
+                            <Form.Control.Feedback type="invalid">
+                              {errors.password}
+                            </Form.Control.Feedback>
+                          )}
+                        </Form.Group>
+                        <Form.Group
+                          className="mb-3"
+                          controlId="formBasicPassword"
+                        >
+                          <Form.Label>New Password</Form.Label>
+                          <Form.Control
+                            type="password"
+                            placeholder="New Password"
+                            name="newPassword"
+                            value={passwdInput.newPassword}
+                            required
+                            onChange={onChangePasswordHandler}
+                            disabled={!isUpdatePassword}
+                            isInvalid={errors.newPassword}
+                          />
+                          {errors.newPassword && (
+                            <Form.Control.Feedback type="invalid">
+                              {errors.newPassword}
+                            </Form.Control.Feedback>
+                          )}
+                        </Form.Group>
+                        <Button
+                          variant="primary"
+                          type="submit"
                           disabled={!isUpdatePassword}
-                          isInvalid={errors.password}
-                        />
-                        {errors.password && (
-                          <Form.Control.Feedback type="invalid">
-                            {errors.password}
-                          </Form.Control.Feedback>
-                        )}
-                      </Form.Group>
-                      <Form.Group
-                        className="mb-3"
-                        controlId="formBasicPassword"
-                      >
-                        <Form.Label>New Password</Form.Label>
-                        <Form.Control
-                          type="password"
-                          placeholder="New Password"
-                          name="newPassword"
-                          value={passwdInput.newPassword}
-                          required
-                          onChange={onChangePasswordHandler}
-                          disabled={!isUpdatePassword}
-                          isInvalid={errors.newPassword}
-                        />
-                        {errors.newPassword && (
-                          <Form.Control.Feedback type="invalid">
-                            {errors.newPassword}
-                          </Form.Control.Feedback>
-                        )}
-                      </Form.Group>
-                      <Button
-                        variant="primary"
-                        type="submit"
-                        disabled={!isUpdatePassword}
-                      >
-                        {!updatingPsw && "Save"}
-                        {updatingPsw && (
-                          <div>
-                            <Spinner
-                              as="span"
-                              animation="border"
-                              size="sm"
-                              role="status"
-                              aria-hidden="true"
-                            />
-                            Saving...
-                          </div>
-                        )}
-                      </Button>
-                    </Form>
+                        >
+                          {!updatingPsw && "Save"}
+                          {updatingPsw && (
+                            <div>
+                              <Spinner
+                                as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                              />
+                              Saving...
+                            </div>
+                          )}
+                        </Button>
+                      </Form>
+                    )}
                   </div>
                 </div>
               </Col>

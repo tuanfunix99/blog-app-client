@@ -59,76 +59,105 @@ const Login = () => {
     });
   };
 
+  const onLoginGoogle = () => {
+    localStorage.setItem("login_passport", "true");
+    window.location.replace(
+      process.env.REACT_APP_HTTP_API_LINK_URL + "/auth/google"
+    );
+  };
+
+  const onLoginGithub = () => {
+    localStorage.setItem("login_passport", "true");
+    window.location.replace(
+      process.env.REACT_APP_HTTP_API_LINK_URL + "/auth/github"
+    );
+  };
+
   return (
-      <div className="login">
-        <Container>
-          <Row>
-            <Col lg={5} className="mx-auto">
-              <Form className="login-form" onSubmit={onSubmitHandler}>
-                <h1>Login</h1>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Email address</Form.Label>
-                  <Form.Control
-                    onChange={onChangeHandler}
-                    type="email"
-                    placeholder="Enter email"
-                    name="email"
-                    disabled={loading}
-                    isInvalid={errors.email}
-                  />
-                  {errors.email && (
-                    <Form.Control.Feedback type="invalid">
-                      {errors.email}
-                    </Form.Control.Feedback>
+    <div className="login">
+      <Container>
+        <Row>
+          <Col lg={5} className="mx-auto">
+            <Form className="login-form" onSubmit={onSubmitHandler}>
+              <h1>Login</h1>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control
+                  onChange={onChangeHandler}
+                  type="email"
+                  placeholder="Enter email"
+                  name="email"
+                  disabled={loading}
+                  isInvalid={errors.email}
+                />
+                {errors.email && (
+                  <Form.Control.Feedback type="invalid">
+                    {errors.email}
+                  </Form.Control.Feedback>
+                )}
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  onChange={onChangeHandler}
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  disabled={loading}
+                  isInvalid={errors.password}
+                />
+                {errors.password && (
+                  <Form.Control.Feedback type="invalid">
+                    {errors.password}
+                  </Form.Control.Feedback>
+                )}
+              </Form.Group>
+              <div className="d-grid gap-2">
+                <Button
+                  variant="primary"
+                  type="submit"
+                  disabled={!isValid || loading}
+                >
+                  {!loading && "Login"}
+                  {loading && (
+                    <div>
+                      <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                      />
+                      Checking...
+                    </div>
                   )}
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    onChange={onChangeHandler}
-                    type="password"
-                    placeholder="Password"
-                    name="password"
-                    disabled={loading}
-                    isInvalid={errors.password}
-                  />
-                  {errors.password && (
-                    <Form.Control.Feedback type="invalid">
-                      {errors.password}
-                    </Form.Control.Feedback>
-                  )}
-                </Form.Group>
-                <div className="d-grid gap-2">
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    disabled={!isValid || loading}
-                  >
-                    {!loading && "Login"}
-                    {loading && (
-                      <div>
-                        <Spinner
-                          as="span"
-                          animation="border"
-                          size="sm"
-                          role="status"
-                          aria-hidden="true"
-                        />
-                        Checking...
-                      </div>
-                    )}
-                  </Button>
-                  <div className="text-center">
-                    <Link to="/register">
-                      Don't have an account? Register here.
-                    </Link>
+                </Button>
+                <h6 className="text-center">OR</h6>
+                <div className="social-form">
+                  <div className="d-grid gap-2">
+                    <Button onClick={onLoginGoogle} className="btn-login-google">
+                      <i class="fab fa-google" ></i>
+                      {" "}
+                      GOOGLE
+                    </Button>
+                    <Button onClick={onLoginGithub} className="btn-login-github">
+                    <i class="fab fa-github"></i>
+                      {" "}
+                      GITHUB
+                    </Button>
                   </div>
                 </div>
-              </Form>
-            </Col>
-          </Row>
-        </Container>
-      </div>
+                <div className="text-center">
+                  <Link to="/register">
+                    Don't have an account? Register here.
+                  </Link>
+                </div>
+              </div>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 
