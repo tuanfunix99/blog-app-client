@@ -46,18 +46,20 @@ function App() {
   useEffect(() => {
     if (!user && login_passport) {
       axios
-        .get("/api/passport/success")
+        .get(`${process.env.REACT_APP_HTTP_API_LINK_URL}/api/passport/success`)
         .then((res) => {
+          console.log(res);
           localStorage.removeItem("access_token");
-          localStorage.setItem("access_token", res.data);
+          localStorage.setItem("access_token", res.data.token);
           localStorage.removeItem("login_passport");
           window.location.reload();
         })
         .catch((err) => {
+          console.log(err.message);
           localStorage.removeItem("login_passport");
         });
     }
-  });
+  }, [user, login_passport]);
 
   return (
     <Routes>

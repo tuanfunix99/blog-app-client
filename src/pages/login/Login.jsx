@@ -136,12 +136,12 @@ const Login = () => {
                 <div className="social-form">
                   <div className="d-grid gap-2">
                     <Button onClick={onLoginGoogle} className="btn-login-google">
-                      <i class="fab fa-google" ></i>
+                      <i className="fab fa-google" ></i>
                       {" "}
                       GOOGLE
                     </Button>
                     <Button onClick={onLoginGithub} className="btn-login-github">
-                    <i class="fab fa-github"></i>
+                    <i className="fab fa-github"></i>
                       {" "}
                       GITHUB
                     </Button>
