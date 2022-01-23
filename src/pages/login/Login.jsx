@@ -66,12 +66,12 @@ const Login = () => {
     );
   };
 
-  // const onLoginGithub = () => {
-  //   localStorage.setItem("login_passport", "true");
-  //   window.location.replace(
-  //     process.env.REACT_APP_HTTP_API_LINK_URL + "/auth/github"
-  //   );
-  // };
+  const onLoginGithub = () => {
+    localStorage.setItem("login_passport", "true");
+    window.location.replace(
+      process.env.REACT_APP_HTTP_API_LINK_URL + "/auth/github"
+    );
+  };
 
   return (
     <div className="login">
@@ -132,7 +132,7 @@ const Login = () => {
                     </div>
                   )}
                 </Button>
-                <h6 className="text-center">OR</h6>
+                <h6 className="text-center my-0">OR</h6>
                 <div className="social-form">
                   <div className="d-grid gap-2">
                     <Button onClick={onLoginGoogle} className="btn-login-google">
@@ -140,11 +140,11 @@ const Login = () => {
                       {" "}
                       GOOGLE
                     </Button>
-                    {/* <Button onClick={onLoginGithub} className="btn-login-github">
+                    <Button onClick={onLoginGithub} className="btn-login-github" disabled={true}>
                     <i className="fab fa-github"></i>
                       {" "}
                       GITHUB
-                    </Button> */}
+                    </Button>
                   </div>
                 </div>
                 <div className="text-center">
