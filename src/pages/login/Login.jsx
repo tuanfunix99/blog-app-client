@@ -140,7 +140,7 @@ const Login = () => {
                       {" "}
                       GOOGLE
                     </Button>
-                    <Button onClick={onLoginGithub} className="btn-login-github" disabled={true}>
+                    <Button onClick={onLoginGithub} className="btn-login-github" disabled={false}>
                     <i className="fab fa-github"></i>
                       {" "}
                       GITHUB
