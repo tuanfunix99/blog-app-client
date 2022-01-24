@@ -1,8 +1,8 @@
 import { useQuery } from "@apollo/client";
 import React, { Fragment, useState } from "react";
 import { Alert, Col, Container, Row } from "react-bootstrap";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { Link, useNavigate } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
 import AccessComponent from "../../components/access/AccessComponent";
 import Footer from "../../components/footer/Footer";
 import Loading from "../../components/loading/Loading";
@@ -10,6 +10,7 @@ import Posts from "../../components/posts/Posts";
 import TopBar from "../../components/topbar/TopBar";
 import { GET_MY_POST } from "../../graphql/query/post";
 import { myPostState } from "../../state/post";
+import { userState } from "../../state/user";
 
 import "./MyPost.scss";
 
@@ -18,11 +19,12 @@ const MyPost = () => {
   const [isUser, setIsUser] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const navigate = useNavigate();
-  const { id } = useParams();
+  const user = useRecoilValue(userState);
 
+  
   useQuery(GET_MY_POST, {
     variables: {
-      input: id,
+      input: user && user._id,
     },
     onCompleted(data) {
       if (data.myPost.length === 0) {

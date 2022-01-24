@@ -65,7 +65,7 @@ const TopBar = () => {
   const onSelectHandler = (e) => {
     const link = e.target.innerHTML.toString();
     if (link === "MY POST") {
-      navigator("/my-post/" + (user ? user._id : ""), { replace: true });
+      navigator("/my-post/", { replace: true });
       return;
     }
     if (link === "HOME") {
@@ -176,7 +176,7 @@ const TopBar = () => {
               </Link>
             </li>
             <li className="topListItem">
-              <Link className="link" to={"/my-post/" + (user ? user._id : "")}>
+              <Link className="link" to="/my-post">
                 MY POST
               </Link>
             </li>

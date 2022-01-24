@@ -20,6 +20,7 @@ import SearchCategory from "./pages/search/SearchCategory";
 import axios from "axios";
 
 import "./App.scss";
+import ForgotPassword from "./pages/forgot-password/ForgotPassword";
 
 function App() {
   const [user, setUser] = useRecoilState(userState);
@@ -66,12 +67,13 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/post/:id" element={<Single />} />
       <Route path="/write" element={<Write />} />
-      <Route path="/my-post/:id" element={<MyPost />} />
+      <Route path="/my-post" element={<MyPost />} />
       <Route path="/posts-category" element={<SearchCategory />} />
       <Route path="/posts" element={<Search />} />
       <Route path="/update-my-post/:id" element={<UpdatePost />} />
       <Route path="/settings" element={<Setting />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/register" element={<Register />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>

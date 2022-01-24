@@ -16,6 +16,7 @@ import './Single.scss';
 const Single = () => {
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
+  // const [loading, setLoading] = useState(false);
   const { id } = useParams();
 
   const toastError = (message) => {
@@ -26,7 +27,7 @@ const Single = () => {
     });
   };
 
-  useQuery(GET_POST, {
+  const { loading } = useQuery(GET_POST, {
     variables: { input: id },
     onCompleted(data) {
       if (data.post && data.post.content){
@@ -73,7 +74,7 @@ const Single = () => {
       <ToastContainer />
       <TopBar />
       <div className="single">
-        {!post && <Loading />}
+        {loading && <Loading />}
         <Container>{displayPost()}</Container>
       </div>
       <Footer />

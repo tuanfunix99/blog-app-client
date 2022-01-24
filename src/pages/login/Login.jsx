@@ -38,6 +38,7 @@ const Login = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     setLoading(true);
+    setErrors({});
     login({
       variables: {
         input: input,
@@ -135,19 +136,24 @@ const Login = () => {
                 <h6 className="text-center my-0">OR</h6>
                 <div className="social-form">
                   <div className="d-grid gap-2">
-                    <Button onClick={onLoginGoogle} className="btn-login-google">
-                      <i className="fab fa-google" ></i>
-                      {" "}
-                      GOOGLE
+                    <Button
+                      onClick={onLoginGoogle}
+                      className="btn-login-google"
+                    >
+                      <i className="fab fa-google"></i> GOOGLE
                     </Button>
-                    <Button onClick={onLoginGithub} className="btn-login-github" disabled={true}>
-                    <i className="fab fa-github"></i>
-                      {" "}
-                      GITHUB
+                    <Button
+                      onClick={onLoginGithub}
+                      className="btn-login-github"
+                      disabled={true}
+                    >
+                      <i className="fab fa-github"></i> GITHUB
                     </Button>
                   </div>
                 </div>
                 <div className="text-center">
+                  <Link to="/forgot-password">Forgot your password?</Link>
+                  <br />
                   <Link to="/register">
                     Don't have an account? Register here.
                   </Link>

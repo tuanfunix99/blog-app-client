@@ -21,9 +21,9 @@ const Register = () => {
   useEffect(() => {
     if (input.username && input.password && input.email) {
       if (
-        input.username.trim().length !== 1 &&
-        input.password.trim().length !== 1 &&
-        input.email.trim().length !== 1
+        input.username.trim().length > 1 &&
+        input.password.trim().length > 1 &&
+        input.email.trim().length > 1
       ) {
         setIsValid(true);
       } else {
@@ -41,6 +41,7 @@ const Register = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     setLoading(true);
+    setErrors({});
     register({
       variables: {
         input: input,
@@ -71,6 +72,7 @@ const Register = () => {
   const onActiveSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
+    setErrors({});
     active({
       variables: {
         input: input.code,

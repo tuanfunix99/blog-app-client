@@ -47,3 +47,9 @@ export const UPDATE_PASSWORD = gql`
     updatePassword(input: $input)
   }
 `;
+
+export const FORGOT_PASSWORD = gql`
+  mutation ($input: String) {
+    forgotPassword(input: $input)
+  }
+`;
