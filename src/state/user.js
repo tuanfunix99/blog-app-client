@@ -1,17 +1,11 @@
-
-import { atom } from 'recoil';
+import { atom } from "recoil";
 
 export const userState = new atom({
-  key: 'User',
-  default: null,  
-});
-
-export const completeLoadUserState = new atom({
-  key: 'LoadUser',
-  default: false,
+  key: "User",
+  default: null,
 });
 
 export const editorState = new atom({
-  key: 'EditorUser',
+  key: "EditorUser",
   default: null,
-})
+});

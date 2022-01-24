@@ -53,3 +53,9 @@ export const FORGOT_PASSWORD = gql`
     forgotPassword(input: $input)
   }
 `;
+
+export const CONTACT = gql`
+  mutation ($input: contactInput) {
+    contact(input: $input)
+  }
+`;

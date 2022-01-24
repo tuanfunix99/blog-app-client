@@ -3,7 +3,7 @@ import React, { Fragment, useState } from "react";
 import { Alert, Col, Container, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
-import AccessComponent from "../../components/access/AccessComponent";
+import AccessPage from "../../components/access/AccessPage";
 import Footer from "../../components/footer/Footer";
 import Loading from "../../components/loading/Loading";
 import Posts from "../../components/posts/Posts";
@@ -21,7 +21,6 @@ const MyPost = () => {
   const navigate = useNavigate();
   const user = useRecoilValue(userState);
 
-  
   useQuery(GET_MY_POST, {
     variables: {
       input: user && user._id,
@@ -42,8 +41,8 @@ const MyPost = () => {
   return (
     <Fragment>
       <TopBar />
-      <div className="main">
-        <AccessComponent isLogin={true}>
+      <AccessPage>
+        <div className="main">
           {myPost.length > 0 && (
             <div>
               <Posts posts={myPost} isUser={isUser} />
@@ -64,21 +63,9 @@ const MyPost = () => {
               </Row>
             </Container>
           )}
-        </AccessComponent>
-        <AccessComponent isLogin={false}>
-          <Container>
-            <Row>
-              <Col lg={8} className="mx-auto px-2">
-                <Alert.Heading>Access denied</Alert.Heading>
-                <Alert variant={"danger"}>
-                  Please <Link to="/login">Login</Link> to access page.
-                </Alert>
-              </Col>
-            </Row>
-          </Container>
-        </AccessComponent>
-      </div>
-      <Footer />
+          <Footer />
+        </div>
+      </AccessPage>
     </Fragment>
   );
 };

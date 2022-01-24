@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Fragment } from "react";
-import AccessComponent from "../../components/access/AccessComponent";
 import TopBar from "../../components/topbar/TopBar";
 import {
   Container,
@@ -24,6 +23,8 @@ import {
 import Resizer from "react-image-file-resizer";
 import FadeLoader from "react-spinners/FadeLoader";
 import Footer from "../../components/footer/Footer";
+import AccessComponent from "../../components/access/AccessComponent";
+import AccessPage from "../../components/access/AccessPage";
 
 import "./Setting.scss";
 
@@ -215,8 +216,8 @@ const Setting = () => {
     <Fragment>
       <ToastContainer />
       <TopBar />
-      <div className="main">
-        <AccessComponent isLogin={true}>
+      <AccessPage>
+        <div className="main">
           <Container>
             <Row>
               <Col lg={9} className="mx-auto">
@@ -272,7 +273,7 @@ const Setting = () => {
                           disabled={!isUpdateInfo}
                         />
                       </Form.Group>
-                      {user && !user.passportId && (
+                      <AccessComponent type={{passportId:true}}>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                           <Form.Label>Email address</Form.Label>
                           <Form.Control
@@ -287,7 +288,7 @@ const Setting = () => {
                             disabled={!isUpdateInfo}
                           />
                         </Form.Group>
-                      )}
+                      </AccessComponent>
                       <Button
                         className="mx-auto"
                         variant="primary"
@@ -309,7 +310,7 @@ const Setting = () => {
                         )}
                       </Button>
                     </Form>
-                    {user && !user.passportId && (
+                    <AccessComponent type={{passportId:true}}>
                       <Form
                         className="my-4"
                         onSubmit={onUpdatePasswordHandler}
@@ -381,27 +382,15 @@ const Setting = () => {
                           )}
                         </Button>
                       </Form>
-                    )}
+                    </AccessComponent>
                   </div>
                 </div>
               </Col>
             </Row>
           </Container>
-        </AccessComponent>
-        <AccessComponent isLogin={false}>
-          <Container>
-            <Row>
-              <Col lg={9} className="mx-auto">
-                <Alert variant={"danger"}>
-                  <Alert.Heading>Access denied</Alert.Heading>
-                  Please <Link to="/login">Login</Link> to access page.
-                </Alert>
-              </Col>
-            </Row>
-          </Container>
-        </AccessComponent>
-      </div>
-      <Footer />
+        </div>
+        <Footer />
+      </AccessPage>
     </Fragment>
   );
 };

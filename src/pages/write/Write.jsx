@@ -28,6 +28,7 @@ import { userState } from "../../state/user";
 import "./Write.scss";
 import Footer from "../../components/footer/Footer";
 import CardUser from "../../components/card-user/CardUser";
+import AccessPage from "../../components/access/AccessPage";
 
 const Write = () => {
   const categories = useRecoilValue(categoriesState);
@@ -235,9 +236,9 @@ const Write = () => {
       <ToastContainer />
       <TopBar />
       {displayViewDemo()}
-      <div className="main">
-        <div className="write">
-          <AccessComponent isLogin={true}>
+      <AccessPage>
+        <div className="main">
+          <div className="write">
             <Container className="px-4">
               <Row>
                 <Col lg={9} className="mx-auto px-0 mt-5 position-relative">
@@ -329,22 +330,10 @@ const Write = () => {
                 </Col>
               </Row>
             </Container>
-          </AccessComponent>
-          <AccessComponent isLogin={false}>
-            <Container>
-              <Row>
-                <Col lg={8} className="mx-auto px-2">
-                  <Alert variant={"danger"}>
-                    <Alert.Heading>Access denied</Alert.Heading>
-                    Please <Link to="/login">Login</Link> to access page.
-                  </Alert>
-                </Col>
-              </Row>
-            </Container>
-          </AccessComponent>
+          </div>
         </div>
-      </div>
         <Footer />
+      </AccessPage>
     </Fragment>
   );
 };

@@ -31,6 +31,7 @@ import Footer from "../../components/footer/Footer";
 import CardUser from "../../components/card-user/CardUser";
 
 import "./UpdatePost.scss";
+import AccessPage from "../../components/access/AccessPage";
 
 const UpdatePost = () => {
   const categories = useRecoilValue(categoriesState);
@@ -109,8 +110,6 @@ const UpdatePost = () => {
       );
     }
   }
-
-  const editorCore = React.useRef(null);
 
   const handleReady = (editor) => {
     new Undo({ editor });
@@ -273,9 +272,9 @@ const UpdatePost = () => {
       <ToastContainer />
       <TopBar />
       {displayViewDemo()}
-      <div className="main">
-        <div className="update-post">
-          <AccessComponent isLogin={true}>
+      <AccessPage>
+        <div className="main">
+          <div className="update-post">
             {post && (
               <Container className="px-4">
                 <Row>
@@ -363,22 +362,10 @@ const UpdatePost = () => {
               </Container>
             )}
             {!post && <Loading />}
-          </AccessComponent>
-          <AccessComponent isLogin={false}>
-            <Container>
-              <Row>
-                <Col lg={8} className="mx-auto px-2">
-                  <Alert variant={"danger"}>
-                    Access denied.Please <Link to="/login">Login</Link> to
-                    access page.
-                  </Alert>
-                </Col>
-              </Row>
-            </Container>
-          </AccessComponent>
+          </div>
         </div>
-      </div>
-      <Footer />
+        <Footer />
+      </AccessPage>
     </Fragment>
   );
 };

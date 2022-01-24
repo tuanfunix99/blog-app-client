@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import AccessComponent from "../access/AccessComponent";
 import { LOGOUT } from "../../graphql/mutation/user";
 import { useMutation, useSubscription } from "@apollo/client";
 import { ToastContainer, toast } from "react-toastify";
@@ -10,6 +9,7 @@ import { UPLOADED_PROFILEPIC } from "../../graphql/subscription/user";
 import { Button, Dropdown, Form, Modal } from "react-bootstrap";
 
 import "./TopBar.scss";
+import AccessComponent from "../access/AccessComponent";
 
 const TopBar = () => {
   const [logout] = useMutation(LOGOUT);
@@ -80,7 +80,7 @@ const TopBar = () => {
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>
-            <AccessComponent isLogin={true}>
+            <AccessComponent type={{isLogin: true}}>
               <Link className="link" to="/settings">
                 <img className="topImg" src={profilePic} alt="profile" />
                 <h6>{user ? user.username : ""}</h6>
@@ -107,7 +107,7 @@ const TopBar = () => {
           <Dropdown.Item eventKey="3" onClick={onSelectHandler}>
             CONTACT
           </Dropdown.Item>
-          <AccessComponent isLogin={true}>
+          <AccessComponent type={{isLogin: true}}>
             <Dropdown.Item eventKey="4" onClick={onSelectHandler}>
               WRITE
             </Dropdown.Item>
@@ -121,7 +121,7 @@ const TopBar = () => {
               LOGOUT
             </Dropdown.Item>
           </AccessComponent>
-          <AccessComponent isLogin={false}>
+          <AccessComponent type={{isLogin: false}}>
             <Dropdown.Item eventKey="7" onClick={onSelectHandler}>
               LOGIN
             </Dropdown.Item>
@@ -168,8 +168,10 @@ const TopBar = () => {
             </Link>
           </li>
           <li className="topListItem">ABOUT</li>
-          <li className="topListItem">CONTACT</li>
-          <AccessComponent isLogin={true}>
+          <li className="topListItem">
+            <Link to="/contact">CONTACT</Link>
+          </li>
+          <AccessComponent type={{isLogin: true}}>
             <li className="topListItem">
               <Link className="link" to="/write">
                 WRITE
@@ -194,12 +196,12 @@ const TopBar = () => {
               />
             </Form>
           </li>
-          <AccessComponent isLogin={true}>
+          <AccessComponent type={{isLogin: true}}>
             <li className="topListItem" onClick={onLogoutHanler}>
               LOGOUT
             </li>
           </AccessComponent>
-          <AccessComponent isLogin={false}>
+          <AccessComponent type={{isLogin: false}}>
             <li className="topListItem">
               <Link className="link" to="/login">
                 LOGIN
@@ -211,7 +213,7 @@ const TopBar = () => {
               </Link>
             </li>
           </AccessComponent>
-          <AccessComponent isLogin={true}>
+          <AccessComponent type={{isLogin: true}}>
             <Link className="link" to="/settings">
               <img className="topImg" src={profilePic} alt="profile" />
             </Link>
