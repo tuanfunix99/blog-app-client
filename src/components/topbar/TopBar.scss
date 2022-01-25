@@ -21,17 +21,17 @@
   color: gray;
 }
 
-.topBar{
+.topBar {
   flex: 3;
   display: none;
 }
 
-.topBar button{
+.topBar button {
   border: 0px;
   background: transparent;
 }
 
-.topTitle{
+.topTitle {
   flex: 3;
   align-items: center;
   font-family: "Lora", serif;
@@ -47,7 +47,7 @@
   justify-content: center;
 }
 
-.topIcon{
+.topIcon {
   font-size: 20px;
   margin-right: 10px;
   color: #444;
@@ -93,17 +93,37 @@
   cursor: pointer;
 }
 
-.link{
+.link {
   display: flex;
   text-decoration: none;
   align-items: center;
   text-transform: capitalize;
 }
 
-.form-search{
+.form-search {
   position: relative;
 }
 
-.form-search input{
+.form-search input {
   border-radius: 50px !important;
+}
+
+button#dropdown-custom-components {
+  background: white !important;
+  border: 0px;
+  display: flex;
+  padding: 0px 0px;
+}
+
+button#dropdown-custom-components::after {
+  display: none;
+}
+
+button#dropdown-custom-components img{
+  margin: 0px;
+}
+
+button#dropdown-custom-components:focus {
+  box-shadow: 0px 0px 0px !important;
+  outline: 0px !important;
 }

@@ -155,7 +155,7 @@ const Login = () => {
                   <Link to="/forgot-password">Forgot your password?</Link>
                   <br />
                   <Link to="/register">
-                    Don't have an account? Register here.
+                    Don't have account? Register here.
                   </Link>
                 </div>
               </div>

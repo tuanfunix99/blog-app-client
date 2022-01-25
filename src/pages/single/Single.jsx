@@ -16,7 +16,6 @@ import './Single.scss';
 const Single = () => {
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
-  // const [loading, setLoading] = useState(false);
   const { id } = useParams();
 
   const toastError = (message) => {

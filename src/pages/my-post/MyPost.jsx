@@ -18,7 +18,6 @@ const MyPost = () => {
   const [myPost, setMyPost] = useRecoilState(myPostState);
   const [isUser, setIsUser] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const navigate = useNavigate();
   const user = useRecoilValue(userState);
 
   useQuery(GET_MY_POST, {
@@ -33,15 +32,12 @@ const MyPost = () => {
       }
       setIsUser(true);
     },
-    onError() {
-      navigate("/not-found");
-    },
   });
 
   return (
-    <Fragment>
-      <TopBar />
-      <AccessPage>
+    <AccessPage>
+      <Fragment>
+        <TopBar />
         <div className="main">
           {myPost.length > 0 && (
             <div>
@@ -65,8 +61,8 @@ const MyPost = () => {
           )}
           <Footer />
         </div>
-      </AccessPage>
-    </Fragment>
+      </Fragment>
+    </AccessPage>
   );
 };
 

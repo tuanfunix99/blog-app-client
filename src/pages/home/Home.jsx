@@ -2,7 +2,7 @@ import { useQuery, useSubscription } from "@apollo/client";
 import React, { Fragment } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { useRecoilState } from "recoil";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
@@ -13,9 +13,9 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { GET_POSTS_PAGE } from "../../graphql/query/post";
 import { postsState } from "../../state/post";
+import { CREATED_POST } from "../../graphql/subscription/post";
 
 import "./Home.scss";
-import { CREATED_POST } from "../../graphql/subscription/post";
 
 const Home = () => {
   const [posts, setPosts] = useRecoilState(postsState);

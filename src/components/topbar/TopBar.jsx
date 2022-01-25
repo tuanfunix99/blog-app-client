@@ -7,9 +7,11 @@ import { useRecoilValue } from "recoil";
 import { userState } from "../../state/user";
 import { UPLOADED_PROFILEPIC } from "../../graphql/subscription/user";
 import { Button, Dropdown, Form, Modal } from "react-bootstrap";
+import AccessComponent from "../access/AccessComponent";
+import Permission from "../permission/Permission";
 
 import "./TopBar.scss";
-import AccessComponent from "../access/AccessComponent";
+import { Fragment } from "react";
 
 const TopBar = () => {
   const [logout] = useMutation(LOGOUT);
@@ -80,7 +82,7 @@ const TopBar = () => {
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>
-            <AccessComponent type={{isLogin: true}}>
+            <AccessComponent type={{ isLogin: true }}>
               <Link className="link" to="/settings">
                 <img className="topImg" src={profilePic} alt="profile" />
                 <h6>{user ? user.username : ""}</h6>
@@ -107,7 +109,7 @@ const TopBar = () => {
           <Dropdown.Item eventKey="3" onClick={onSelectHandler}>
             CONTACT
           </Dropdown.Item>
-          <AccessComponent type={{isLogin: true}}>
+          <AccessComponent type={{ isLogin: true }}>
             <Dropdown.Item eventKey="4" onClick={onSelectHandler}>
               WRITE
             </Dropdown.Item>
@@ -121,7 +123,7 @@ const TopBar = () => {
               LOGOUT
             </Dropdown.Item>
           </AccessComponent>
-          <AccessComponent type={{isLogin: false}}>
+          <AccessComponent type={{ isLogin: false }}>
             <Dropdown.Item eventKey="7" onClick={onSelectHandler}>
               LOGIN
             </Dropdown.Item>
@@ -171,7 +173,7 @@ const TopBar = () => {
           <li className="topListItem">
             <Link to="/contact">CONTACT</Link>
           </li>
-          <AccessComponent type={{isLogin: true}}>
+          <AccessComponent type={{ isLogin: true }}>
             <li className="topListItem">
               <Link className="link" to="/write">
                 WRITE
@@ -196,12 +198,7 @@ const TopBar = () => {
               />
             </Form>
           </li>
-          <AccessComponent type={{isLogin: true}}>
-            <li className="topListItem" onClick={onLogoutHanler}>
-              LOGOUT
-            </li>
-          </AccessComponent>
-          <AccessComponent type={{isLogin: false}}>
+          <AccessComponent type={{ isLogin: false }}>
             <li className="topListItem">
               <Link className="link" to="/login">
                 LOGIN
@@ -213,10 +210,31 @@ const TopBar = () => {
               </Link>
             </li>
           </AccessComponent>
-          <AccessComponent type={{isLogin: true}}>
-            <Link className="link" to="/settings">
-              <img className="topImg" src={profilePic} alt="profile" />
-            </Link>
+          <AccessComponent type={{ isLogin: true }}>
+            <Dropdown>
+              <Dropdown.Toggle id="dropdown-custom-components">
+                <img className="topImg" src={profilePic} alt="profile" />
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item>
+                  <Link className="link" to="/settings">
+                    SETTINGS
+                  </Link>
+                </Dropdown.Item>
+                <Permission userRole={user && user.role} roles={["admin", "manager"]}>
+                  <Dropdown.Item>
+                    <Link className="link" to="/admin-dashboard">
+                      ADMIN DASHBOARD
+                    </Link>
+                  </Dropdown.Item>
+                </Permission>
+                <Dropdown.Item>
+                  <li className="link" onClick={onLogoutHanler}>
+                    LOGOUT
+                  </li>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </AccessComponent>
         </ul>
       </div>

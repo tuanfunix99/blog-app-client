@@ -5,13 +5,11 @@ import {
   Container,
   Row,
   Col,
-  Alert,
   Form,
   Modal,
   Spinner,
 } from "react-bootstrap";
-import AccessComponent from "../../components/access/AccessComponent";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { createReactEditorJS } from "react-editor-js";
 import { EDITOR_JS_TOOLS } from "../../utils/parse/constants";
@@ -24,11 +22,11 @@ import { categoriesState } from "../../state/category";
 import { useMutation } from "@apollo/client";
 import { CREATE_POST } from "../../graphql/mutation/post";
 import { userState } from "../../state/user";
-
-import "./Write.scss";
 import Footer from "../../components/footer/Footer";
 import CardUser from "../../components/card-user/CardUser";
 import AccessPage from "../../components/access/AccessPage";
+
+import "./Write.scss";
 
 const Write = () => {
   const categories = useRecoilValue(categoriesState);
@@ -232,11 +230,11 @@ const Write = () => {
   };
 
   return (
-    <Fragment>
-      <ToastContainer />
-      <TopBar />
-      {displayViewDemo()}
-      <AccessPage>
+    <AccessPage>
+      <Fragment>
+        <ToastContainer />
+        <TopBar />
+        {displayViewDemo()}
         <div className="main">
           <div className="write">
             <Container className="px-4">
@@ -333,8 +331,8 @@ const Write = () => {
           </div>
         </div>
         <Footer />
-      </AccessPage>
-    </Fragment>
+      </Fragment>
+    </AccessPage>
   );
 };
 

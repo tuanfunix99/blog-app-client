@@ -4,7 +4,7 @@ import { userState } from "../../state/user";
 
 import "./Access.scss";
 
-const AccessPage = ({ children }) => {
+const AccessPage = ({ children, roles }) => {
   const user = useRecoilValue(userState);
 
   const templateAlert = (title, message) => {
@@ -26,9 +26,17 @@ const AccessPage = ({ children }) => {
   return (
     <Fragment>
       <Fragment>
-        {user && children}
         {!user &&
           templateAlert("ACCESS DENIDED", "Please login to access pages.")}
+        {user &&
+          roles &&
+          !roles.includes(user.role) &&
+          templateAlert(
+            "ACCESS DENIDED",
+            "Your account is not permitted to access this page."
+          )}
+        {user && roles && roles.includes(user.role) && children}
+        {user && !roles && children}
       </Fragment>
     </Fragment>
   );

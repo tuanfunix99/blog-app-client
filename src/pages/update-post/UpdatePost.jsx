@@ -10,10 +10,8 @@ import {
   Modal,
   Spinner,
 } from "react-bootstrap";
-import AccessComponent from "../../components/access/AccessComponent";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { createReactEditorJS } from "react-editor-js";
 import { EDITOR_JS_TOOLS } from "../../utils/parse/constants";
 import EdjsParser from "../../utils/parse/parse-editor-to-html";
 import parse from "html-react-parser";
@@ -29,9 +27,9 @@ import { GET_POST } from "../../graphql/query/post";
 import Loading from "../../components/loading/Loading";
 import Footer from "../../components/footer/Footer";
 import CardUser from "../../components/card-user/CardUser";
+import AccessPage from "../../components/access/AccessPage";
 
 import "./UpdatePost.scss";
-import AccessPage from "../../components/access/AccessPage";
 
 const UpdatePost = () => {
   const categories = useRecoilValue(categoriesState);
@@ -43,12 +41,10 @@ const UpdatePost = () => {
   const [publishing, setPublishing] = useState(false);
   const [content, setContent] = useState({});
   const [html, setHtml] = useState("");
-  const ReactEditorJS = createReactEditorJS();
   const [updatePost] = useMutation(UPDATE_POST);
   const user = useRecoilValue(userState);
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
-  const [blocks, setBlocks] = useState([]);
   const { id } = useParams();
   const [editor, setEditor] = useState(null);
 
@@ -268,11 +264,11 @@ const UpdatePost = () => {
   };
 
   return (
-    <Fragment>
-      <ToastContainer />
-      <TopBar />
-      {displayViewDemo()}
-      <AccessPage>
+    <AccessPage>
+      <Fragment>
+        <ToastContainer />
+        <TopBar />
+        {displayViewDemo()}
         <div className="main">
           <div className="update-post">
             {post && (
@@ -364,9 +360,9 @@ const UpdatePost = () => {
             {!post && <Loading />}
           </div>
         </div>
-        <Footer />
-      </AccessPage>
-    </Fragment>
+      </Fragment>
+      <Footer />
+    </AccessPage>
   );
 };
 

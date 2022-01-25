@@ -213,10 +213,10 @@ const Setting = () => {
   };
 
   return (
-    <Fragment>
-      <ToastContainer />
-      <TopBar />
-      <AccessPage>
+    <AccessPage>
+      <Fragment>
+        <ToastContainer />
+        <TopBar />
         <div className="main">
           <Container>
             <Row>
@@ -273,7 +273,7 @@ const Setting = () => {
                           disabled={!isUpdateInfo}
                         />
                       </Form.Group>
-                      <AccessComponent type={{passportId:true}}>
+                      <AccessComponent type={{ passportId: true }}>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                           <Form.Label>Email address</Form.Label>
                           <Form.Control
@@ -310,7 +310,7 @@ const Setting = () => {
                         )}
                       </Button>
                     </Form>
-                    <AccessComponent type={{passportId:true}}>
+                    <AccessComponent type={{ passportId: true }}>
                       <Form
                         className="my-4"
                         onSubmit={onUpdatePasswordHandler}
@@ -390,8 +390,8 @@ const Setting = () => {
           </Container>
         </div>
         <Footer />
-      </AccessPage>
-    </Fragment>
+      </Fragment>
+    </AccessPage>
   );
 };
 

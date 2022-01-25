@@ -24,6 +24,7 @@ import Contact from "./pages/contact/Contact";
 
 import "./App.scss";
 import { Fragment } from "react";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 function App() {
   const [user, setUser] = useRecoilState(userState);
@@ -72,8 +73,6 @@ function App() {
   const onCloseHandler = () => {
     document.body.classList.remove("modal-open");
   };
-
-  console.log(user);
   
   return (
     <Fragment>
@@ -99,6 +98,7 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/register" element={<Register />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/*" element={<NotFound />} />
           </Routes>
         </Fragment>
