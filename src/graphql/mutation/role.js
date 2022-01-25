@@ -10,6 +10,7 @@ export const UPDATE_USER_FROM_ROLE = gql`
       passportId
       isActive
       profilePic
+      createdAt
     }
   }
 `;

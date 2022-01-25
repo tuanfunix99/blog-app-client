@@ -15,12 +15,12 @@ import UpdateUserDashboard from "./UpdateUserDashboard";
 import Permission from "../../../components/permission/Permission";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../../state/user";
-import Loading from "../../../components/loading/Loading";
 import Toast from "../../../utils/Toast";
 import { REGISTED } from "../../../graphql/subscription/user";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { useEffect } from "react";
+import moment from "moment";
 
 const UsersDashboard = () => {
   const [users, setUsers] = useState([]);
@@ -31,7 +31,9 @@ const UsersDashboard = () => {
   const [role, setRole] = useState("");
   const [options, setOptions] = useState({
     keyword: "",
-    filter: {},
+    filter: {
+      role: "all",
+    },
     pagination: {
       page: 1,
       perpage: 4,
@@ -67,14 +69,19 @@ const UsersDashboard = () => {
   const loadUsersTable = (users) => {
     if (users.length > 0) {
       return users.map((profile, key) => {
+        const createdAt = moment(
+          new Date(parseInt(profile.createdAt.toString()))
+        ).format("MMM Do YY");
         return (
-          <Fragment>
-            <tr key={key}>
+          <Fragment key={key}>
+            <tr>
               <td>{profile._id}</td>
+              <td><img src={profile.profilePic} alt={profile.username} /></td>
               <td>{profile.username}</td>
               <td>{profile.passportId ? "social" : profile.email}</td>
               <td>{profile.isActive ? "active" : "disabled"}</td>
               <td>{profile.role}</td>
+              <td>{createdAt}</td>
               <td className="text-center">
                 <Button
                   variant="warning"
@@ -133,10 +140,12 @@ const UsersDashboard = () => {
                   <thead>
                     <tr>
                       <th>Id</th>
+                      <th className="text-center">Avatar</th>
                       <th>Username</th>
                       <th>email</th>
                       <th>Active</th>
                       <th>Role</th>
+                      <th>Joinned</th>
                       <th className="text-center">Update</th>
                       <Permission userRole={user.role} roles={["manager"]}>
                         <th className="text-center">Delete</th>
@@ -187,25 +196,19 @@ const UsersDashboard = () => {
   };
 
   const onFilterRole = (e) => {
-    if (e.target.value !== "all") {
-      setRole(e.target.value);
-      setOptions((pre) => {
-        return {
-          ...pre,
-          filter: {
-            role: e.target.value,
-          },
-        };
-      });
-    } else {
-      setRole("");
-      setOptions((pre) => {
-        delete pre.filter.role;
-        return {
-          ...pre,
-        };
-      });
-    }
+    setRole(e.target.value);
+    setOptions((pre) => {
+      return {
+        ...pre,
+        filter: {
+          role: e.target.value,
+        },
+        pagination: {
+          perpage: 4,
+          page: 1,
+        },
+      };
+    });
   };
 
   const onSearchHandler = (e) => {
@@ -213,9 +216,18 @@ const UsersDashboard = () => {
       return {
         ...pre,
         keyword: e.target.value,
+        pagination: {
+          page: 1,
+          perpage: 4,
+        },
       };
     });
   };
+
+  const onRefresh = () => {
+    setUsers([]);
+    setCount(0);
+  }
 
   return (
     <Fragment>
