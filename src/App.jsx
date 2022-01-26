@@ -18,7 +18,7 @@ import UpdatePost from "./pages/update-post/UpdatePost";
 import Search from "./pages/search/Search";
 import SearchCategory from "./pages/search/SearchCategory";
 import axios from "axios";
-import PacmanLoader from "react-spinners/PacmanLoader";
+import BarLoader from "react-spinners/BarLoader";
 import ForgotPassword from "./pages/forgot-password/ForgotPassword";
 import Contact from "./pages/contact/Contact";
 
@@ -79,7 +79,7 @@ function App() {
       {!completed && (
         <div className="loading">
           {onOpenHandler()}
-          <PacmanLoader color={"#35B5BF"} loading={!completed} size={40} />
+          <BarLoader color={"#35B5BF"} loading={!completed} size={40} />
         </div>
       )}
       {completed && (
