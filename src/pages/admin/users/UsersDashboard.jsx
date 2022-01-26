@@ -15,14 +15,13 @@ import UpdateUserDashboard from "./UpdateUserDashboard";
 import Permission from "../../../components/permission/Permission";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../../state/user";
-import Toast from "../../../utils/Toast";
 import { REGISTED } from "../../../graphql/subscription/user";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { useEffect } from "react";
 import moment from "moment";
 
-const UsersDashboard = () => {
+const UsersDashboard = ({ Toast }) => {
   const [users, setUsers] = useState([]);
   const [count, setCount] = useState(0);
   const [isUpdate, setIsUpdate] = useState(false);
@@ -36,7 +35,7 @@ const UsersDashboard = () => {
     },
     pagination: {
       page: 1,
-      perpage: 4,
+     perpage: 5,
     },
   });
 
@@ -74,7 +73,7 @@ const UsersDashboard = () => {
         ).format("MMM Do YY");
         return (
           <Fragment key={key}>
-            <tr>
+            <tr className="tr-user-dashboard">
               <td>{profile._id}</td>
               <td><img src={profile.profilePic} alt={profile.username} /></td>
               <td>{profile.username}</td>
@@ -109,7 +108,7 @@ const UsersDashboard = () => {
       <Fragment>
         <Container>
           <Row>
-            <Col lg={12} className="mx-auto mt-5">
+            <Col lg={12} className="mx-auto mt-3">
               <Form className="form-filter-user">
                 <Permission userRole={user.role} roles={["manager"]}>
                   <Form.Group className="form-filter-user-group">
@@ -188,7 +187,7 @@ const UsersDashboard = () => {
       return {
         ...pre,
         pagination: {
-          perpage: 4,
+         perpage: 5,
           page: value,
         },
       };
@@ -204,7 +203,7 @@ const UsersDashboard = () => {
           role: e.target.value,
         },
         pagination: {
-          perpage: 4,
+         perpage: 5,
           page: 1,
         },
       };
@@ -218,7 +217,7 @@ const UsersDashboard = () => {
         keyword: e.target.value,
         pagination: {
           page: 1,
-          perpage: 4,
+         perpage: 5,
         },
       };
     });
@@ -231,7 +230,6 @@ const UsersDashboard = () => {
 
   return (
     <Fragment>
-      {Toast.container()}
       <Fragment>
         {!isUpdate && displayUsers()}
         {isUpdate && (
@@ -243,7 +241,7 @@ const UsersDashboard = () => {
           />
         )}
       </Fragment>
-      {!loading && (
+      {!loading && !isUpdate && (
         <div className="pagination-bar">
           <Pagination
             count={count}

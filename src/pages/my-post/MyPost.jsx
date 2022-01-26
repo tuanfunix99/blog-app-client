@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import React, { Fragment, useState } from "react";
 import { Alert, Col, Container, Row } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import AccessPage from "../../components/access/AccessPage";
 import Footer from "../../components/footer/Footer";
@@ -59,8 +59,8 @@ const MyPost = () => {
               </Row>
             </Container>
           )}
-          <Footer />
         </div>
+        <Footer />
       </Fragment>
     </AccessPage>
   );

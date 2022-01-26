@@ -11,11 +11,9 @@ import AccessComponent from "../access/AccessComponent";
 import Permission from "../permission/Permission";
 
 import "./TopBar.scss";
-import { Fragment } from "react";
 
 const TopBar = () => {
   const [logout] = useMutation(LOGOUT);
-
   const user = useRecoilValue(userState);
   const [profilePic, setProfilePic] = useState("");
   const [show, setShow] = useState(false);

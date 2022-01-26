@@ -1,13 +1,23 @@
+@mixin variant($color, $background) {
+  color: $color !important;
+  background-color: $background !important;
+  border-color: $background !important;
+}
+
 .btn.btn-danger {
-  color: #fff !important;
-  background-color: #bb2d3b !important;
-  border-color: #b02a37 !important;
+  @include variant(#fff, #bb2d3b);
 }
 
 .btn.btn-warning {
-  color: #fff !important;
-  background-color: #ffc107 !important;
-  border-color: #ffc107 !important;
+  @include variant(#fff, #ffc107);
+}
+
+.btn.btn-success {
+  @include variant(#fff, #198754);
+}
+
+.btn.btn-info {
+  @include variant(#fff, #31d2f2);
 }
 
 .form-update {
@@ -16,17 +26,17 @@
   border-radius: 5px;
 }
 
-.form-filter-user{
+.form-filter-user {
   margin-bottom: 10px;
   display: flex;
 }
 
-.form-filter-user-group{
+.form-filter-user-group {
   width: 20%;
   margin-right: 10px;
 }
 
-img{
+.tr-user-dashboard img {
   width: 40px;
   height: 40px;
   border-radius: 50%;

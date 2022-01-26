@@ -17,3 +17,18 @@ export const GET_USERS = gql`
     }
   }
 `;
+
+export const GET_CONTACTS = gql`
+  query ($options: Option) {
+    contacts(options: $options) {
+      count
+      contacts {
+        name
+        email
+        content
+        replied
+        createdAt
+      }
+    }
+  }
+`;
