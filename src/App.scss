@@ -81,7 +81,7 @@ body.modal-open {
 
 @mixin variant($color, $background) {
   color: $color !important;
-  background-color: $background !important;
+  background-color: $background;
   border-color: $background !important;
 }
 
@@ -103,4 +103,20 @@ body.modal-open {
 
 .btn.btn-secondary {
   @include variant(#fff, #6c757d);
+}
+
+.btn.btn-teal {
+  @include variant(#fff, teal)
+}
+
+.btn.btn-teal:hover{
+  @include variant(#fff, rgb(10, 97, 97))
+}
+
+.btn.btn-google{
+  @include variant(#fff, #e24242);
+}
+
+.btn.btn-github{
+  @include variant(#fff, #3d3d3d);
 }

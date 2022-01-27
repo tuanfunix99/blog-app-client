@@ -115,7 +115,7 @@ const Login = () => {
               </Form.Group>
               <div className="d-grid gap-2">
                 <Button
-                  variant="primary"
+                  variant="teal"
                   type="submit"
                   disabled={!isValid || loading}
                 >
@@ -136,15 +136,12 @@ const Login = () => {
                 <h6 className="text-center my-0">OR</h6>
                 <div className="social-form">
                   <div className="d-grid gap-2">
-                    <Button
-                      onClick={onLoginGoogle}
-                      className="btn-login-google"
-                    >
+                    <Button variant="google" onClick={onLoginGoogle}>
                       <i className="fab fa-google"></i> GOOGLE
                     </Button>
                     <Button
+                      variant="github"
                       onClick={onLoginGithub}
-                      className="btn-login-github"
                       disabled={true}
                     >
                       <i className="fab fa-github"></i> GITHUB
@@ -154,9 +151,7 @@ const Login = () => {
                 <div className="text-center">
                   <Link to="/forgot-password">Forgot your password?</Link>
                   <br />
-                  <Link to="/register">
-                    Don't have account? Register here.
-                  </Link>
+                  <Link to="/register">Don't have account? Register here.</Link>
                 </div>
               </div>
             </Form>

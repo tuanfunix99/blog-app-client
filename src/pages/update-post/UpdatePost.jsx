@@ -1,14 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import Resizer from "react-image-file-resizer";
 import TopBar from "../../components/topbar/TopBar";
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  Modal,
-  Spinner,
-} from "react-bootstrap";
+import { Container, Row, Col, Form, Modal, Spinner } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { EDITOR_JS_TOOLS } from "../../utils/parse/constants";
 import EdjsParser from "../../utils/parse/parse-editor-to-html";
@@ -27,6 +20,7 @@ import Footer from "../../components/footer/Footer";
 import CardUser from "../../components/card-user/CardUser";
 import AccessPage from "../../components/access/AccessPage";
 import Toast from "../../utils/Toast";
+import { Button } from 'react-bootstrap';
 
 import "./UpdatePost.scss";
 
@@ -305,16 +299,17 @@ const UpdatePost = () => {
                         {displayCategories()}
                       </Form.Group>
                       <Form.Group className="form-publish-button mt-3">
-                        <button
+                        <Button
+                          variant="teal"
                           type="button"
-                          className="btn btn-primary mx-3"
+                          className="mx-3"
                           onClick={onShowHandler}
                           disabled={publishing}
                         >
                           View Demo
-                        </button>
-                        <button
-                          className="btn btn-primary"
+                        </Button>
+                        <Button
+                          variant="teal"
                           type="submit"
                           onClick={onPublisPostHandler}
                           disabled={publishing}
@@ -332,7 +327,7 @@ const UpdatePost = () => {
                               Updating...
                             </div>
                           )}
-                        </button>
+                        </Button>
                       </Form.Group>
                     </Form>
                   </Col>

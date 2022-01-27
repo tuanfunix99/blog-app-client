@@ -1,7 +1,15 @@
 import React, { Fragment, useState } from "react";
 import Resizer from "react-image-file-resizer";
 import TopBar from "../../components/topbar/TopBar";
-import { Container, Row, Col, Form, Modal, Spinner } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  Modal,
+  Spinner,
+  Button,
+} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { createReactEditorJS } from "react-editor-js";
 import { EDITOR_JS_TOOLS } from "../../utils/parse/constants";
@@ -271,16 +279,17 @@ const Write = () => {
                       {displayCategories()}
                     </Form.Group>
                     <Form.Group className="form-publish-button mt-3">
-                      <button
+                      <Button
+                        variant="teal"
                         type="button"
-                        className="btn btn-primary mx-3"
+                        className="mx-3"
                         onClick={onShowHandler}
                         disabled={publishing}
                       >
                         View Demo
-                      </button>
-                      <button
-                        className="btn btn-primary"
+                      </Button>
+                      <Button
+                        variant="teal"
                         type="submit"
                         onClick={onPublisPostHandler}
                         disabled={publishing}
@@ -298,7 +307,7 @@ const Write = () => {
                             Publishing...
                           </div>
                         )}
-                      </button>
+                      </Button>
                     </Form.Group>
                   </Form>
                 </Col>

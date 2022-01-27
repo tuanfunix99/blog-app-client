@@ -51,9 +51,9 @@ let defaultParsers = {
     const regex = new RegExp(/<%data\.(.+?)%>/, "gm");
     if (embedMarkups[data.service]) {
       if (data.service === "instagram") {
-        data.length = `width="100%" height="810px"`;
+        data.length = `width="100%" height="800px"`;
       } else if (data.service === " twitter") {
-        data.length = `width="100%" height="600px"`;
+        data.length = `width="100%" height="450px"`;
       }
       if (data.caption.trim().length > 0) {
         elements.push(`<div className='caption'>${data.caption.trim()}</div>`);

@@ -129,7 +129,7 @@ const Setting = () => {
             ...pre,
             username: data.updateInfo.username,
             email: data.updateInfo.email,
-            passportId: data.passportId,
+            passportId: user.passportId
           };
         });
         setUpdating(false);
@@ -272,7 +272,7 @@ const Setting = () => {
                       </AccessComponent>
                       <Button
                         className="mx-auto"
-                        variant="primary"
+                        variant="teal"
                         type="submit"
                         disabled={!isUpdateInfo}
                       >
@@ -344,7 +344,7 @@ const Setting = () => {
                           )}
                         </Form.Group>
                         <Button
-                          variant="primary"
+                          variant="teal"
                           type="submit"
                           disabled={!isUpdatePassword}
                         >

@@ -8,7 +8,6 @@ import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import Loading from "../../components/loading/Loading";
 import Posts from "../../components/posts/Posts";
-import SideBar from "../../components/sidebar/SideBar";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { GET_POSTS_PAGE } from "../../graphql/query/post";
@@ -70,7 +69,6 @@ const Home = () => {
           <Container fluid>
             <Row>
               <Col lg={12} md={12} className="position-relative">
-                {/* <h2>New Posts:</h2> */}
                 {posts.length > 0 && !loadPage && <Posts posts={posts} />}
                 {posts.length === 0 && <Loading />}
                 {loadPage && (

@@ -1,4 +1,3 @@
-
 @import "~bootstrap/scss/bootstrap";
 
 .login {
@@ -57,36 +56,8 @@
   border-radius: 5px;
 }
 
-.btn {
-  background: teal !important;
-  transition: 0.5s;
-}
-
-.btn:hover{
-  background: rgb(2, 112, 112) !important;
-}
-
-.btn:focus{
-  box-shadow: 0px !important;
-  outline: 0px !important;
-}
-
-.btn.btn-login-google{
-  background: #e24242 !important;
-  border: 0px;
-}
-
-.btn.btn-login-google:hover{
-  background: rgb(214, 12, 12) !important;
-  border: 0px;
-}
-
-.btn.btn-login-github{
-  background: #3d3d3d !important;
-  border: 0px;
-}
-
-.btn.btn-login-github:hover{
-  background: #161616 !important;
-  border: 0px;
+@mixin variant($color, $background) {
+  color: $color !important;
+  background-color: $background !important;
+  border-color: $background !important;
 }

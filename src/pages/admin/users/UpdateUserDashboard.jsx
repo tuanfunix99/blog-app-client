@@ -139,7 +139,7 @@ const UpdateUserDashboard = ({
               </Button>
               <Button
                 className="mx-2"
-                variant="primary"
+                variant="teal"
                 type="submit"
                 disabled={!isValid || loading}
               >

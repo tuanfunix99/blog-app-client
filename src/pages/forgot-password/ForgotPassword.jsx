@@ -78,7 +78,7 @@ const ForgotPassword = () => {
                   </Form.Group>
                   <div className="d-grid gap-2">
                     <Button
-                      variant="primary"
+                      variant="teal"
                       type="submit"
                       disabled={!isValid || loading}
                     >
