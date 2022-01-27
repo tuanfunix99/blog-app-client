@@ -26,6 +26,7 @@ body.modal-open {
   }
 }
 
+
 @media only screen and (max-width: 1120px) {
   .topBar {
     flex: 3;
@@ -63,6 +64,7 @@ body.modal-open {
 
 .main {
   min-height: 70vh;
+  padding: 0px 20px;
 }
 
 .loading {
