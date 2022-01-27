@@ -19,7 +19,7 @@ const CardUser = ({ user, createdAt }) => {
               />
               <div className="carduser__info">
                 <h6>{user.username}</h6>
-                <small>{createdAt}</small>
+                <small>Posted on {createdAt}</small>
               </div>
             </div>
           </Col>
