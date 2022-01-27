@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button, Spinner } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
 import { ACTIVE_ACCOUNT, REGISTER } from "../../graphql/mutation/user";
-import { ToastContainer, toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
+import Toast from "../../utils/Toast";
 
 import "./Register.scss";
 
@@ -49,13 +49,8 @@ const Register = () => {
       onCompleted(data) {
         if (data.register) {
           setIsActive(true);
-          toast.success(
-            "Register successful.Check your email to get code active account.",
-            {
-              position: "top-center",
-              autoClose: 6000,
-              theme:"colored"
-            }
+          Toast.success(
+            "Register successful.Check your email to get code active account."
           );
         }
         setLoading(false);
@@ -95,7 +90,6 @@ const Register = () => {
 
   return (
     <div className="register">
-      <ToastContainer />
       {!isActive && (
         <Container>
           <Row>

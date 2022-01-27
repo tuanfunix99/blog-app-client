@@ -4,8 +4,9 @@
   flex: 9 1;
   display: flex;
   flex-wrap: wrap;
-  margin: 20px;
-  justify-content: space-around;
+  margin: 30px 25px;
+  justify-content: flex-start;
+  flex-direction: row;
 }
 
 .tool {

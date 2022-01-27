@@ -78,7 +78,7 @@ const Posts = ({ posts, isUser }) => {
             Close
           </Button>
           <Button
-            variant="primary"
+            variant="danger"
             onClick={onDeleteHandler}
             disabled={deleting}
           >
@@ -123,7 +123,7 @@ const Posts = ({ posts, isUser }) => {
       {displayModalDelete()}
       {cards.length > 0 && (
         <div className="tool">
-          <Button variant="primary" onClick={onShowHandler}>
+          <Button variant="danger" onClick={onShowHandler}>
             <i className="fas fa-trash"></i>
           </Button>
         </div>

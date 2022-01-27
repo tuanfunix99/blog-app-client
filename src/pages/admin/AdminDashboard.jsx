@@ -30,7 +30,6 @@ const AdminDashboard = () => {
   return (
     <Fragment>
       <AccessPage roles={["admin", "manager"]}>
-        {Toast.container()}
         <Navbar onOptions={onOptionsHandler} Toast={Toast} />
         {option === "users" && <UsersDashboard Toast={Toast} />}
         {option === "posts" && "Posts"}

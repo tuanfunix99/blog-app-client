@@ -8,8 +8,8 @@ import { Col, Container, Row } from "react-bootstrap";
 import EdjsParser from "../../utils/parse/parse-editor-to-html";
 import Loading from "../../components/loading/Loading";
 import Footer from "../../components/footer/Footer";
-import { ToastContainer, toast } from "react-toastify";
 import CardUser from "../../components/card-user/CardUser";
+import Toast from "../../utils/Toast";
 
 import './Single.scss';
 
@@ -18,14 +18,6 @@ const Single = () => {
   const [post, setPost] = useState(null);
   const { id } = useParams();
 
-  const toastError = (message) => {
-    toast.error(message, {
-      position: "top-center",
-      autoClose: 5000,
-      theme: "colored",
-    });
-  };
-
   const { loading } = useQuery(GET_POST, {
     variables: { input: id },
     onCompleted(data) {
@@ -33,7 +25,7 @@ const Single = () => {
         const clone = {...data.post};
         setPost(clone);
       } else {
-        toastError("Error System.Can't load post");
+        Toast.error("Error System.Can't load post");
       }
     },
     onError() {
@@ -70,7 +62,6 @@ const Single = () => {
 
   return (
     <Fragment>
-      <ToastContainer />
       <TopBar />
       <div className="single">
         {loading && <Loading />}

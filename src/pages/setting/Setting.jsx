@@ -5,14 +5,11 @@ import {
   Container,
   Row,
   Col,
-  Alert,
   Form,
   Button,
   Spinner,
 } from "react-bootstrap";
 import { useRecoilState } from "recoil";
-import { ToastContainer, toast } from "react-toastify";
-import { Link } from "react-router-dom";
 import { userState } from "../../state/user";
 import { useMutation } from "@apollo/client";
 import {
@@ -25,6 +22,7 @@ import FadeLoader from "react-spinners/FadeLoader";
 import Footer from "../../components/footer/Footer";
 import AccessComponent from "../../components/access/AccessComponent";
 import AccessPage from "../../components/access/AccessPage";
+import Toast from "../../utils/Toast";
 
 import "./Setting.scss";
 
@@ -53,22 +51,6 @@ const Setting = () => {
     }
   }, [user]);
 
-  const toastError = (message) => {
-    toast.error(message, {
-      position: "top-center",
-      autoClose: 3000,
-      theme: "colored",
-    });
-  };
-
-  const toastSuccess = (message) => {
-    toast.success(message, {
-      position: "top-center",
-      autoClose: 3000,
-      theme: "colored",
-    });
-  };
-
   const resizeFile = (file) =>
     new Promise((resolve) => {
       Resizer.imageFileResizer(
@@ -96,10 +78,10 @@ const Setting = () => {
     const types = ["image/jpeg", "image/jpg", "image/png"];
     if (file) {
       if (file.size > 2000000) {
-        toastError("File size is bigger than 2MB");
+        Toast.error("File size is bigger than 2MB");
         return;
       } else if (!types.includes(file.type)) {
-        toastError("File not image");
+        Toast.error("File not image");
         return;
       }
       try {
@@ -118,15 +100,15 @@ const Setting = () => {
               return { ...pre, profilePic: image, passportId: user.passportId };
             });
             setUploading(false);
-            toastSuccess("Upload profile picture successful");
+            Toast.success("Upload profile picture successful");
           },
           onError() {
-            toastError("Error System.Can't not upload file");
+            Toast.error("Error System.Can't not upload file");
             setUploading(false);
           },
         });
       } catch (error) {
-        toastError("Error System.Can't not upload file");
+        Toast.error("Error System.Can't not upload file");
         setUploading(false);
       }
     }
@@ -141,7 +123,7 @@ const Setting = () => {
         input: info,
       },
       onCompleted(data) {
-        toastSuccess("Successfully updated");
+        Toast.success("Successfully updated");
         setUser((pre) => {
           return {
             ...pre,
@@ -153,7 +135,7 @@ const Setting = () => {
         setUpdating(false);
       },
       onError() {
-        toastError("Error System.Can't update info");
+        Toast.error("Error System.Can't update info");
         setUpdating(false);
       },
     });
@@ -168,7 +150,7 @@ const Setting = () => {
         input: passwdInput,
       },
       onCompleted(data) {
-        toastSuccess("Successfully updated");
+        Toast.success("Successfully updated");
         setPasswdInput({
           password: "",
           newPassword: "",
@@ -215,7 +197,6 @@ const Setting = () => {
   return (
     <AccessPage>
       <Fragment>
-        <ToastContainer />
         <TopBar />
         <div className="main">
           <Container>

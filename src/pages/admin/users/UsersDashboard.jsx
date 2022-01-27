@@ -35,7 +35,7 @@ const UsersDashboard = ({ Toast }) => {
     },
     pagination: {
       page: 1,
-     perpage: 5,
+      perpage: 5,
     },
   });
 
@@ -58,9 +58,6 @@ const UsersDashboard = ({ Toast }) => {
         data: { registed },
       },
     }) {
-      const usersCopy = [...users];
-      usersCopy.unshift({ ...registed });
-      setUsers([...usersCopy]);
       Toast.info("New user registed on blog");
     },
   });
@@ -75,7 +72,9 @@ const UsersDashboard = ({ Toast }) => {
           <Fragment key={key}>
             <tr className="tr-user-dashboard">
               <td>{profile._id}</td>
-              <td><img src={profile.profilePic} alt={profile.username} /></td>
+              <td>
+                <img src={profile.profilePic} alt={profile.username} />
+              </td>
               <td>{profile.username}</td>
               <td>{profile.passportId ? "social" : profile.email}</td>
               <td>{profile.isActive ? "active" : "disabled"}</td>
@@ -187,7 +186,7 @@ const UsersDashboard = ({ Toast }) => {
       return {
         ...pre,
         pagination: {
-         perpage: 5,
+          perpage: 5,
           page: value,
         },
       };
@@ -203,7 +202,7 @@ const UsersDashboard = ({ Toast }) => {
           role: e.target.value,
         },
         pagination: {
-         perpage: 5,
+          perpage: 5,
           page: 1,
         },
       };
@@ -217,7 +216,7 @@ const UsersDashboard = ({ Toast }) => {
         keyword: e.target.value,
         pagination: {
           page: 1,
-         perpage: 5,
+          perpage: 5,
         },
       };
     });
@@ -226,7 +225,7 @@ const UsersDashboard = ({ Toast }) => {
   const onRefresh = () => {
     setUsers([]);
     setCount(0);
-  }
+  };
 
   return (
     <Fragment>

@@ -130,7 +130,7 @@ const UpdateUserDashboard = ({
                 </Form.Group>
               </Permission>
               <Button
-                variant="primary"
+                variant="secondary"
                 type="submit"
                 onClick={onCancelUpdate}
                 disabled={loading}

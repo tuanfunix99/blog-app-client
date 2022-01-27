@@ -1,25 +1,3 @@
-@mixin variant($color, $background) {
-  color: $color !important;
-  background-color: $background !important;
-  border-color: $background !important;
-}
-
-.btn.btn-danger {
-  @include variant(#fff, #bb2d3b);
-}
-
-.btn.btn-warning {
-  @include variant(#fff, #ffc107);
-}
-
-.btn.btn-success {
-  @include variant(#fff, #198754);
-}
-
-.btn.btn-info {
-  @include variant(#fff, #31d2f2);
-}
-
 .form-update {
   background-color: #ececec;
   padding: 15px 15px;

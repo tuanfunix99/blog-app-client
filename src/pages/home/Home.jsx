@@ -27,7 +27,7 @@ const Home = () => {
     variables: {
       input: {
         page: page,
-        perPage: 4,
+        perPage: 6,
       },
     },
   });
@@ -69,7 +69,8 @@ const Home = () => {
         <div className="home">
           <Container fluid>
             <Row>
-              <Col lg={8} md={12} className="position-relative">
+              <Col lg={12} md={12} className="position-relative">
+                {/* <h2>New Posts:</h2> */}
                 {posts.length > 0 && !loadPage && <Posts posts={posts} />}
                 {posts.length === 0 && <Loading />}
                 {loadPage && (
@@ -88,9 +89,9 @@ const Home = () => {
                 )}
                 <Stack spacing={2}></Stack>
               </Col>
-              <Col lg={4} md={0}>
+              {/* <Col lg={12} md={0}>
                 <SideBar />
-              </Col>
+              </Col> */}
             </Row>
           </Container>
         </div>

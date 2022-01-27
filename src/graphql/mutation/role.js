@@ -14,3 +14,9 @@ export const UPDATE_USER_FROM_ROLE = gql`
     }
   }
 `;
+
+export const DELETE_CONTACT = gql`
+  mutation ($input: ID!) {
+    deleteContact(input: $input)
+  }
+`;

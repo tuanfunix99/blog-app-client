@@ -23,6 +23,7 @@ export const GET_CONTACTS = gql`
     contacts(options: $options) {
       count
       contacts {
+        _id
         name
         email
         content

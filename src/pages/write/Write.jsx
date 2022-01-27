@@ -1,16 +1,8 @@
 import React, { Fragment, useState } from "react";
 import Resizer from "react-image-file-resizer";
 import TopBar from "../../components/topbar/TopBar";
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  Modal,
-  Spinner,
-} from "react-bootstrap";
+import { Container, Row, Col, Form, Modal, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
 import { createReactEditorJS } from "react-editor-js";
 import { EDITOR_JS_TOOLS } from "../../utils/parse/constants";
 import EdjsParser from "../../utils/parse/parse-editor-to-html";
@@ -25,6 +17,7 @@ import { userState } from "../../state/user";
 import Footer from "../../components/footer/Footer";
 import CardUser from "../../components/card-user/CardUser";
 import AccessPage from "../../components/access/AccessPage";
+import Toast from "../../utils/Toast";
 
 import "./Write.scss";
 
@@ -68,22 +61,6 @@ const Write = () => {
     editorCore.current = instance;
   }, []);
 
-  const toastError = (message) => {
-    toast.error(message, {
-      position: "top-center",
-      autoClose: 3000,
-      theme: "colored",
-    });
-  };
-
-  const toastWarning = (message) => {
-    toast.warning(message, {
-      position: "top-center",
-      autoClose: 3000,
-      theme: "colored",
-    });
-  };
-
   const resizeFile = (file) =>
     new Promise((resolve) => {
       Resizer.imageFileResizer(
@@ -124,17 +101,17 @@ const Write = () => {
     const types = ["image/jpeg", "image/jpg", "image/png"];
     if (file) {
       if (file.size > 2000000) {
-        toastError("File size is bigger than 2MB");
+        Toast.error("File size is bigger than 2MB");
         return;
       } else if (!types.includes(file.type)) {
-        toastError("File not image");
+        Toast.error("File not image");
         return;
       }
       try {
         const image = await resizeFile(file);
         setBackgroundPic(image);
       } catch (error) {
-        toastError("Can't upload image");
+        Toast.error("Can't upload image");
       }
     }
   };
@@ -155,11 +132,11 @@ const Write = () => {
     e.preventDefault();
     setPublishing(true);
     if (checkCategory.length === 0) {
-      toastWarning("Please choose at leat 1 category");
+      Toast.warning("Please choose at leat 1 category");
       setPublishing(false);
       return;
     } else if (checkCategory.length > 5) {
-      toastWarning("Each post max 5 categories");
+      Toast.warning("Each post max 5 categories");
       setPublishing(false);
       return;
     }
@@ -179,7 +156,7 @@ const Write = () => {
         navigate(`/post/${data.createPost}`);
       },
       onError(err) {
-        toastError("Error System. Can't publish post");
+        Toast.error("Error System. Can't publish post");
         setPublishing(false);
       },
     });
@@ -232,7 +209,6 @@ const Write = () => {
   return (
     <AccessPage>
       <Fragment>
-        <ToastContainer />
         <TopBar />
         {displayViewDemo()}
         <div className="main">

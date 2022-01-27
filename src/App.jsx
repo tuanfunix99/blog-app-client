@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
@@ -21,10 +21,10 @@ import axios from "axios";
 import BarLoader from "react-spinners/BarLoader";
 import ForgotPassword from "./pages/forgot-password/ForgotPassword";
 import Contact from "./pages/contact/Contact";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import Toast from "./utils/Toast";
 
 import "./App.scss";
-import { Fragment } from "react";
-import AdminDashboard from "./pages/admin/AdminDashboard";
 
 function App() {
   const [user, setUser] = useRecoilState(userState);
@@ -73,7 +73,7 @@ function App() {
   const onCloseHandler = () => {
     document.body.classList.remove("modal-open");
   };
-  
+
   return (
     <Fragment>
       {!completed && (
@@ -85,6 +85,7 @@ function App() {
       {completed && (
         <Fragment>
           {onCloseHandler()}
+          {Toast.container()}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/post/:id" element={<Single />} />
