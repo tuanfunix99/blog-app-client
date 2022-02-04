@@ -23,6 +23,14 @@ const AccessPage = ({ children, roles }) => {
     );
   };
 
+  const onOpenHandler = () => {
+    document.body.classList.add("modal-open");
+  };
+
+  const onCloseHandler = () => {
+    document.body.classList.remove("modal-open");
+  };
+
   return (
     <Fragment>
       <Fragment>

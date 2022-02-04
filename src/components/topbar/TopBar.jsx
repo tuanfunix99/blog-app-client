@@ -156,7 +156,7 @@ const TopBar = () => {
         <span className="headerTitleSm">Dev & Storys</span>
       </div>
       <div className="topBar">
-        <Button variant="primary" onClick={handleShow}>
+        <Button variant="teal" onClick={handleShow}>
           <i className="fas fa-bars"></i>
         </Button>
       </div>
@@ -213,7 +213,7 @@ const TopBar = () => {
               <Dropdown.Toggle id="dropdown-custom-components">
                 <img className="topImg" src={profilePic} alt="profile" />
               </Dropdown.Toggle>
-              <Dropdown.Menu>
+              <Dropdown.Menu>F
                 <Dropdown.Item>
                   <Link className="link" to="/settings">
                     SETTINGS

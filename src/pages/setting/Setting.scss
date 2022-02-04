@@ -1,6 +1,4 @@
-
 @import "~bootstrap/scss/bootstrap";
-
 
 .settings {
   display: flex;
@@ -111,6 +109,10 @@
   height: 70px;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   border-radius: 20px;
+}
+
+.css-kud8pv {
+  left: 15px !important;
 }
