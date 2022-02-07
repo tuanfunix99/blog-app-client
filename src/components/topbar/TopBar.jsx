@@ -6,17 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../state/user";
 import { UPLOADED_PROFILEPIC } from "../../graphql/subscription/user";
-import {
-  Button,
-  Dropdown,
-  Form,
-  FormControl,
-  Modal,
-  Nav,
-  Navbar,
-  NavDropdown,
-  Offcanvas,
-} from "react-bootstrap";
+import { Button, Dropdown, Form, Modal } from "react-bootstrap";
 import AccessComponent from "../access/AccessComponent";
 import Permission from "../permission/Permission";
 
@@ -124,6 +114,16 @@ const TopBar = () => {
             <Dropdown.Item eventKey="5" onClick={onSelectHandler}>
               MY POST
             </Dropdown.Item>
+            <Permission
+              userRole={user && user.role}
+              roles={["admin", "manager"]}
+            >
+              <Dropdown.Item>
+                <Link className="link" to="/admin-dashboard">
+                  ADMIN DASHBOARD
+                </Link>
+              </Dropdown.Item>
+            </Permission>
             <Dropdown.Item eventKey="5" onClick={onSelectHandler}>
               SETTINGS
             </Dropdown.Item>
