@@ -6,7 +6,17 @@ import { ToastContainer, toast } from "react-toastify";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../state/user";
 import { UPLOADED_PROFILEPIC } from "../../graphql/subscription/user";
-import { Button, Dropdown, Form, Modal } from "react-bootstrap";
+import {
+  Button,
+  Dropdown,
+  Form,
+  FormControl,
+  Modal,
+  Nav,
+  Navbar,
+  NavDropdown,
+  Offcanvas,
+} from "react-bootstrap";
 import AccessComponent from "../access/AccessComponent";
 import Permission from "../permission/Permission";
 
@@ -213,13 +223,16 @@ const TopBar = () => {
               <Dropdown.Toggle id="dropdown-custom-components">
                 <img className="topImg" src={profilePic} alt="profile" />
               </Dropdown.Toggle>
-              <Dropdown.Menu>F
+              <Dropdown.Menu>
                 <Dropdown.Item>
                   <Link className="link" to="/settings">
                     SETTINGS
                   </Link>
                 </Dropdown.Item>
-                <Permission userRole={user && user.role} roles={["admin", "manager"]}>
+                <Permission
+                  userRole={user && user.role}
+                  roles={["admin", "manager"]}
+                >
                   <Dropdown.Item>
                     <Link className="link" to="/admin-dashboard">
                       ADMIN DASHBOARD

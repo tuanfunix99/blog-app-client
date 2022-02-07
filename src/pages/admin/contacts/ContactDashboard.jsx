@@ -118,22 +118,24 @@ const ContactDashboard = () => {
                 </Form.Group>
               </Form>
               {!loading && (
-                <Table striped bordered hover>
-                  <thead>
-                    <tr>
-                      <th>Number</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Content</th>
-                      <th>Replied</th>
-                      <th>Day</th>
-                      <th className="text-center">Detail</th>
-                      <th className="text-center">Reply</th>
-                      <th className="text-center">Delete</th>
-                    </tr>
-                  </thead>
-                  <tbody>{loadContactsTable(contacts)}</tbody>
-                </Table>
+                <div className="TableContainer">
+                  <Table striped bordered hover>
+                    <thead>
+                      <tr>
+                        <th>Number</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Content</th>
+                        <th>Replied</th>
+                        <th>Day</th>
+                        <th className="text-center">Detail</th>
+                        <th className="text-center">Reply</th>
+                        <th className="text-center">Delete</th>
+                      </tr>
+                    </thead>
+                    <tbody>{loadContactsTable(contacts)}</tbody>
+                  </Table>
+                </div>
               )}
               {loading && <Spinner animation="border" variant="info" />}
             </Col>

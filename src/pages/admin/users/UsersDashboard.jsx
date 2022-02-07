@@ -134,24 +134,26 @@ const UsersDashboard = ({ Toast }) => {
                 </Form.Group>
               </Form>
               {!loading && (
-                <Table striped bordered hover>
-                  <thead>
-                    <tr>
-                      <th>Id</th>
-                      <th className="text-center">Avatar</th>
-                      <th>Username</th>
-                      <th>email</th>
-                      <th>Active</th>
-                      <th>Role</th>
-                      <th>Joinned</th>
-                      <th className="text-center">Update</th>
-                      <Permission userRole={user.role} roles={["manager"]}>
-                        <th className="text-center">Delete</th>
-                      </Permission>
-                    </tr>
-                  </thead>
-                  <tbody>{loadUsersTable(users)}</tbody>
-                </Table>
+                <div className="TableContainer">
+                  <Table striped bordered hover>
+                    <thead>
+                      <tr>
+                        <th>Id</th>
+                        <th className="text-center">Avatar</th>
+                        <th>Username</th>
+                        <th>email</th>
+                        <th>Active</th>
+                        <th>Role</th>
+                        <th>Joinned</th>
+                        <th className="text-center">Update</th>
+                        <Permission userRole={user.role} roles={["manager"]}>
+                          <th className="text-center">Delete</th>
+                        </Permission>
+                      </tr>
+                    </thead>
+                    <tbody>{loadUsersTable(users)}</tbody>
+                  </Table>
+                </div>
               )}
               {loading && <Spinner animation="border" variant="info" />}
             </Col>

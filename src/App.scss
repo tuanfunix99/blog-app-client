@@ -8,12 +8,20 @@ body {
 
 body.modal-open {
   overflow-y: hidden !important;
-}
+} 
 
 .writeInput {
   text-transform: capitalize;
   font-size: 45px;
   font-weight: 700;
+}
+
+.writeImg {
+  max-width: 100% !important;
+  height: 400px;
+  object-fit: cover;
+  padding: 0px 0px;
+  margin: auto;
 }
 
 .view-demo {
@@ -25,6 +33,7 @@ body.modal-open {
     font-size: 18px !important;
   }
 }
+
 
 
 @media only screen and (max-width: 1120px) {
