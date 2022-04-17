@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Fragment } from "react";
 import TopBar from "../../components/topbar/TopBar";
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  Button,
-  Spinner,
-} from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Spinner } from "react-bootstrap";
 import { useRecoilState } from "recoil";
 import { userState } from "../../state/user";
 import { useMutation } from "@apollo/client";
@@ -97,7 +90,7 @@ const Setting = () => {
           onCompleted(data) {
             setProfilePic(data.uploadProfilePic.url);
             setUser((...pre) => {
-              return { ...pre, profilePic: image, passportId: user.passportId };
+              return { ...pre, profilePic: image };
             });
             setUploading(false);
             Toast.success("Upload profile picture successful");
@@ -118,6 +111,7 @@ const Setting = () => {
     e.preventDefault();
     setUpdating(true);
     setIsUpdateInfo(false);
+    setErrors({});
     updateInfo({
       variables: {
         input: info,
@@ -129,13 +123,12 @@ const Setting = () => {
             ...pre,
             username: data.updateInfo.username,
             email: data.updateInfo.email,
-            passportId: user.passportId
           };
         });
         setUpdating(false);
       },
-      onError() {
-        Toast.error("Error System.Can't update info");
+      onError(error) {
+        setErrors(error.graphQLErrors[0].extensions.errors);
         setUpdating(false);
       },
     });
@@ -145,6 +138,7 @@ const Setting = () => {
     e.preventDefault();
     setUpdatingPsw(true);
     setIsUpdatePassword(false);
+    setErrors({});
     updatePassword({
       variables: {
         input: passwdInput,
@@ -252,24 +246,34 @@ const Setting = () => {
                             setInfo({ ...info, username: e.target.value })
                           }
                           disabled={!isUpdateInfo}
+                          isInvalid={errors.username}
                         />
+                         {errors.username && (
+                          <Form.Control.Feedback type="invalid">
+                            {errors.username}
+                          </Form.Control.Feedback>
+                        )}
                       </Form.Group>
-                      <AccessComponent type={{ passportId: true }}>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                          <Form.Label>Email address</Form.Label>
-                          <Form.Control
-                            type="email"
-                            placeholder="Enter email"
-                            name="email"
-                            required
-                            value={info.email}
-                            onChange={(e) =>
-                              setInfo({ ...info, email: e.target.value })
-                            }
-                            disabled={!isUpdateInfo}
-                          />
-                        </Form.Group>
-                      </AccessComponent>
+                      <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Email address</Form.Label>
+                        <Form.Control
+                          type="email"
+                          placeholder="Enter email"
+                          name="email"
+                          required
+                          value={info.email}
+                          onChange={(e) =>
+                            setInfo({ ...info, email: e.target.value })
+                          }
+                          disabled={!isUpdateInfo}
+                          isInvalid={errors.email}
+                        />
+                        {errors.email && (
+                          <Form.Control.Feedback type="invalid">
+                            {errors.email}
+                          </Form.Control.Feedback>
+                        )}
+                      </Form.Group>
                       <Button
                         className="mx-auto"
                         variant="teal"
@@ -291,7 +295,7 @@ const Setting = () => {
                         )}
                       </Button>
                     </Form>
-                    <AccessComponent type={{ passportId: true }}>
+                    <AccessComponent type={{ authType: true }}>
                       <Form
                         className="my-4"
                         onSubmit={onUpdatePasswordHandler}

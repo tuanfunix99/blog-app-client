@@ -70,7 +70,7 @@ const Home = () => {
             <Row>
               <Col lg={12} md={12} className="position-relative">
                 {posts.length > 0 && !loadPage && <Posts posts={posts} />}
-                {posts.length === 0 && <Loading />}
+                {posts.length === 0 && loadPage && <Loading />}
                 {loadPage && (
                   <Loading color={"#36D7B7"} loading={true} size={40} />
                 )}

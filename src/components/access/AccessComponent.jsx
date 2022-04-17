@@ -6,7 +6,7 @@ import "./Access.scss";
 
 const AccessComponent = ({ children, type }) => {
   const user = useRecoilValue(userState);
-  const { isLogin, passportId } = type;
+  const { isLogin, authType } = type;
   const displayComponent = () => {
     if (isLogin !== undefined) {
       return (
@@ -15,8 +15,8 @@ const AccessComponent = ({ children, type }) => {
           {!user && !isLogin && children}
         </Fragment>
       );
-    } else if(passportId !== undefined) {
-      return <Fragment>{user && !user.passportId && children}</Fragment>;
+    } else if(authType !== undefined) {
+      return <Fragment>{user && user.authType === 0 && children}</Fragment>;
     }
   };
   return <Fragment>{displayComponent()}</Fragment>;
